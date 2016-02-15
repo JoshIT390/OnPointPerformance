@@ -68,16 +68,76 @@ and open the template in the editor.
         <div class="container-fluid">
         
         </div>
-        <!--
-        <div>
-        <a href="#" class="btn btn-default">Default</a>
-        <a href="#" class="btn btn-primary">Primary</a>
-        <a href="#" class="btn btn-success">Success</a>
-        <a href="#" class="btn btn-info">Info</a>
-        <a href="#" class="btn btn-warning">Warning</a>
-        <a href="#" class="btn btn-danger">Danger</a>
-        <a href="#" class="btn btn-link">Link</a>
-        </div> -->
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel primary</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel success</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel warning</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel Danger</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel Info</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Panel default</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="panel panel-default">
             <div class="panel-footer">
