@@ -31,8 +31,8 @@ and open the template in the editor.
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php">Home<span class="sr-only">(current)</span></a></li>
-                        <li><a href="aboutUs.php">About Us</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li class="active"><a href="aboutUs.php">About Us<span class="sr-only">(current)</span></a></li>
                         <li><a href="joinUs.php">Join Us</a></li>
                         <li><a href="eventCalendar.php">Event Calendar</a></li>
                         <li><a href="merchandise.php">Merchandise</a></li>
@@ -65,8 +65,8 @@ and open the template in the editor.
         </nav>
         
         <div class="jumbotron">
-            <h1>Announcement 1</h1>
-            <p>Announcement text will go here.</p>
+            <h1>On Point Performance Center</h1>
+            <p>Description of the business goes here.</p>
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
             <div>
                 
@@ -79,8 +79,8 @@ and open the template in the editor.
                 </div>
                 <div class="col-lg-9">
                     <div class="jumbotron">
-                        <h1>Announcement 2</h1>
-                        <p>Announcement text will go here.</p>
+                        <h1>Rusty Pugh</h1>
+                        <p>Information about Rusty.</p>
                         <p><a class="btn btn-primary btn-lg">Learn more</a></p>
                     </div>
                 </div>
@@ -89,8 +89,8 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-lg-9">
                     <div class="jumbotron">
-                        <h1>Announcement 3</h1>
-                        <p>Announcement text will go here.</p>
+                        <h1>John Sheetz</h1>
+                        <p>Information about John.</p>
                         <p><a class="btn btn-primary btn-lg">Learn more</a></p>
                     </div>
                 </div>

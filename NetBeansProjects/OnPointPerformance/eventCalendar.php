@@ -31,10 +31,10 @@ and open the template in the editor.
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php">Home<span class="sr-only">(current)</span></a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li><a href="aboutUs.php">About Us</a></li>
                         <li><a href="joinUs.php">Join Us</a></li>
-                        <li><a href="eventCalendar.php">Event Calendar</a></li>
+                        <li class="active"><a href="eventCalendar.php">Event Calendar<span class="sr-only">(current)</span></a></li>
                         <li><a href="merchandise.php">Merchandise</a></li>
                         <li><a href="contactUs.php">Contact Us</a></li>
                         <!-- <li class="dropdown">
@@ -64,40 +64,9 @@ and open the template in the editor.
             </div>
         </nav>
         
-        <div class="jumbotron">
-            <h1>Announcement 1</h1>
-            <p>Announcement text will go here.</p>
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-            <div>
-                
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3">
-                    <img src="./images/ph_300x300.gif" alt="placeholder">
-                </div>
-                <div class="col-lg-9">
-                    <div class="jumbotron">
-                        <h1>Announcement 2</h1>
-                        <p>Announcement text will go here.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
         
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="jumbotron">
-                        <h1>Announcement 3</h1>
-                        <p>Announcement text will go here.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <img src="./images/ph_300x300.gif" alt="placeholder">
-                </div>
-            </div>    
+        <div class="container-fluid">
+        
         </div>
         <!--
         <div>
