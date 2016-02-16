@@ -20,18 +20,18 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">On Point Performance Center</a>
+                    <a class="navbar-brand" href="../">On Point Performance Center</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="../index.php">Home</a></li>
+                        <li><a href="../">Home</a></li>
                         <li><a href="../announcements/">Announcements</a></li>
-                        <li><a href="../aboutUs.php">About Us</a></li>
+                        <li><a href="../about/">About Us</a></li>
                         <li class="active"><a><span class="sr-only">(current)</span>Apply</a></li>
                         <li><a href="../events/">Events</a></li>
-                        <li><a href="../merchandise.php">Merchandise</a></li>
-                        <li><a href="../contactUs.php">Contact Us</a></li>
+                        <li><a href="../merchandise/">Merchandise</a></li>
+                        <li><a href="../contact/">Contact Us</a></li>
                         
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../login/">Log in</a></li>
