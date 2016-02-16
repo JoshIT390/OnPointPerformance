@@ -8,13 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>On Point Performance Center</title>
-        <link href="./bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" >
-        <script href="./bootstrap/js/bootstrap.js" type="text/javascript" ></script>
-        <script href="./bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
-        <style type="text/css">
-            .img-left{float: left;}
-            .img-right{float: right;}
-        </style>
+        <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -32,32 +26,15 @@ and open the template in the editor.
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="index.php">Home</a></li>
+                        <li><a href="./announcements/">Announcements</a></li>
                         <li><a href="aboutUs.php">About Us</a></li>
-                        <li><a href="joinUs.php">Join Us</a></li>
-                        <li><a href="eventCalendar.php">Event Calendar</a></li>
-                        <li class="active"><a href="merchandise.php">Merchandise<span class="sr-only">(current)</span></a></li>
+                        <li><a href="./apply/">Apply</a></li>
+                        <li><a href="./events/">Events</a></li>
+                        <li class="active"><a><span class="sr-only">(current)</span>Merchandise</a></li>
                         <li><a href="contactUs.php">Contact Us</a></li>
-                        <!-- <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown example<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul> -->
-                    <!--<form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form> -->
+                        
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="logIn.php">Log in</a></li>
+                        <li><a href="./login/">Log in</a></li>
                         <li><a href="#">Portal page</a></li>
                     </ul>
                 </div>
@@ -65,23 +42,10 @@ and open the template in the editor.
         </nav>
         
         
-        <div class="container-fluid">
-        
-        </div>
-        <!--
-        <div>
-        <a href="#" class="btn btn-default">Default</a>
-        <a href="#" class="btn btn-primary">Primary</a>
-        <a href="#" class="btn btn-success">Success</a>
-        <a href="#" class="btn btn-info">Info</a>
-        <a href="#" class="btn btn-warning">Warning</a>
-        <a href="#" class="btn btn-danger">Danger</a>
-        <a href="#" class="btn btn-link">Link</a>
-        </div> -->
         
         <div class="panel panel-default">
             <div class="panel-footer">
-                <?php include ("./virtual/footer.inc"); ?>
+                <?php include ("./assets/virtual/footer.inc"); ?>
             </div>
         </div>
     </body>

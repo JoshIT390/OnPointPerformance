@@ -7,8 +7,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>On Point Performance Center</title>
-        <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
+        <title>Apply</title>
+        <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -25,33 +25,32 @@ and open the template in the editor.
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a><span class="sr-only">(current)</span>Home</a></li>
-                        <li><a href="./announcements/">Announcements</a></li>
-                        <li><a href="aboutUs.php">About Us</a></li>
-                        <li><a href="./apply/">Apply</a></li>
-                        <li><a href="./events/">Events</a></li>
-                        <li><a href="merchandise.php">Merchandise</a></li>
-                        <li><a href="contactUs.php">Contact Us</a></li>
+                        <li><a href="../index.php">Home</a></li>
+                        <li><a href="../announcements/">Announcements</a></li>
+                        <li><a href="../aboutUs.php">About Us</a></li>
+                        <li class="active"><a><span class="sr-only">(current)</span>Apply</a></li>
+                        <li><a href="../events/">Events</a></li>
+                        <li><a href="../merchandise.php">Merchandise</a></li>
+                        <li><a href="../contactUs.php">Contact Us</a></li>
                         
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./login/">Log in</a></li>
+                        <li><a href="../login/">Log in</a></li>
                         <li><a href="#">Portal page</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         
-        <div class="jumbotron">
-            <h1>Splash Page</h1>
-            <p>to do: add slides</p>
-            <div>
-                
-            </div>
+        
+        <div class="container-fluid">
+        
         </div>
+        
+        
         
         <div class="panel panel-default">
             <div class="panel-footer">
-                <?php include ("./assets/virtual/footer.inc"); ?>
+                <?php include ("../assets/virtual/footer.inc"); ?>
             </div>
         </div>
     </body>

@@ -7,8 +7,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>About Us</title>
-        <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
+        <title>Announcements</title>
+        <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -25,16 +25,16 @@ and open the template in the editor.
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="./announcements/">Announcements</a></li>
-                        <li class="active"><a><span class="sr-only">(current)</span>About Us</a></li>
-                        <li><a href="./apply/">Apply</a></li>
-                        <li><a href="./events/">Events</a></li>
-                        <li><a href="merchandise.php">Merchandise</a></li>
-                        <li><a href="contactUs.php">Contact Us</a></li>
+                        <li><a href="../index.php">Home</a></li>
+                        <li class="active"><a><span class="sr-only">(current)</span>Announcements</a></li>
+                        <li><a href="../aboutUs.php">About Us</a></li>
+                        <li><a href="../apply/">Apply</a></li>
+                        <li><a href="../events/">Events</a></li>
+                        <li><a href="../merchandise.php">Merchandise</a></li>
+                        <li><a href="../contactUs.php">Contact Us</a></li>
                         
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./login/">Log in</a></li>
+                        <li><a href="../login/">Log in</a></li>
                         <li><a href="#">Portal page</a></li>
                     </ul>
                 </div>
@@ -42,8 +42,8 @@ and open the template in the editor.
         </nav>
         
         <div class="jumbotron">
-            <h1>On Point Performance Center</h1>
-            <p>Description of the business goes here.</p>
+            <h1>Announcement 1</h1>
+            <p>Announcement text will go here.</p>
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
             <div>
                 
@@ -52,12 +52,12 @@ and open the template in the editor.
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                    <img src="../assets/images/ph_300x300.gif" alt="placeholder">
                 </div>
                 <div class="col-lg-9">
                     <div class="jumbotron">
-                        <h1>Rusty Pugh</h1>
-                        <p>Information about Rusty.</p>
+                        <h1>Announcement 2</h1>
+                        <p>Announcement text will go here.</p>
                         <p><a class="btn btn-primary btn-lg">Learn more</a></p>
                     </div>
                 </div>
@@ -66,21 +66,22 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-lg-9">
                     <div class="jumbotron">
-                        <h1>John Sheetz</h1>
-                        <p>Information about John.</p>
+                        <h1>Announcement 3</h1>
+                        <p>Announcement text will go here.</p>
                         <p><a class="btn btn-primary btn-lg">Learn more</a></p>
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                    <img src="../assets/images/ph_300x300.gif" alt="placeholder">
                 </div>
             </div>    
         </div>
         
         
+        
         <div class="panel panel-default">
             <div class="panel-footer">
-                <?php include ("./assets/virtual/footer.inc"); ?>
+                <?php include ("../assets/virtual/footer.inc"); ?>
             </div>
         </div>
     </body>
