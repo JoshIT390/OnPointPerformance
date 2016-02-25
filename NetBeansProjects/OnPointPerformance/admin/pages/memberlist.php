@@ -95,7 +95,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<h3><a href="add.html">Add a Member</a> </h3>
+						<h3><a href="add.php">Add a Member</a> </h3>
 						<p> <h3> Search Results:</h3>
 							<?php
 							$servername = "mysql.dnguyen94.com";
