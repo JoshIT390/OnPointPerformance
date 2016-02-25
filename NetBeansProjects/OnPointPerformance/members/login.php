@@ -3,7 +3,7 @@
     define("DB_USER_NAME", "ad_victorium");
     define("DB_PASSWORD", "MT8AlJAM");
     define("DB_NAME", "onpoint_performance_center_lower");
-    define("USER_CREDENTIAL_TABLE", "user_test");
+    define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
 
     // If first time logging in or inputted incorrect credentials
     if (!isset($_SESSION["member_username"]) && !isset($_SESSION["member_password"])) {
@@ -14,7 +14,6 @@
             // Saves username and password to session cookie if inputted correctly
             if (checkLogin(trim($_POST["username"]), $_POST["password"])) {
                 $_SESSION['member_username'] = trim($_POST["username"]);
-                $_SESSION['member_password'] = $_POST["password"];
             }
             // Error if not inputted correctly
             else {
@@ -47,22 +46,22 @@
             // Exceptions fire when occur
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
-            $passwordQuery = $connection->prepare('SELECT userPassword FROM ' . USER_CREDENTIAL_TABLE . ' WHERE userID = :username');
+            $passwordQuery = $connection->prepare('SELECT PASSWORD FROM ' . USER_CREDENTIAL_TABLE . ' WHERE MEMBER_EMAIL = :username');
             $passwordQuery->execute(array('username' => $username));
             
             $passwordResult = $passwordQuery->fetch();
-            
             // If no matches
+
             if (!$passwordResult) {
                 return FALSE;
             }
             else {
-                // Resultant password of inputted user
-                if ($passwordResult[0] != $password) {
-                    return FALSE;
+                // Checks to see if applying hashed password as salt onto inputted password and hashing equals to hashed password
+                if (crypt($password, $passwordResult[0]) === $passwordResult[0]) {
+                    return TRUE;
                 }
                 else {
-                    return TRUE;
+                    return FALSE;
                 }
             }
         }

@@ -15,9 +15,9 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Members Self-Service Portal</title>
-        <link href="../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
-        <script href="../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
-        <script href="../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
+        <link href="../../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
+        <script href="../../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
+        <script href="../../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -58,31 +58,32 @@ and open the template in the editor.
         </nav>
         
         <?php
-            include 'login.php';
+            include '../login.php';
             
             if (isset($_SESSION['member_username'])){
-                include 'portal_information.php';
-                echo 
-                '<div>
-                    <h1>Welcome, ' . queryName($_SESSION['member_username']) . '</h1>
-                </div>
-                <div>
-                    <h4>MEMBERSHIP FEE DUE DATE</h4>
-                </div>
-                <div>
-                    <h3>' . date("F j, Y", strtotime(queryDueDate($_SESSION['member_username']))) . '</h3>
-                </div>
-                <div>
-                    <a href="./account-information/">View/change your account information</a></br></br>
-                    <a href="./account-password/">Change your password</a>
-                </div>';
+                include './account_information.php';
+                
+                echo '<div><a href="../">Your Account</a> › View/change Account Settings</div>';
+                
+                if (!isset($_POST["submit"])) {
+                    displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs);
+                }
+                else {
+                    echo 
+                    '<div>
+                        Changes saved
+                    </div>';
+                    submitAccountInformation($_SESSION["member_username"], trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["address"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]));
+                    $_SESSION['member_username'] = $_POST["email"];
+                    displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs);
+                }
             }
         ?>
         
         
         <div class="panel panel-default">
             <div class="panel-footer">
-                <?php include ("../assets/virtual/footer.inc"); ?>
+                <?php include ("../../assets/virtual/footer.inc"); ?>
             </div>
         </div>
     </body>

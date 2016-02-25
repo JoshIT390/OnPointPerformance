@@ -15,9 +15,9 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Members Self-Service Portal</title>
-        <link href="../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
-        <script href="../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
-        <script href="../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
+        <link href="../../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
+        <script href="../../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
+        <script href="../../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -58,31 +58,36 @@ and open the template in the editor.
         </nav>
         
         <?php
-            include 'login.php';
+            include '../login.php';
             
             if (isset($_SESSION['member_username'])){
-                include 'portal_information.php';
-                echo 
-                '<div>
-                    <h1>Welcome, ' . queryName($_SESSION['member_username']) . '</h1>
-                </div>
-                <div>
-                    <h4>MEMBERSHIP FEE DUE DATE</h4>
-                </div>
-                <div>
-                    <h3>' . date("F j, Y", strtotime(queryDueDate($_SESSION['member_username']))) . '</h3>
-                </div>
-                <div>
-                    <a href="./account-information/">View/change your account information</a></br></br>
-                    <a href="./account-password/">Change your password</a>
-                </div>';
+                include './account_password.php';
+                
+                echo '<div><a href="../">Your Account</a> › Change Password</div>';
+                
+                if (isset($_POST["currentPassword"]) && isset($_POST["newPassword1"]) && isset($_POST["newPassword2"])) {
+                    if (checkPassword($_SESSION['member_username'], $_POST["currentPassword"], $_POST["newPassword1"], $_POST["newPassword2"])) {
+                        echo 
+                        "<div>
+                            New password saved
+                        </div>";                        
+                        submitPassword($_SESSION['member_username'], $_POST["newPassword1"]);
+                        displayPasswordForm($_SESSION["member_username"]);
+                    }
+                    else {
+                        displayPasswordForm($_SESSION["member_username"]);
+                    }
+                }
+                else {
+                    displayPasswordForm($_SESSION["member_username"]);
+                }
             }
         ?>
         
         
         <div class="panel panel-default">
             <div class="panel-footer">
-                <?php include ("../assets/virtual/footer.inc"); ?>
+                <?php include ("../../assets/virtual/footer.inc"); ?>
             </div>
         </div>
     </body>
