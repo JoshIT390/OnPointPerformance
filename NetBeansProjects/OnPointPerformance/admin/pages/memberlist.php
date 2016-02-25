@@ -60,25 +60,25 @@
                             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.html"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="email.html"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.html"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.html">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.html">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.html">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -95,7 +95,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<a href="add.html">Add a Member</a> </br>
+						<h3><a href="add.html">Add a Member</a> </h3>
 						<p> <h3> Search Results:</h3>
 							<?php
 							$servername = "mysql.dnguyen94.com";
@@ -106,25 +106,27 @@
 							$last = $_POST["lname"];
 							$email = $_POST["email"];
 							$status = $_POST["status"];
-							$search = "SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT WHERE ";
+							$search = "SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT WHERE";
 							if ($first != ""){
-								$search = $search . "FIRSTNAME='$first'";
+								$search = $search . " FIRSTNAME='$first' AND";
 							}
 							if ($last != ""){
-								$search = $search . "LASTNAME='$last'";
+								$search = $search . " LASTNAME='$last' AND";
 							}
 							if ($email != ""){
-								$search = $search . "MEMBER_EMAIL='$email'";
+								$search = $search . " MEMBER_EMAIL='$email' AND";
 							}
 							if ($status == "active"){
-								$search = $search . "ACTIVESTATUS='1'";
+								$search = $search . " ACTIVESTATUS='1'";
 							}
 							if ($status == "inactive"){
-								$search = $search . "ACTIVESTATUS='0'";
+								$search = $search . " ACTIVESTATUS='0'";
 							}
 							if ($status == "all"){
-								$search = $search . "ACTIVESTATUS='0' OR ACTIVESTATUS='1'";
+								$search = $search . " ACTIVESTATUS='0' OR ACTIVESTATUS='1'";
 							}
+							$search = $search . ";";
+							ECHO $search;
 
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);

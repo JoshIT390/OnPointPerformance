@@ -60,25 +60,25 @@
                             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.html"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="email.html"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.html"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.html">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.html">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.html">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -94,25 +94,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Member Management</h1>
-						<p> <h3> Add a Member:</h3>
-							<form action="addmember.php" method="post">
-							<div>First Name: <input type="text" name="fname">
-							Last Name: <input type="text" name="lname"></div></br>
-							<div>Street Name: <input type="text" name="street">
-							City: <input type="text" name="city">
-							State: <input type="text" name="State"></div> </br>
-							<div>Zip Code: <input type="text" name="zip">
-							Phone Number: <input type="text" name="phone">
-							Email Address: <input type="text" name="email"></div></br>
-							Notes: <input type="text" name="notes">
-							Dues End Date: <input type="text" name="duesdate">
-							Password: <input type="text" name="password">
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index2.html">Search for a Member</a> </br>
-							<a href="viewall.php">View All Members</a>
-							
-						</p>
+                        <h1 class="page-header">Manage Calenar Events</h1>
+						<p> Put stuff here </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

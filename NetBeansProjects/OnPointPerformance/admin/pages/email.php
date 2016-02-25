@@ -60,25 +60,25 @@
                             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.html"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="email.html"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.html"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.html">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.html">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.html">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -94,7 +94,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Forms</h1>
+                        <h1 class="page-header">Email Members</h1>
 						<p> Put stuff here </p>
                     </div>
                     <!-- /.col-lg-12 -->
