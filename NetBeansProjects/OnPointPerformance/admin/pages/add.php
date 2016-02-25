@@ -109,8 +109,7 @@
 							Dues End Date: <input type="text" name="duesdate">
 							Password: <input type="text" name="password">
 							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index2.html">Search for a Member</a> </br>
-							<a href="viewall.php">View All Members</a>
+							<a href="index.php">Member Management Home Page</a> </br>
 							
 						</p>
                     </div>
