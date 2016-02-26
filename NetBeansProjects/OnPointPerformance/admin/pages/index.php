@@ -91,28 +91,28 @@
                             
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.php">Front Page Banner</a>
+                                    <a href="./bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.php">Front Page Announcements</a>
+                                    <a href="./announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.php">Forms</a>
+                                    <a href="./formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
