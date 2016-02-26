@@ -32,6 +32,7 @@ and open the template in the editor.
                         <li><a href="../events/">Events</a></li>
                         <li><a href="../merchandise/">Merchandise</a></li>
                         <li><a href="../contact/">Contact Us</a></li>
+                    </ul>
                         
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../login/">Log in</a></li>
@@ -43,7 +44,7 @@ and open the template in the editor.
         
         <div class="jumbotron">
             <h1>Announcement 1</h1>
-            <p>Announcement text will go here.</p>
+            <p><?php include 'announcements.php';?></p>
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
             <div>
                 
