@@ -4,6 +4,15 @@
         header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); 
         exit();
     }
+    
+    // Redirects to login page if haven't logged in or trying to access page as admin
+    if (isset($_SESSION['admin_username'])){
+        unset($_SESSION['admin_username']);
+    }
+    elseif (!isset($_SESSION['member_username'])) {
+        header("Location: ../../login");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -41,15 +50,15 @@ and open the template in the editor.
                         <li><a href="../events/">Events</a></li>
                         <li><a href="../merchandise/">Merchandise</a></li>
                         <li><a href="../contact/">Contact Us</a></li>
-                        
+                    </ul>    
                     <ul class="nav navbar-nav navbar-right">
                         <?php
                             if (isset($_SESSION['member_username'])){
-                                echo '<li><a href="../members/">My Account</a></li>';
-                                echo '<li><a href="../members/logout.php">Logout</a></li>';
+                                echo '<li><a href="../">My Account</a></li>';
+                                echo '<li><a href="../../login/logout.php">Logout</a></li>';
                             }
                             else {
-                                echo '<li><a href="../members/">Log In</a></li>';
+                                echo '<li><a href="../login/">Log In</a></li>';
                             }
                         ?>
                     </ul>
@@ -58,8 +67,6 @@ and open the template in the editor.
         </nav>
         
         <?php
-            include '../login.php';
-            
             if (isset($_SESSION['member_username'])){
                 include './account_information.php';
                 
