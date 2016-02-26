@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    if($_SERVER['SERVER_PORT'] != '443') { 
+        header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); 
+        exit();
+    }
+    
+    // Redirects to login page if haven't logged in or trying to access page as admin
+    if (isset($_SESSION['admin_username'])){
+        unset($_SESSION['admin_username']);
+    }
+    elseif (!isset($_SESSION['member_username'])) {
+        header("Location: ../login");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,6 +64,23 @@
                 <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
             
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
@@ -72,13 +105,13 @@
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.php">Front Page Banner</a>
+                                    <a href="bannerm.html">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.php">Front Page Announcements</a>
+                                    <a href="announcementsm.html">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.php">Forms</a>
+                                    <a href="formsm.html">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -94,8 +127,38 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calenar Events</h1>
-						<p> Put stuff here </p>
+                        <h1 class="page-header">Manage Calendar Events</h1>
+						<p> <?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+							}
+							$result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR;");
+							printf("Returned %d row(s).", $result->num_rows);
+							echo "<table style='width:100%'><tr><td>Name</td><td>DATE</td><td>CITY</td><td>STATE</td><td>ZIP</td><td>DESCRIPTION</td><td>FORMS</td></tr>";
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+								if ($row["ACTIVESTATUS"] == 1){
+									$status = "Active";
+								}
+								else if($row["ACTIVESTATUS"] == 0){
+									$status = "Inactive";
+								}
+								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["CITY"] . "</td> <td>" . $row["STATE"] . "</td> <td>" . $row["ZIP"] . "</td><td>" . $row["DESCRIPTION"] . "</td><td>" . $row["FORM"] . "</td> </tr>";
+								}
+							}
+							$result->close();
+							
+							?>  </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

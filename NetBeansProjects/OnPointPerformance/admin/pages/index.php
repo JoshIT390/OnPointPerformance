@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    if($_SERVER['SERVER_PORT'] != '443') { 
+        header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); 
+        exit();
+    }
+    
+    // Redirects to login page if haven't logged in or trying to access page as admin
+    if (isset($_SESSION['member_username'])){
+        unset($_SESSION['member_username']);
+    }
+    elseif (!isset($_SESSION['admin_username'])) {
+        header("Location: ../../login");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,6 +63,24 @@
                 </button>
                 <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
+             <!-- /.navbar-header -->
+             
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
             
             <!-- /.navbar-top-links -->
 
