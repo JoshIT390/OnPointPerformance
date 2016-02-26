@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if($_SERVER['SERVER_PORT'] != '443') { 
+        header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); 
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -32,10 +39,21 @@ and open the template in the editor.
                         <li><a href="./events/">Events</a></li>
                         <li><a href="./merchandise/">Merchandise</a></li>
                         <li><a href="./contact/">Contact Us</a></li>
-                        
+                    </ul>    
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./login/">Log in</a></li>
-                        <li><a href="#">Portal page</a></li>
+                        <?php
+                            if (isset($_SESSION['member_username'])){
+                                echo '<li><a href="./members">' . $_SESSION['member_username'] . '</a></li>';
+                                echo '<li><a href="./login/logout.php">Logout</a></li>';
+                            }
+                            if (isset($_SESSION['admin_username'])){
+                                echo '<li><a href="./admin">' . $_SESSION['admin_username'] . '</a></li>';
+                                echo '<li><a href="./login/logout.php">Logout</a></li>';                            
+                            }
+                            elseif (!isset($_SESSION['member_username']) && !isset($_SESSION['admin_username'])) {
+                                echo '<li><a href="./login">Log In</a></li>';
+                            }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -48,7 +66,7 @@ and open the template in the editor.
                 
             </div>
         </div>
-        
+        <p><a href="./assets/images/ph_300x300.gif" download>test</a></p>
         <div class="panel panel-default">
             <div class="panel-footer">
                 <?php include ("./assets/virtual/footer.inc"); ?>
