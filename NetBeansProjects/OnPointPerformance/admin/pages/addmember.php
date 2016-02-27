@@ -154,14 +154,13 @@
 								die("Connection failed: " . $conn->connect_error);
                                                         }
                                                         $query = "INSERT INTO MEMBER_ACCOUNT(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL) VALUES ('$fname', '$lname', '$duedate', '1', '$address', '$city', '$state', '$zip', '$phone', '$email');";
-                                                        /*$result = mysqli_query($conn, $query);
+                                                        $result = mysqli_query($conn, $query);
                                                         if (!$result){
                                                             die('Invalid query: ' . mysql_error());
                                                         }
                                                         else{
                                                             echo "Successfully added member</br>";
-                                                        }*/
-                                                        echo $query;
+                                                        }
 							?> 
 						</p>
                     </div>

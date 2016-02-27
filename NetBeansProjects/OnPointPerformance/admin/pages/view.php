@@ -162,7 +162,9 @@
                                                         echo "<tr><td>" . $row["PHONE"] . "</td><td>" . $row["MEMBER_EMAIL"] . "</td></tr></table></br>";
                                                         echo "<div style='width:50%'>Member Viewable Notes:</br>" . $row["NOTES"] . "</div>";
                                                         echo "</br><div style='width:50%'>Administrator Notes:</br>" . $row["ADMIN_NOTES"] . "</div>";
-                                                        }
+                                                        echo "</br> <form action='edit.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='Edit'></form>";
+                                                            }
+
                                                         $result->close();
 							
 							?> 
