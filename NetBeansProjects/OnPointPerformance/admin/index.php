@@ -10,7 +10,7 @@
         unset($_SESSION['member_username']);
     }
     elseif (!isset($_SESSION['admin_username'])) {
-        header("Location: ../../login");
+        header("Location: ../login");
         exit();
     }
 ?>
