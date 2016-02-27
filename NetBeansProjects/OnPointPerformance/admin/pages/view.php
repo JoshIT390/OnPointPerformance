@@ -63,7 +63,8 @@
                 </button>
                 <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
-            
+             <!-- /.navbar-header -->
+             
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -90,28 +91,28 @@
                             
                         </li>
                         <li>
-                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="./bannerm.php">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="./announcementsm.php">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="./formsm.php">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -128,22 +129,43 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p> <h3> Add a Member:</h3>
-							<form action="addmember.php" method="post">
-							<div>First Name: <input type="text" name="fname" required>
-							Last Name: <input type="text" name="lname" required></div></br>
-							<div>Street Name: <input type="text" name="street" required>
-							City: <input type="text" name="city" required>
-							State: <input type="text" name="State" required></div> </br>
-							<div>Zip Code: <input type="text" name="zip" required>
-							Phone Number: <input type="text" name="phone" required>
-							Email Address: <input type="text" name="email" required></div></br>
-							Notes: <input type="text" name="notes">
-							Dues End Date: <input type="text" name="duesdate" required>
-							Password: <input type="text" name="password" required>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index.php">Member Management Home Page</a> </br>
+						<p>
+							<?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+                                                        $memberid = $_POST["random"];
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+                                                        }
+                                                        $query = "SELECT * FROM MEMBER_ACCOUNT WHERE MEMBER_ID='" . $memberid . "';";
+							$result = mysqli_query($conn, $query);
+                                                        while($row = $result->fetch_assoc()) {
+                                                            if ($row["ACTIVESTATUS"] == 1){
+								$status = "Active";
+                                                            }
+                                                            else if($row["ACTIVESTATUS"] == 0){
+								$status = "Inactive";
+                                                            }
+                                                        echo "<h3> Viewing " . $row["FIRSTNAME"] . " " . $row["LASTNAME"] . "</h3></br>";
+                                                        echo "<table style='width:75%'><tr><td>First Name:</td><td>Last Name:</td><td>Dues Paid Until:</td><td>Member Status:</td></tr>";
+                                                        echo"<tr><td>" . $row["FIRSTNAME"] . "</td><td>" . $row["LASTNAME"] . "</td><td>" . $row["DUEDATE"] . "</td><td>" . $status . "</td></tr>";
+                                                        echo "<tr><td> </br>Street Address:</td><td></br>City:</td><td></br>State:</td><td></br>Zip Code:</td></tr>";
+                                                        echo"<tr><td>" . $row["ADDRESS"] . "</td><td>" . $row["CITY"] . "</td><td>" . $row["STATE"] . "</td><td>" . $row["ZIP"] . "</td></tr>";
+                                                        echo "<tr><td> </br>Phone Number:</td><td></br>Email Address:</td></tr>";
+                                                        echo "<tr><td>" . $row["PHONE"] . "</td><td>" . $row["MEMBER_EMAIL"] . "</td></tr></table></br>";
+                                                        echo "<div style='width:50%'>Member Viewable Notes:</br>" . $row["NOTES"] . "</div>";
+                                                        echo "</br><div style='width:50%'>Administrator Notes:</br>" . $row["ADMIN_NOTES"] . "</div>";
+                                                        }
+                                                        $result->close();
 							
+							?> 
 						</p>
                     </div>
                     <!-- /.col-lg-12 -->

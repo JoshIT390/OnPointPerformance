@@ -63,7 +63,8 @@
                 </button>
                 <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
-            
+             <!-- /.navbar-header -->
+             
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -90,28 +91,28 @@
                             
                         </li>
                         <li>
-                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="./bannerm.php">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="./announcementsm.php">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="./formsm.php">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -128,22 +129,40 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p> <h3> Add a Member:</h3>
-							<form action="addmember.php" method="post">
-							<div>First Name: <input type="text" name="fname" required>
-							Last Name: <input type="text" name="lname" required></div></br>
-							<div>Street Name: <input type="text" name="street" required>
-							City: <input type="text" name="city" required>
-							State: <input type="text" name="State" required></div> </br>
-							<div>Zip Code: <input type="text" name="zip" required>
-							Phone Number: <input type="text" name="phone" required>
-							Email Address: <input type="text" name="email" required></div></br>
-							Notes: <input type="text" name="notes">
-							Dues End Date: <input type="text" name="duesdate" required>
-							Password: <input type="text" name="password" required>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index.php">Member Management Home Page</a> </br>
-							
+						<p>
+							<?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+                                                        $fname = $_POST["fname"];
+                                                        $lname = $_POST["lname"];
+                                                        $duedate = $_POST["duesdate"];
+                                                        $status = $_POST["status"];
+                                                        $address = $_POST["street"];
+                                                        $city = $_POST["city"];
+                                                        $state = $_POST["State"];
+                                                        $zip = $_POST["zip"];
+                                                        $phone = $_POST["phone"];
+                                                        $email = $_POST["email"];
+                                                        $notes = $_POST["notes"];
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+                                                        }
+                                                        $query = "INSERT INTO MEMBER_ACCOUNT(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL) VALUES ('$fname', '$lname', '$duedate', '1', '$address', '$city', '$state', '$zip', '$phone', '$email');";
+                                                        /*$result = mysqli_query($conn, $query);
+                                                        if (!$result){
+                                                            die('Invalid query: ' . mysql_error());
+                                                        }
+                                                        else{
+                                                            echo "Successfully added member</br>";
+                                                        }*/
+                                                        echo $query;
+							?> 
 						</p>
                     </div>
                     <!-- /.col-lg-12 -->

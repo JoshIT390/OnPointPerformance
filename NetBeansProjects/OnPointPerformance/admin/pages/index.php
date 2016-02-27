@@ -153,9 +153,9 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
+							$result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
 							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><td>First Name</td><td>Last Name</td><td>Email Address</td><td>Phone Number</td><td>Dues Paid Until</td><td>Member Status</td></tr>";
+							echo "<table style='width:100%'><tr><td>First Name</td><td>Last Name</td><td>Email Address</td><td>Phone Number</td><td>Dues Paid Until</td><td>Member Status</td><td>Management</td></tr>";
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
@@ -165,9 +165,10 @@
 								else if($row["ACTIVESTATUS"] == 0){
 									$status = "Inactive";
 								}
-								echo "<tr> <td>". $row["FIRSTNAME"]. "</td> <td> ". $row["LASTNAME"]. "</td> <td> <a href='mailto:" . $row["MEMBER_EMAIL"] . "'>" . $row["MEMBER_EMAIL"] . " </a></td> <td>" . $row["PHONE"] . "</td> <td>" . $row["DUEDATE"] . "</td> <td>" . $status . "</td> </tr>";
+								echo "<tr> <td>". $row["FIRSTNAME"]. "</td> <td> ". $row["LASTNAME"]. "</td> <td> <a href='mailto:" . $row["MEMBER_EMAIL"] . "'>" . $row["MEMBER_EMAIL"] . " </a></td> <td>" . $row["PHONE"] . "</td> <td>" . $row["DUEDATE"] . "</td> <td>" . $status . "</td><td><form action='view.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='View'></form><form action='edit.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
 								}
 							}
+                                                        echo "</table>";
 							$result->close();
 							
 							?> 

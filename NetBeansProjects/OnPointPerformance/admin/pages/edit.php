@@ -63,7 +63,8 @@
                 </button>
                 <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
-            
+             <!-- /.navbar-header -->
+             
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -90,28 +91,28 @@
                             
                         </li>
                         <li>
-                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
                         </li>
                         <li>
-                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="./bannerm.php">Front Page Banner</a>
+                                    <a href="bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="./announcementsm.php">Front Page Announcements</a>
+                                    <a href="announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="./formsm.php">Forms</a>
+                                    <a href="formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -128,22 +129,41 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p> <h3> Add a Member:</h3>
-							<form action="addmember.php" method="post">
-							<div>First Name: <input type="text" name="fname" required>
-							Last Name: <input type="text" name="lname" required></div></br>
-							<div>Street Name: <input type="text" name="street" required>
-							City: <input type="text" name="city" required>
-							State: <input type="text" name="State" required></div> </br>
-							<div>Zip Code: <input type="text" name="zip" required>
-							Phone Number: <input type="text" name="phone" required>
-							Email Address: <input type="text" name="email" required></div></br>
-							Notes: <input type="text" name="notes">
-							Dues End Date: <input type="text" name="duesdate" required>
-							Password: <input type="text" name="password" required>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index.php">Member Management Home Page</a> </br>
+						<p>
+							<?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+                                                        $memberid = $_POST["random"];
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+                                                        }
+                                                        $query = "SELECT * FROM MEMBER_ACCOUNT WHERE MEMBER_ID='" . $memberid . "';";
+							$result = mysqli_query($conn, $query);
+                                                        while($row = $result->fetch_assoc()) {
+                                                        echo "<form action='update.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden>";
+                                                        echo "<h3> Editing " . $row["FIRSTNAME"] . " " . $row["LASTNAME"] . "</h3></br>";
+                                                        echo "<table style='width:75%'><tr><td>First Name: <input type='text' name='fname' value='" . $row["FIRSTNAME"] . "'></td><td>Last Name: <input type='text' name='lname' value='" . $row["LASTNAME"] . "'></td><td>Dues Paid Until: <input type='text' name='duedate' value='" . $row["DUEDATE"] . "'></td>";
+                                                        echo "<td>Member Status: <select name='status'><option value='active'>Active</option><option value='inactive'";
+                                                        if ($row["ACTIVESTATUS" == '0']){
+                                                        echo "selected>Inactive</option> </select> </td></tr>";
+                                                        }
+                                                        else{echo ">Inactive</option> </select> </td></tr>";}
+                                                        echo "<tr><td> </br>Street Address: <input type='text' name='address' value='" . $row["ADDRESS"] . "'></td><td></br>City: <input type='text' name='city' value='" . $row["CITY"] . "'></td><td></br>State: <input type='text' name='state' value='" . $row["STATE"] . "'></td><td></br>Zip Code: <input type='text' name='zip' value='" . $row["ZIP"] . "'></td></tr>";
+                                                        echo "<tr><td> </br>Phone Number: <input type='text' name='phone' value='" . $row["PHONE"] . "'></td><td></br>Email Address: <input type='text' name='email' value='" . $row["MEMBER_EMAIL"] . "'></td></tr></table>";
+                                                        echo "</br><div style='width:50%'>Member Viewable Notes:</br> <textarea rows='4' cols='100' name='notes'>" . $row["NOTES"] . "</textarea></div>";
+                                                        echo "</br><div style='width:50%'>Administrator Notes:</br><textarea rows='4' cols='100' name='adminnotes'>" . $row["ADMIN_NOTES"] . "</textarea></div>";
+                                                        echo "<input type='submit' value='Submit'> </form>";
+                                                        }
+                                                        $result->close();
 							
+							?> 
 						</p>
                     </div>
                     <!-- /.col-lg-12 -->
