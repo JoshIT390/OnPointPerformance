@@ -131,6 +131,12 @@
                         <h1 class="page-header">Member Management</h1>
 						<p>
 							<?php
+                                                        function hashPassword($password) {
+                                                            $cost = 10;
+                                                            $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+                                                            $salt = sprintf("$2a$%02d$", $cost) . $salt;
+                                                            return crypt($password, $salt);
+                                                        }
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
@@ -146,6 +152,7 @@
                                                         $phone = $_POST["phone"];
                                                         $email = $_POST["email"];
                                                         $notes = $_POST["notes"];
+                                                        $passwordz = $_POST["password"];
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
 
@@ -153,7 +160,8 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
                                                         }
-                                                        $query = "INSERT INTO MEMBER_ACCOUNT(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL) VALUES ('$fname', '$lname', '$duedate', '1', '$address', '$city', '$state', '$zip', '$phone', '$email');";
+                                                        $hash = hashPassword($passwordz);
+                                                        $query = "INSERT INTO MEMBER_ACCOUNT(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL, PASSWORD) VALUES ('$fname', '$lname', '$duedate', '1', '$address', '$city', '$state', '$zip', '$phone', '$email', '$hash');";
                                                         $result = mysqli_query($conn, $query);
                                                         if (!$result){
                                                             die('Invalid query: ' . mysql_error());

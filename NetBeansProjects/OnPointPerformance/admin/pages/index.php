@@ -38,6 +38,9 @@
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- Inline Forms -->
+    <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -155,7 +158,7 @@
 							}
 							$result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
 							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><td>First Name</td><td>Last Name</td><td>Email Address</td><td>Phone Number</td><td>Dues Paid Until</td><td>Member Status</td><td>Management</td></tr>";
+							echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {

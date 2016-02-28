@@ -35,6 +35,9 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    
+    <!-- Inline Forms -->
+    <link href="inline.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -139,7 +142,7 @@
 							$last = $_POST["lname"];
 							$email = $_POST["email"];
 							$status = $_POST["status"];
-							$search = "SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT WHERE";
+							$search = "SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID FROM MEMBER_ACCOUNT WHERE";
 							if ($first != ""){
 								$search = $search . " FIRSTNAME='$first' AND";
 							}
@@ -169,7 +172,7 @@
 							}
 							$result = mysqli_query($conn, $search);
 							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><td>First Name</td><td>Last Name</td><td>Email Address</td><td>Phone Number</td><td>Dues Paid Until</td><td>Member Status</td><td>Management</td></tr>";
+							echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
