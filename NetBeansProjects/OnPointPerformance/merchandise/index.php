@@ -64,6 +64,7 @@ and open the template in the editor.
         <div class="panel panel-default">
             <div class="panel-footer">
                 <?php include ("../assets/virtual/footer.inc"); ?>
+                <p>test commit</p>
             </div>
         </div>
     </body>
