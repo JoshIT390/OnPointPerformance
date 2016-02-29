@@ -75,8 +75,7 @@ and open the template in the editor.
                 <div class="col-lg-9">
                     <div class="jumbotron">
                         <h1>Rusty Pugh</h1>
-                        <p>Information about Rusty.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+                        <p>Rusty served 14 years in the U.S. Army's elite Special Forces, known as the Green Berets. During this time Rusty operated in several high threat missions overseas. These included tours in Central America and Afghanistan where he was awarded the Bronze Star Medal and the Combat Infantry Badge. Rusty served the majority of his military  career on an Operational Detachment Alpha, otherwise known as a Special Forces A Team. Rusty was a graduate of the Special Forces Advanced Urban Combat Course as well as the Special Operations Combat Diver Qualification Course, one of the most physically demanding military courses in the world. Rusty has also competed in Tactical 3 Gun and International Practical Shooting Confederation at a National level. Rusty holds Elite / Pro totals in 2 weight classes as a powerlifter  and has squatted 800 pounds and bench pressed 650 pounds in sanctioned powerlifting meets. Rusty has coached several powerlifters to achieve Elite/Pro totals. He has a personal training certificate from the Cooper Institute in Dallas Texas.</p>
                     </div>
                 </div>
             </div>
@@ -85,8 +84,7 @@ and open the template in the editor.
                 <div class="col-lg-9">
                     <div class="jumbotron">
                         <h1>John Sheetz</h1>
-                        <p>Information about John.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+                        <p>John served as a paid firefighter for the U.S. Forest Service, he has a back ground in competitive powerlifting and martial arts. John has a Masters of Sports Science degree from the United States Sports Academy. He is a C.S.C.S and is certified through other organizations such as NSCA and IDEA. John was selected as an intern with the USSA Human Performance Center Laboratory. John served as the Senior Exercise Physiologist for Sports Life in Ga. He was the Fitness Director for Riverside Health Systems in VA. John also developed the initial sports medicine programming for INOVA Health System in Fairfax Va. He has also worked closely with the medical team physician for a NHL hockey team.</p>
                     </div>
                 </div>
                 <div class="col-lg-3">
