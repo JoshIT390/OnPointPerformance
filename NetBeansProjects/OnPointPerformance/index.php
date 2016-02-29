@@ -16,16 +16,16 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>On Point Performance Center</title>
         <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
+        <script src="./assets/slideshow/js/jquery-1.11.min.js"></script>
+        <script src="assets/js/modernizr.js"></script>
         
+        <!-- IMAGE SLIDESHOW IMPORTS -->
         <link rel="stylesheet" href="./assets/slideshow/css/supersized.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="./assets/slideshow/theme/supersized.shutter.css" type="text/css" media="screen" />
-		
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
         <script type="text/javascript" src="./assets/slideshow/js/jquery.easing.min.js"></script>
-		
         <script type="text/javascript" src="./assets/slideshow/js/supersized.3.2.7.js"></script>
         <script type="text/javascript" src="./assets/slideshow/theme/supersized.shutter.js"></script>
-		
 	<script type="text/javascript">
             jQuery(function($){
                 $.supersized({
@@ -35,12 +35,13 @@ and open the template in the editor.
                     start_slide : 1, // Start slide (0 is random)
                     stop_loop :	0, // Pauses slideshow on last slide
                     random : 0, // Randomize slide order (Ignores start slide)
-                    slide_interval : 3000, // Length between transitions
+                    slide_interval : 5000, // Length between transitions
                     transition : 6, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-                    transition_speed : 1000, // Speed of transition
+                    animationSpeed : 1000, // Speed of transition
+                    initDelay: 0, //Integer: Set an initialization delay, in milliseconds
                     new_window : 1, // Image links open in new window/tab
                     pause_hover : 0, // Pause slideshow on hover
-                    keyboard_nav : 1, // Keyboard navigation on/off
+                    keyboard_nav : 0, // Keyboard navigation on/off
                     performance : 1, // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
                     image_protect : 1, // Disables image dragging and right click with Javascript
 													   
@@ -70,11 +71,30 @@ and open the template in the editor.
                     ],
 
                     // Theme Options			   
-                    progress_bar : 3, // Timer for each slide							
+                    progress_bar : 4, // Timer for each slide							
                     mouse_scrub	: 0	
 		});
 	    });
 	</script>
+        <!-- END IMAGE SLIDESHOW IMPORTS -->
+        
+        <!-- CAPTION SLIDESHOW IMPORTS -->
+        <link rel="stylesheet" href="./assets/slideshow/css/flexslider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="./assets/css/animate.css" type="text/css" media="all" />
+        <script type="text/javascript" src="./assets/slideshow/js/move-top.js"></script>
+        <script type="text/javascript" src="./assets/slideshow/js/easing.js"></script>	
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+	</script>
+        <link href="./assets/slideshow/css/animate.css" rel="stylesheet" type="text/css" media="all">
+        <script src="./assets/slideshow/js/wow.min.js"></script>
+	<script>new WOW().init();</script>
+        <!-- END CAPTION SLIDESHOW IMPORTS -->
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -117,11 +137,8 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
-        <div class="container">
-        
-	<!--Thumbnail Navigation-->
-	<div id="prevthumb"></div>
-        <div id="nextthumb"></div>
+        <div class="container-fluid">
+            
 	
         <!--Arrow Navigation-->
         <a id="prevslide" class="load-item"></a>
@@ -132,6 +149,44 @@ and open the template in the editor.
             <div id="thumb-forward"></div>
 	</div>
 	
+        <!-- END CAPTION SLIDER-->
+        <section class="slider">
+            	<div class="flexslider">
+                    <ul class="slides">
+                    	<li>
+                            <h1>Dual Purpose Gym</h1>
+                            <h4>We have our facility split into two sides, one for strength training and the other for military/tactical training</h4>
+  	    		</li>
+ 	    		<li>
+                            <h1>Strength Training</h1>
+                            <h4>Our strength training section has all the equipment you needed to get stronger</h4>
+  	    		</li>
+ 	    		<li>
+                            <h1>Tactical Training</h1>
+                            <h4>Our tactical section is set up for practicing military and police routines</h4>
+  	    		</li>
+                    </ul>
+                    
+        	</div>
+            </section>
+            <script>window.jQuery || document.write('<script src="./assets/slideshow/js/jquery-1.11.min.js">\x3C/script>')</script>
+            <!--FlexSlider-->
+            <script defer src="./assets/slideshow/js/jquery.flexslider.js"></script>
+            <script type="text/javascript">
+                $(function(){
+                    SyntaxHighlighter.all();
+    		});
+    		$(window).load(function(){
+                    $('.flexslider').flexslider({
+                        animation: "slide",
+        		start: function(slider){
+                            $('body').removeClass('loading');
+        		}
+                    });
+    		});
+            </script>
+            <!-- END CAPTION SLIDER-->
+            
 	<!--Time Bar-->
 	<div id="progress-back" class="load-item">
             <div id="progress-bar"></div>
