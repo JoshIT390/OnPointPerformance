@@ -22,18 +22,36 @@
             
             return FALSE;
         }
-    
-    for ($count=0; $count<2; $count++) {
-        $result = $query->fetch();
-        foreach ($result as $element){
-        echo $element . " - ";
-        }
-        echo "<br>";
+    /*  Output from query instance structure
+        ["ANN_ID"]=> [0]
+        ["DESCRIPTION"]=> [1]
+        ["TITLE"]=> [2]
+        ["DATE"]=> [3]
+        ["ACTIVESTATUS"]=> [4]
+     *  ["IMG_URL"]=> [5] 
+     *  ["IMG_ALT"]=> [6]
+      */  
         
-        /*
-        foreach ($result as $element){
+        
+    for ($count=0; $count<3; $count++) {
+        try{
+            $result = $query->fetch();
+            if ($result == NULL){ break;}
+            echo "<div class='row-fluid'>"
+                    . "<div class='col-lg-3'>"
+                        //todo: replace this with img url
+                        . "<img src='" . $result[5] . "' alt='" . $result[6] . "' >"
+                    . "</div>"
+                    . "<div class='col-lg-9'>"
+                        . "<div class='jumbotron'>"
+                            . "<h1>" . $result[2] . "</h1>"
+                            . "<p> Description: \n" . $result[1] . "</p>"
+                            . "<p> Date: " . $result[3] . "</p>"
+                        . "</div>"
+                    . "</div>"
+                . "</div>";
             
-            echo "<br>";
-        }*/
-        
+        }catch(OutOfBoundsException $e){
+            $count = 10; //exit loop
+        }
     }

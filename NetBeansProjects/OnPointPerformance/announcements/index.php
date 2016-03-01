@@ -60,40 +60,8 @@ and open the template in the editor.
             </div>
         </nav>
         
-        <div class="jumbotron">
-            <h1>Announcement 1</h1>
-            <p><?php include 'announcements.php';?></p>
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-            <div>
-                
-            </div>
-        </div>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3">
-                    <img src="../assets/images/ph_300x300.gif" alt="placeholder">
-                </div>
-                <div class="col-lg-9">
-                    <div class="jumbotron">
-                        <h1>Announcement 2</h1>
-                        <p>Announcement text will go here.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="jumbotron">
-                        <h1>Announcement 3</h1>
-                        <p>Announcement text will go here.</p>
-                        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <img src="../assets/images/ph_300x300.gif" alt="placeholder">
-                </div>
-            </div>    
+            <?php include 'announcements.php';?>
         </div>
         
         

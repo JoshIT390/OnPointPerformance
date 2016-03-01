@@ -822,7 +822,7 @@
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
     animationSpeed: 1000,            //Integer: Set the speed of animations, in milliseconds
-    initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
+    initDelay: 500,                   //{NEW} Integer: Set an initialization delay, in milliseconds
     randomize: false,               //Boolean: Randomize slide order
     
     

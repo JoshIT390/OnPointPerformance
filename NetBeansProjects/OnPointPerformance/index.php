@@ -16,87 +16,20 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>On Point Performance Center</title>
         <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
-        <script src="./assets/slideshow/js/jquery-1.11.min.js"></script>
-        <script src="assets/js/modernizr.js"></script>
         
-        <!-- IMAGE SLIDESHOW IMPORTS -->
-        <link rel="stylesheet" href="./assets/slideshow/css/supersized.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="./assets/slideshow/theme/supersized.shutter.css" type="text/css" media="screen" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-        <script type="text/javascript" src="./assets/slideshow/js/jquery.easing.min.js"></script>
-        <script type="text/javascript" src="./assets/slideshow/js/supersized.3.2.7.js"></script>
-        <script type="text/javascript" src="./assets/slideshow/theme/supersized.shutter.js"></script>
-	<script type="text/javascript">
-            jQuery(function($){
-                $.supersized({
-                    // Functionality
-                    slideshow : 1, // Slideshow on/off
-                    autoplay : 1, // Slideshow starts playing automatically
-                    start_slide : 1, // Start slide (0 is random)
-                    stop_loop :	0, // Pauses slideshow on last slide
-                    random : 0, // Randomize slide order (Ignores start slide)
-                    slide_interval : 5000, // Length between transitions
-                    transition : 6, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-                    animationSpeed : 1000, // Speed of transition
-                    initDelay: 0, //Integer: Set an initialization delay, in milliseconds
-                    new_window : 1, // Image links open in new window/tab
-                    pause_hover : 0, // Pause slideshow on hover
-                    keyboard_nav : 0, // Keyboard navigation on/off
-                    performance : 1, // 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
-                    image_protect : 1, // Disables image dragging and right click with Javascript
-													   
-                    // Size & Position						   
-                    min_width : 0, // Min width allowed (in pixels)
-                    min_height : 0, // Min height allowed (in pixels)
-                    vertical_center : 1, // Vertically center background
-                    horizontal_center : 1, // Horizontally center background
-                    fit_always : 0, // Image will never exceed browser width or height (Ignores min. dimensions)
-                    fit_portrait : 1, // Portrait images will not exceed browser height
-                    fit_landscape : 0, // Landscape images will not exceed browser width
-															   
-                    // Components							
-                    slide_links	: 'blank', // Individual links for each slide (Options: false, 'num', 'name', 'blank')
-                    thumb_links	: 1, // Individual thumb links for each slide
-                    thumbnail_navigation : 0, // Thumbnail navigation
-                    slides : [	 // Slideshow Images
-                        {image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/kazvan-1.jpg', title : 'Image Credit: Maria Kazvan', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/kazvan-1.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/kazvan-2.jpg', title : 'Image Credit: Maria Kazvan', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/kazvan-2.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/kazvan-3.jpg', title : 'Image Credit: Maria Kazvan', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/kazvan-3.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/wojno-1.jpg', title : 'Image Credit: Colin Wojno', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/wojno-1.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/wojno-2.jpg', title : 'Image Credit: Colin Wojno', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/wojno-2.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/wojno-3.jpg', title : 'Image Credit: Colin Wojno', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/wojno-3.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/shaden-1.jpg', title : 'Image Credit: Brooke Shaden', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/shaden-1.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/shaden-2.jpg', title : 'Image Credit: Brooke Shaden', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/shaden-2.jpg'},
-			{image : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/slides/shaden-3.jpg', title : 'Image Credit: Brooke Shaden', thumb : 'http://buildinternet.s3.amazonaws.com/projects/supersized/3.2/thumbs/shaden-3.jpg'}
-                    ],
-
-                    // Theme Options			   
-                    progress_bar : 4, // Timer for each slide							
-                    mouse_scrub	: 0	
-		});
-	    });
-	</script>
-        <!-- END IMAGE SLIDESHOW IMPORTS -->
-        
-        <!-- CAPTION SLIDESHOW IMPORTS -->
-        <link rel="stylesheet" href="./assets/slideshow/css/flexslider.css" type="text/css" media="screen" />
-        <link rel="stylesheet" href="./assets/css/animate.css" type="text/css" media="all" />
-        <script type="text/javascript" src="./assets/slideshow/js/move-top.js"></script>
-        <script type="text/javascript" src="./assets/slideshow/js/easing.js"></script>	
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$(".scroll").click(function(event){		
-				event.preventDefault();
-				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-			});
-		});
-	</script>
-        <link href="./assets/slideshow/css/animate.css" rel="stylesheet" type="text/css" media="all">
-        <script src="./assets/slideshow/js/wow.min.js"></script>
-	<script>new WOW().init();</script>
-        <!-- END CAPTION SLIDESHOW IMPORTS -->
+        <!-- FLEXSLIDER IMPORTS -->
+        <link rel="stylesheet" href="flexslider.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="jquery.flexslider.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(window).load(function() {
+                $('.flexslider').flexslider();
+            });
+        </script>
+        <!-- END FLEXSLIDER IMPORTS -->
     </head>
     <body>
+        <!-- NAVBAR -->
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -137,86 +70,96 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
+        <!-- END NAVBAR -->
+        
+        <!-- FLEXSLIDER -->
         <div class="container-fluid">
-            
-	
-        <!--Arrow Navigation-->
-        <a id="prevslide" class="load-item"></a>
-        <a id="nextslide" class="load-item"></a>
-	
-        <div id="thumb-tray" class="load-item">
-            <div id="thumb-back"></div>
-            <div id="thumb-forward"></div>
-	</div>
-	
-        <!-- END CAPTION SLIDER-->
-        <section class="slider">
-            	<div class="flexslider">
-                    <ul class="slides">
-                    	<li>
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="./assets//images/slide1.jpg" />
+                        <div class="flex-caption">
                             <h1>Dual Purpose Gym</h1>
-                            <h4>We have our facility split into two sides, one for strength training and the other for military/tactical training</h4>
-  	    		</li>
- 	    		<li>
+                            <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./assets/images/slide2.jpg" />
+                        <div class="flex-caption">
                             <h1>Strength Training</h1>
                             <h4>Our strength training section has all the equipment you needed to get stronger</h4>
-  	    		</li>
- 	    		<li>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./assets/images/slide3.jpg" />
+                        <div class="flex-caption">
                             <h1>Tactical Training</h1>
                             <h4>Our tactical section is set up for practicing military and police routines</h4>
-  	    		</li>
-                    </ul>
-                    
-        	</div>
-            </section>
-            <script>window.jQuery || document.write('<script src="./assets/slideshow/js/jquery-1.11.min.js">\x3C/script>')</script>
-            <!--FlexSlider-->
-            <script defer src="./assets/slideshow/js/jquery.flexslider.js"></script>
-            <script type="text/javascript">
-                $(function(){
-                    SyntaxHighlighter.all();
-    		});
-    		$(window).load(function(){
-                    $('.flexslider').flexslider({
-                        animation: "slide",
-        		start: function(slider){
-                            $('body').removeClass('loading');
-        		}
-                    });
-    		});
-            </script>
-            <!-- END CAPTION SLIDER-->
-            
-	<!--Time Bar-->
-	<div id="progress-back" class="load-item">
-            <div id="progress-bar"></div>
-	</div>
-	
-	<!--Control Bar-->
-	<div id="controls-wrapper" class="load-item">
-            <div id="controls">
-                <a id="play-button"><img id="pauseplay" src="./assets/slideshow/img/pause.png"/></a>
-		
-		<!--Slide counter-->
-		<div id="slidecounter">
-                    <span class="slidenumber"></span> / <span class="totalslides"></span>
-		</div>
-			
-		<!--Slide captions displayed here-->
-		<div id="slidecaption"></div>
-			
-		<!--Thumb Tray button-->
-                <a id="tray-button"><img id="tray-arrow" src="./assets/slideshow/img/button-tray-up.png"/></a>
-			
-		<!--Navigation-->
-		<ul id="slide-list"></ul>	
+                        </div>
+                    </li>
+                </ul>
             </div>
-	</div>
         </div>
+        <!-- END FLEXSLIDER -->
+        
+        <!-- ANNOUNCEMENTS -->
+        <div class="container" style="width: auto;">
+            <div class="row-fluid" style="margin-bottom: 2em;">
+                <div class="col-lg-3" style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 1</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row-fluid" style="margin-bottom: 2em;">
+                <div class="col-lg-3"style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 2</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="row-fluid">
+                <div class="col-lg-3"style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 3</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END ANNOUNCEMENTS -->
+        
+        <!--
+        <div class="panel panel-default" style="margin-bottom: 0px; position: absolute;">
+            <div class="panel-body">
+                
+            </div>
+        <div class="panel-footer"></div>
+        </div>-->
+        
+        <!-- FOOTER -->
+        <div class="well">
+            <?php include ("./assets/virtual/footer.inc"); ?>
+        </div>
+        <!-- END FOOTER -->
+        
         <!--
         <div class="panel panel-default" style="margin-bottom: 0px; padding-top: 2px;">
             <div class="panel-footer">
-                <?php include ("./assets/virtual/footer.inc"); ?>
+                
             </div>
         </div>-->
     </body>
