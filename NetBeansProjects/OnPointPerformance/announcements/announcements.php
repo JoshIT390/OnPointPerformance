@@ -9,7 +9,7 @@
     // Exceptions fire when occur
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    $query = $connection->prepare('SELECT * FROM ANNOUNCEMENT ORDER BY DATE asc');
+    $query = $connection->prepare('SELECT * FROM ANNOUNCEMENT ORDER BY DATE desc');
     $query->execute();
     //$result = $query->fetch_row();
     //var_dump($result);
