@@ -145,7 +145,7 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR;");
+							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR ORDER BY DATE asc;");
 							printf("Returned %d row(s).", $result->num_rows);
 							echo "<table style='width:100%'><tr><th>Name</th><th>DATE</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>DESCRIPTION</th><th>FORMS</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {
