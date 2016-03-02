@@ -15,6 +15,8 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
         <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
         
         <!-- FLEXSLIDER IMPORTS -->
