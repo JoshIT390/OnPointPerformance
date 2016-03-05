@@ -16,6 +16,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Contact Us</title>
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -58,9 +59,33 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
-        
-        
-        
+        <?php
+            include 'form_submission.php';
+            
+            if (!isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && !isset($_POST["name"]) && !isset($_POST["email"]) && !isset($_POST["message"])) {
+                displayForm();
+            }
+            if (isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && (!isset($_POST["name"]) && !isset($_POST["email"]) && !isset($_POST["message"]))) {
+                echo "Please fill out all fields";
+                displayForm();
+            }
+            elseif (isset($_POST["submit"]) && isset($_POST["g-recaptcha-response"]) && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"])) {
+                if (isValid($_POST["g-recaptcha-response"])) {
+                    if (submitEmail($_POST["name"], $_POST["email"], $_POST["message"])) {
+                        echo "Message sent successfully";
+                        displayForm();
+                    }
+                    else {
+                        echo "There has been a problem with submission";
+                        displayForm();
+                    }
+                }
+                else {
+                    echo "There has been a problem with our verification process";
+                    displayForm();
+                }
+            }
+        ?>
         <div class="panel panel-default">
             <div class="panel-footer">
                 <?php include ("../assets/virtual/footer.inc"); ?>
