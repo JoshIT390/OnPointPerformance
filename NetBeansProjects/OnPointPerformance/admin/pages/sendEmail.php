@@ -127,24 +127,63 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Email Members</h1>
-			<form method="post" action="sendEmail.php">
-                            <p>
-                                Notice: This email will be sent to all active members from noreply@OnPointPerformanceCenter.com
-                            </p></br>
-                            <div>
-                                Subject: <input type="text" name="subject" required/>
-                            </div><br />
-                            <div>
-                                Message: 
-                            </div>
-                            <div>
-                                <textarea rows='10' cols='100' name='message'></textarea>
-                            </div><br />
-                            <div>
-                                <input type='submit' value='Send' class='btn btn-default' />
-                            </div>
-                        </form>
+                        <?php
+                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                            define("DB_USER_NAME", "ad_victorium");
+                            define("DB_PASSWORD", "MT8AlJAM");
+                            define("DB_NAME", "onpoint_performance_center_lower");
+                            define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+                        
+                            if (isset($_POST['subject']) && isset($_POST['message'])) {
+                                if (submitEmails($_POST['subject'], $_POST['message'])) echo "<div>Emails sent successfully.</div>";
+                            }
+                            
+                            function getActiveMemberEmailAddresses() {
+                                $memberEmails;
+                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $memberEmailsQuery = $connection->query('
+                                        SELECT MEMBER_EMAIL 
+                                        FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                        WHERE ACTIVESTATUS = '. $connection->quote(1)
+                                    );
+
+                                    $memberEmails = $memberEmailsQuery->fetchAll(PDO::FETCH_COLUMN, 0);
+                                }
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+                                }
+                                
+                                return $memberEmails;
+                            }
+                            
+                            function submitEmails($subject, $message) {
+                                include '../../mail/all_member.php';
+                                $numFailed = 0;
+                                $memberEmails = getActiveMemberEmailAddresses();
+                                
+                                foreach ($memberEmails as &$memberEmail) {
+                                    if (!sendEmail($memberEmail, $subject, nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8')))) {
+                                        $numFailed++;
+                                    }
+                                }
+                                
+                                if ($numFailed > 0) {
+                                    return FALSE;
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

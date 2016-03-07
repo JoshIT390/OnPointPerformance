@@ -8,7 +8,7 @@
                         <form class="form-horizontal" method="post" action="./" id="contact_form">
                             <fieldset>
                                 <div class="form-group">
-                                    <label for="inputEmail" class="col-lg-2 control-label">
+                                    <label for="inputName" class="col-lg-2 control-label">
                                         Your name
                                     </label>
                                     <div class="col-lg-5">
@@ -66,5 +66,12 @@
 
     function submitEmail($name, $email, $message) {
         include '../mail/contact_form.php';
-        return $sendStatus;
+        
+        $detailedMessage = 
+                "<b>Name:</b> " . $name . "<br />
+                <b>Email:</b> " . $email . "<br /><br />
+                <b>Message:</b> <br />" . 
+                nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8'));
+        
+        return sendEmail($name, $email, $detailedMessage);
     }
