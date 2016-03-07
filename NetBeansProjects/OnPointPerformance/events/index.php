@@ -60,8 +60,10 @@ and open the template in the editor.
         </nav>
         
         <div class="container">
-            
-            
+            <div class="jumbotron" style="text-align: center;">
+                <h1>Upcoming Events</h1>
+                <p>Come join us.</p>
+            </div>
             <?php include 'events.php'; ?>
             
         </div>

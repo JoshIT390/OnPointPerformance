@@ -1,8 +1,8 @@
 <?php
     // Should be ../ in prod
-    require_once('../../PHPMailer-master/PHPMailerAutoload.php');
+    require_once('../../../PHPMailer-master/PHPMailerAutoload.php');
    
-    function sendEmail($name, $email, $message) {
+    function sendEmail($emailAddress, $subject, $message) {
         $mail = new PHPMailer();
         $sendStatus;
         //$mail->SMTPDebug = 3;                               // Enable verbose debug output
@@ -16,12 +16,12 @@
         $mail->Port = 465;                                    // TCP port to connect to
 
         $mail->setFrom('noreply@dnguyen94.com', 'OnPoint Performance Center');
-        $mail->addAddress('support@dnguyen94.com');     // Add a recipient
-        $mail->addReplyTo($email);
+        $mail->addAddress($emailAddress);     // Add a recipient
+        $mail->addReplyTo('noreply@dnguyen94.com', 'OnPoint Performance Center');
 
         $mail->isHTML(true);                                  // Set email format to HTML
 
-        $mail->Subject = 'New Contact Form Submission';
+        $mail->Subject = $subject;
         $mail->Body    = $message;
         $mail->AltBody = $message;
 

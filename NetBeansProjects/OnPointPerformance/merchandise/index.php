@@ -59,14 +59,29 @@ and open the template in the editor.
             </div>
         </nav>
        
-        
+        <div class="container-fluid">
+        <div class="col-lg-9">
         <div class="jumbotron">
   <h1>Jumbotron</h1>
-  <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <p>Merchandise Item 1</p>
   <p><a class="btn btn-primary btn-lg">Learn more</a></p>
 </div>
-        
-        
+        </div>
+        <div class="col-lg-9">
+           <div class="jumbotron">
+  <h1>Jumbotron</h1>
+  <p>Merchandise Item 2</p>
+  <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+</div>
+        </div>
+         <div class="col-lg-9">
+           <div class="jumbotron">
+  <h1>Jumbotron</h1>
+  <p>Merchandise Item 3</p>
+  <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+</div>
+        </div>
+        </div>
         
         <div class="panel panel-default">
             <div class="panel-footer">
