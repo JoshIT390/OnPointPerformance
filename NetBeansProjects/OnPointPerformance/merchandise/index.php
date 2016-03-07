@@ -65,10 +65,10 @@ and open the template in the editor.
   <h1>Jumbotron</h1>
   <div class='col-lg-3'>
                         
-     <img src='" ../assets/images/ph_300x300.gif "' alt='" placeholder image "' >
+     <img src=" ../assets/images/ph_300x300.gif " alt=" placeholder image " >
              </div>
   <p>Merchandise Item 1</p>
-  <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+  
 </div>
         </div>
         <div class="col-lg-9">
