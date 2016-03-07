@@ -129,8 +129,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p>
-							<?php
+						<p><!--
+							</*?php
                                                         function hashPassword($password) {
                                                             $cost = 10;
                                                             $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
@@ -168,8 +168,137 @@
                                                         }
                                                         else{
                                                             echo "Successfully added member</br>";
-                                                        }
-							?> 
+                                                        }*/
+							?> -->
+                                                    
+                                                        <?php
+                                                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                                                            define("DB_USER_NAME", "ad_victorium");
+                                                            define("DB_PASSWORD", "MT8AlJAM");
+                                                            define("DB_NAME", "onpoint_performance_center_lower");
+                                                            define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+                                                            define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                                            
+                                                            if (submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duesdate"], '1', $_POST["street"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["phone"], $_POST["email"], $_POST["notes"], $_POST["password"])) {
+                                                                if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["email"])) {
+                                                                    echo "Successfully added member</br>";
+                                                                }
+                                                                else {
+                                                                    echo "Account information saved, but a problem has occurred with saving emergency contact information.";
+                                                                }
+                                                            }
+                                                            else {
+                                                                echo "A problem has occurred with saving account information. Emergency contact information was not saved";
+                                                            }
+                                                            
+                                                            function hashPassword($password) {
+                                                                $cost = 10;
+                                                                $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+                                                                $salt = sprintf("$2a$%02d$", $cost) . $salt;
+                                                                return crypt($password, $salt);
+                                                            }
+                                                            
+                                                            function getMemberID($email) {
+                                                                try {
+                                                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                                                    // Exceptions fire when occur
+                                                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                    $memberIDQuery = $connection->query('
+                                                                        SELECT MEMBER_ID 
+                                                                        FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                                                        WHERE MEMBER_EMAIL = '. $connection->quote($email)
+                                                                    );
+
+                                                                    $memberID = $memberIDQuery->fetch();
+                                                                    return $memberID[0];
+                                                                }
+                                                                // Script halts and throws error if exception is caught
+                                                                catch(PDOException $e) {
+                                                                    echo "
+                                                                    <div>
+                                                                        Error3: " . $e->getMessage() . 
+                                                                    "</div>";
+                                                                    
+                                                                    return FALSE;
+                                                                }
+                                                            }
+                                                            
+                                                            function submitAccountInformation($submittedFirstName, $submittedLastName, $submittedDueDate, $submittedStatus, $submittedAddress, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedAdminNotes, $submittedPassword) {
+                                                                try {
+                                                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                                                    // Exceptions fire when occur
+                                                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                    $accountInformationUpdate = $connection->prepare('
+                                                                        INSERT INTO ' . USER_CREDENTIAL_TABLE . '(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL, ADMIN_NOTES, PASSWORD) 
+                                                                        VALUES (:submittedFirstName, :submittedLastName, :submittedDueDate, :submittedActiveStatus, :submittedAddress, :submittedCity, :submittedState, :submittedZip, :submittedPhone, :submittedEmail, :submittedAdminNotes, :submittedPassword)'
+                                                                    );
+                                                                    
+                                                                    $accountInformationUpdate->execute(array(
+                                                                        ':submittedFirstName' => $submittedFirstName,
+                                                                        ':submittedLastName' => $submittedLastName,
+                                                                        ':submittedDueDate' => $submittedDueDate,
+                                                                        ':submittedActiveStatus' => $submittedStatus,
+                                                                        ':submittedAddress' => $submittedAddress,
+                                                                        ':submittedCity' => $submittedCity,
+                                                                        ':submittedState' => $submittedState,
+                                                                        ':submittedZip' => $submittedZip,
+                                                                        ':submittedPhone' => $submittedPhone,
+                                                                        ':submittedEmail' => $submittedEmail,
+                                                                        ':submittedAdminNotes' => $submittedAdminNotes,
+                                                                        ':submittedPassword' => hashPassword($submittedPassword)
+                                                                    ));
+                                                                    var_dump($connection->lastInsertId);
+                                                                }
+
+                                                                // Script halts and throws error if exception is caught
+                                                                catch(PDOException $e) {
+                                                                    echo "
+                                                                    <div>
+                                                                        Error1: " . $e->getMessage() . 
+                                                                    "</div>";
+
+                                                                    return FALSE;
+                                                                }
+                                                                
+                                                                return TRUE;
+                                                            }
+                                                            
+                                                            function submitEmergencyContactInformation($submittedFirstName, $submittedLastName, $submittedPhone, $submittedRelationship, $submittedEmail) {
+                                                                try {
+                                                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                                                    // Exceptions fire when occur
+                                                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                    $accountInformationUpdate = $connection->prepare("
+                                                                        INSERT INTO " . USER_EMERGENCY_CONTACT_TABLE . "(FIRSTNAME, LASTNAME, PHONE, RELATIONSHIP, MEMBER_ID)
+                                                                        VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedRelationship, '" . getMemberID($submittedEmail) . "')"
+                                                                    );
+
+                                                                    $accountInformationUpdate->execute(array(
+                                                                        ':submittedFirstName' => $submittedFirstName,
+                                                                        ':submittedLastName' => $submittedLastName,
+                                                                        ':submittedPhone' => $submittedPhone,
+                                                                        ':submittedRelationship' => $submittedRelationship,
+                                                                    ));
+                                                                    
+                                                                    echo "submitEmergencyContact" . time();
+                                                                }
+
+                                                                // Script halts and throws error if exception is caught
+                                                                catch(PDOException $e) {
+                                                                    echo "
+                                                                    <div>
+                                                                        Error2: " . $e->getMessage() . 
+                                                                    "</div>";
+
+                                                                    return FALSE;
+                                                                }
+                                                                
+                                                                return TRUE;
+                                                            }
+                                                        ?>
 						</p>
                     </div>
                     <!-- /.col-lg-12 -->
