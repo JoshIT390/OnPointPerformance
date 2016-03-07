@@ -128,23 +128,79 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p> <h3> Add a Member:</h3>
-							<form action="addmember.php" method="post">
-							<div>First Name: <input type="text" name="fname" required>
-							Last Name: <input type="text" name="lname" required></div></br>
-							<div>Street Name: <input type="text" name="street" required>
-							City: <input type="text" name="city" required>
-							State: <input type="text" name="State" required></div> </br>
-							<div>Zip Code: <input type="text" name="zip" required>
-							Phone Number: <input type="text" name="phone" required>
-							Email Address: <input type="text" name="email" required></div></br>
-							Notes: <input type="text" name="notes">
-							Dues End Date: <input type="text" name="duesdate" required>
-							Password: <input type="text" name="password" required>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="index.php">Member Management Home Page</a> </br>
-							
-						</p>
+                        
+                        <p> 
+                            <h3> Add a Member:</h3>
+                            <form action="addmember.php" method="post">
+                                <div>
+                                    First Name: <input type="text" name="fname" required>
+                                    Last Name: <input type="text" name="lname" required>
+                                    Dues End Date: <input type="text" name="duesdate" required>
+                                </div></br></br>
+                                <div>
+                                    Street Address: <input type="text" name="street" required>
+                                    City: <input type="text" name="city" required>
+                                    State:
+                                    <select name='state'>         
+                                        <?php        
+                                            function createStateOptions($states) {
+                                                $stateOptions;
+
+                                                foreach ($states as &$state) {
+                                                    $stateOptions .= '<option value="' . $state . '">' . $state . '</option>';
+                                                }
+
+                                                return $stateOptions;
+                                            }
+
+                                            echo createStateOptions(array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY')) 
+                                        ?>
+                                    </select>
+                                    Zip Code: <input type="text" name="zip" required>
+                                </div></br>
+                                <div>
+                                    Phone Number: <input type="text" name="phone" required>
+                                    Email Address: <input type="text" name="email" required>
+                                </div></br>
+                                <div>
+                                    Password: <input type="text" name="password" required>
+                                </div></br>
+                                <div>
+                                    Administrator Notes:
+                                </div>
+                                <div>
+                                    <textarea rows='4' cols='100' name='notes'></textarea>
+                                </div></br>
+
+                                <h4> Emergency Contact:</h4>
+                                <div>
+                                    First Name: <input type="text" name="emergency_fname" required>
+                                    Last Name: <input type="text" name="emergency_lname" required>
+                                    Phone Number: <input type="text" name="emergency_phone" required>                                    
+                                    Relationship:
+                                    <select name='emergency_relationship'>
+                                        <?php        
+                                            function createRelationshipsOptions($relationships) {
+                                                $relationshipsOptions;
+
+                                                foreach ($relationships as &$relationship) {
+                                                    $relationshipsOptions .= '<option value="' . $relationship . '">' . $relationship . '</option>';
+                                                }
+
+                                                return $relationshipsOptions;
+                                            }
+
+                                            echo createRelationshipsOptions(array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend')) 
+                                        ?>
+                                    </select>
+                                </div></br></br>
+                                <div>
+                                    <input type='submit' value='Submit' class='btn btn-default'>
+                                </div>
+                            </form>
+                            </br> </br> 
+                            <a href="index.php">Member Management Home Page</a> </br>
+                        </p>                       
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
