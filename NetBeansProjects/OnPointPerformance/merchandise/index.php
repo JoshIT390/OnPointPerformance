@@ -59,6 +59,7 @@ and open the template in the editor.
             </div>
         </nav>
        
+        <div class="container-fluid">
         <div class="col-lg-9">
         <div class="jumbotron">
   <h1>Jumbotron</h1>
@@ -73,7 +74,7 @@ and open the template in the editor.
   <p><a class="btn btn-primary btn-lg">Learn more</a></p>
 </div>
         </div>
-        
+        </div>
         
         <div class="panel panel-default">
             <div class="panel-footer">
