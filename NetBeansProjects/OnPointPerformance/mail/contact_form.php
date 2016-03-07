@@ -17,7 +17,7 @@
 
         $mail->setFrom('noreply@dnguyen94.com', 'OnPoint Performance Center');
         $mail->addAddress('support@dnguyen94.com');     // Add a recipient
-        $mail->addReplyTo($email, $name);
+        $mail->addReplyTo($email);
 
         $mail->isHTML(true);                                  // Set email format to HTML
 
