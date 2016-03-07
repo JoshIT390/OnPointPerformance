@@ -127,80 +127,63 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Member Management</h1>
+                        <?php
+                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                            define("DB_USER_NAME", "ad_victorium");
+                            define("DB_PASSWORD", "MT8AlJAM");
+                            define("DB_NAME", "onpoint_performance_center_lower");
+                            define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
                         
-                        <p> 
-                            <h3> Add a Member:</h3>
-                            <form action="addmember.php" method="post">
-                                <div>
-                                    First Name: <input type="text" name="fname" required>
-                                    Last Name: <input type="text" name="lname" required>
-                                    Dues End Date: <input type="text" name="duesdate" required>
-                                </div></br></br>
-                                <div>
-                                    Street Address: <input type="text" name="street" required>
-                                    City: <input type="text" name="city" required>
-                                    State:
-                                    <select name='state'>         
-                                        <?php        
-                                            function createStateOptions($states) {
-                                                $stateOptions;
+                            if (isset($_POST['subject']) && isset($_POST['message'])) {
+                                if (submitEmails($_POST['subject'], $_POST['message'])) echo "<div>Emails sent successfully.</div>";
+                            }
+                            
+                            function getActiveMemberEmailAddresses() {
+                                $memberEmails;
+                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                                foreach ($states as &$state) {
-                                                    $stateOptions .= '<option value="' . $state . '">' . $state . '</option>';
-                                                }
+                                    $memberEmailsQuery = $connection->query('
+                                        SELECT MEMBER_EMAIL 
+                                        FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                        WHERE ACTIVESTATUS = '. $connection->quote(1)
+                                    );
 
-                                                return $stateOptions;
-                                            }
-
-                                            echo createStateOptions(array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY')) 
-                                        ?>
-                                    </select>
-                                    Zip Code: <input type="text" name="zip" required>
-                                </div></br>
-                                <div>
-                                    Phone Number: <input type="text" name="phone" required>
-                                    Email Address: <input type="text" name="email" required>
-                                </div></br>
-                                <div>
-                                    Password: <input type="text" name="password" required>
-                                </div></br>
-                                <div>
-                                    Administrator Notes:
-                                </div>
-                                <div>
-                                    <textarea rows='4' cols='100' name='notes'></textarea>
-                                </div></br>
-
-                                <h4> Emergency Contact:</h4>
-                                <div>
-                                    First Name: <input type="text" name="emergency_fname" required>
-                                    Last Name: <input type="text" name="emergency_lname" required>
-                                    Phone Number: <input type="text" name="emergency_phone" required>                                    
-                                    Relationship:
-                                    <select name='emergency_relationship'>
-                                        <?php        
-                                            function createRelationshipsOptions($relationships) {
-                                                $relationshipsOptions;
-
-                                                foreach ($relationships as &$relationship) {
-                                                    $relationshipsOptions .= '<option value="' . $relationship . '">' . $relationship . '</option>';
-                                                }
-
-                                                return $relationshipsOptions;
-                                            }
-
-                                            echo createRelationshipsOptions(array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend')) 
-                                        ?>
-                                    </select>
-                                </div></br></br>
-                                <div>
-                                    <input type='submit' value='Submit' class='btn btn-default'>
-                                </div>
-                            </form>
-                            </br> </br> 
-                            <a href="index.php">Member Management Home Page</a> </br>
-                        </p>                       
+                                    $memberEmails = $memberEmailsQuery->fetchAll(PDO::FETCH_COLUMN, 0);
+                                }
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+                                }
+                                
+                                return $memberEmails;
+                            }
+                            
+                            function submitEmails($subject, $message) {
+                                include '../../mail/all_member.php';
+                                $numFailed = 0;
+                                $memberEmails = getActiveMemberEmailAddresses();
+                                
+                                foreach ($memberEmails as &$memberEmail) {
+                                    if (!sendEmail($memberEmail, $subject, nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8')))) {
+                                        $numFailed++;
+                                    }
+                                }
+                                
+                                if ($numFailed > 0) {
+                                    return FALSE;
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

@@ -16,6 +16,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Contact Us</title>
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -58,9 +59,42 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
-        
-        
-        
+        <?php
+            include 'form_submission.php';
+            
+            if (!isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && !isset($_POST["name"]) && !isset($_POST["email"]) && !isset($_POST["message"])) {
+                displayForm();
+            }
+            if (isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && (!isset($_POST["name"]) && !isset($_POST["email"]) && !isset($_POST["message"]))) {
+                echo "Please fill out all fields";
+                displayForm();
+            }
+            elseif (isset($_POST["submit"]) && isset($_POST["g-recaptcha-response"]) && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"])) {
+                if (isValid($_POST["g-recaptcha-response"])) {
+                    if (submitEmail($_POST["name"], $_POST["email"], $_POST["message"])) {
+                        echo '<div class="alert alert-dismissible alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&close;</button>
+                                Message sent successfully
+                            </div>';
+                        displayForm();
+                    }
+                    else {
+                        echo '<div class="alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&close;</button>                                
+                                There has been a problem with submission. Please try again.
+                            </div>';
+                        displayForm();
+                    }
+                }
+                else {
+                        echo '<div class="alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&close;</button>      
+                                There has been a problem with our verification process. Please try again.
+                            </div>';
+                    displayForm();
+                }
+            }
+        ?>
         <div class="panel panel-default">
             <div class="panel-footer">
                 <?php include ("../assets/virtual/footer.inc"); ?>

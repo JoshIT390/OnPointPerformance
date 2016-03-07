@@ -128,7 +128,23 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Email Members</h1>
-						<p> Put stuff here </p>
+			<form method="post" action="sendEmail.php">
+                            <p>
+                                Notice: This email will be sent to all active members from noreply@OnPointPerformanceCenter.com
+                            </p></br>
+                            <div>
+                                Subject: <input type="text" name="subject" required/>
+                            </div><br />
+                            <div>
+                                Message: 
+                            </div>
+                            <div>
+                                <textarea rows='10' cols='100' name='message'></textarea>
+                            </div><br />
+                            <div>
+                                <input type='submit' value='Send' class='btn btn-default' />
+                            </div>
+                        </form>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
