@@ -59,9 +59,160 @@ and open the template in the editor.
             </div>
         </nav>
         
+        <!-- 
+        first name
+        last name
+        gender
+        age (number)
+        phone number
+        email
+        military background
+            checkbox and comment box
+        police background
+            checkbox and comment box
+        strength background
+            checkbox and comment box
+        where do you train
+            dropdown
+        days per week
+            dropdpwn
+        degree/cert physical therapy's
+            checkbox and comment box
+        comment box for additional
+        -->
         
         <div class="container-fluid">
-        
+            <div class="row">
+                <div class="col-lg-3"></div>
+          <div class="col-lg-6">
+            <div class="well bs-component">
+            <form class="form-horizontal">
+                <fieldset>
+                <legend>Application for membership</legend>
+                <!-- FIRST NAME -->
+                <div class="form-group">
+                    <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
+                    <div class="col-lg-8">
+                        <input type="text" name="firstName" class="form-control" id="inputFirstName" placeholder="First Name">
+                    </div>
+                </div>
+                <!-- LAST NAME -->
+                <div class="form-group">
+                    <label for="inputLastName" class="col-lg-2 control-label">Last Name</label>
+                    <div class="col-lg-8">
+                        <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <!-- GENDER -->
+                <div class="form-group">
+                    <label for="inputGender" class="col-lg-2 control-label">Gender</label>
+                    <div class="col-lg-8">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" id="inputGender" value="Male" checked="checked">
+                                Male
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" id="inputGender" value="Female">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Age -->
+                <div class="form-group">
+                    <label for="inputAge" class="col-lg-2 control-label">Age</label>
+                    <div class="col-lg-8">
+                        <input type="text" name="age" class="form-control" id="inputAge" placeholder="">
+                    </div>
+                </div>
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="inputPhone" class="col-lg-2 control-label">Phone Number</label>
+                    <div class="col-lg-8">
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="555-555-5555">
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="inputEmail" class="col-lg-2 control-label">E-mail</label>
+                    <div class="col-lg-8">
+                        <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@example.com">
+                    </div>
+                </div>
+                <!-- Military Background -->
+                <div class="form-group">
+                    <label for="isMilitary" class="col-lg-2 control-label">Military</label>
+                    <div class="col-lg-8" style="text-align: left;">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="isMilitary">Do You have a Military background? </label>
+                        </div>
+                        <label for="inputMilitary">If yes, what is your Military background?</label>
+                        <textarea class="form-control" rows="3" id="inputMilitary" name="militaryBG"></textarea>
+                    </div>
+                </div>
+                <!-- Law Enforcement Background -->
+                <div class="form-group">
+                    <label for="isLaw" class="col-lg-2 control-label">Law Enforcement</label>
+                    <div class="col-lg-8">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="isLaw">Do You have a Law Enforcement background?</label>
+                        </div>
+                        <label for="inputLaw">If yes, what is your Law Enforcement background?</label>
+                        <textarea class="form-control" rows="3" id="inputLaw" name="lawBG"></textarea>
+                    </div>
+                </div>
+                <!-- Competitive Background -->
+                <div class="form-group">
+                    <label for="isStrength" class="col-lg-2 control-label">Strength</label>
+                    <div class="col-lg-8">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="isStrength">Are you an competitive Strength Athlete?</label>
+                        </div>
+                        <label for="inputStrength">If yes, what is your Competitive Strength Training background</label>
+                        <textarea class="form-control" rows="3" id="inputStrength" name="strengthBG"></textarea>
+                    </div>
+                </div>
+                <!-- Current Training-->
+                <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Current</label>
+                    <div class="col-lg-8">
+                        <label>Where do you currently train?</label>
+                        <select multiple="" name="currentTraining" class="form-control">
+                            <option value="Chain">Chain Gym</option>
+                            <option value="Private">Private Gym</option>
+                            <option value="Crossfit">Crossfit Gym</option>
+                            <option value="Home">Home</option>
+                            <option value="Military/Police">Military/Police Facility</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Health Background -->
+                <div class="form-group">
+                    <label for="hasDegree" class="col-lg-2 control-label">Health Knowledge</label>
+                    <div class="col-lg-8">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="hasDegree">Do You have a Degree or Certification regarding sports health/training?</label>
+                        </div>
+                        <label for="inputDegree">If yes, what is your Degree or Certification?</label>
+                        <textarea class="form-control" rows="3" id="inputDegree" name="healthBG"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Additional Information -->
+                <div class="form-group">
+                    <label for="textArea" class="col-lg-2 control-label">Additional Info</label>
+                    <div class="col-lg-8">
+                        <textarea class="form-control" rows="3" id="textArea" name="additional"></textarea>
+                    </div>
+                </div>
+            </form>  
+        </div>
+        </div>
+        </div>
+                <div class="col-lg-3"></div>
         </div>
         
         
