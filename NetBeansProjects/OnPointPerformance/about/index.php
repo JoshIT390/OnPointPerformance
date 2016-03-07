@@ -61,7 +61,7 @@ and open the template in the editor.
         
         <div class="jumbotron">
             <h1>On Point Performance Center</h1>
-            <p>Description of the business goes here.</p>
+            <p>OPPC is a physical training approach for elite and tactical athletes. It’s not just gym or a workout, it is a mindset and an approach to existence. We exist for the purpose of creating mission-capable athletes who compete on the platform, in the streets and on the battlefield. Participation in this program is limited and by invitation or application only. It is not for the general population and the core focus and mission of OPPC will be vigorously protected. The owners and trainers of this facility have years of Special Forces experience and decades of institutional and experiential knowledge in the field of training athletes to become stronger, faster and more mentally tough than their competition, their adversaries or their enemies.</p>
             <p><a class="btn btn-primary btn-lg">Learn more</a></p>
             <div>
                 
@@ -84,7 +84,7 @@ and open the template in the editor.
                 <div class="col-lg-9">
                     <div class="jumbotron">
                         <h1>John Sheetz</h1>
-                        <p>John served as a paid firefighter for the U.S. Forest Service, he has a back ground in competitive powerlifting and martial arts. John has a Masters of Sports Science degree from the United States Sports Academy. He is a C.S.C.S and is certified through other organizations such as NSCA and IDEA. John was selected as an intern with the USSA Human Performance Center Laboratory. John served as the Senior Exercise Physiologist for Sports Life in Ga. He was the Fitness Director for Riverside Health Systems in VA. John also developed the initial sports medicine programming for INOVA Health System in Fairfax Va. He has also worked closely with the medical team physician for a NHL hockey team.</p>
+                        <p>John holds a Master of Sports Science degree and has extensive experience in testing and training of athletes to improve performance. He has worked with conventional and tactical athletes from amateur to professional ranks, and has consulted with municipalities and public companies on fitness for duty programming. John has held certifications from organizations such as National Strength and Conditioning Association, ACE and others. A lifelong athlete, he participated in team sports before finding success in powerlifting and martial arts. He trained and served as both a volunteer city firefighter and a paid firefighter for the U.S. Forest Service. John is also certified as a Personal Protection Specialist by the Executive Protection Institute and holds a Private Security Service registration from the Virginia Department of Criminal Justice Services.</p>
                     </div>
                 </div>
                 <div class="col-lg-3">

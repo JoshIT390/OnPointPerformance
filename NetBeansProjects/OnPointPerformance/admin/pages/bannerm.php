@@ -61,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
             
             <ul class="nav navbar-top-links navbar-right">
@@ -128,7 +128,33 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Front Page Banner</h1>
-						<p> Put stuff here </p>
+						<p> 
+                                                <?php
+
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+                                                        }
+                                                        $query = "SELECT * FROM BANNER;";
+                                                        $result = mysqli_query($conn, $query);
+                                                        while($row = $result->fetch_assoc()) {
+                                                            echo "<form action='banneru.php' method='post'> Title: <input type='text' name='title' value='" . $row["TITLE"] . "'>";
+                                                            echo "Displayed Until:<input type='text' name='date' value='" . $row["DISPLAYED_UNTIL"] . "'>";
+                                                            echo "</br>Description:</br> <textarea rows='4' cols='100' name='desc'>" . $row["DESCRIPTION"] . "</textarea>";
+                                                            echo "<input type='submit' value='Submit'> </form>";
+                                                        }
+                                                        if (!$result){
+                                                            die('Invalid query: ' . mysql_error());
+                                                        }
+							?>
+                                                </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
