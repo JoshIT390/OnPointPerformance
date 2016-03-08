@@ -67,13 +67,17 @@
                 <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
             
+             <!-- /.navbar-header -->
+             
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="./profile/"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="../../"><i class="fa fa-home fa-fw"></i> Public Website</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -93,13 +97,16 @@
                             
                         </li>
                         <li>
-                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="./index.php"><i class="fa fa-users fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="./adminslist.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
                         </li>
                         <li>
-                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="./calendar.php"><i class="fa fa-calendar fa-fw"></i> Manage Calendar</a>
+                        </li>
+                        <li>
+                            <a href="./email.php"><i class="fa fa-envelope-o fa-fw"></i> Email Members</a>
                         </li>
 						<li>
                             <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
@@ -114,7 +121,7 @@
                                     <a href="./announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.php">Forms</a>
+                                    <a href="./formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -155,6 +162,7 @@
 								echo"<h4>Event Zip Code: ". $row["ZIP"]. "</h4></br>";
 								echo"<h4>Event Description: ". $row["DESCRIPTION"]. "</h4></br>";
 								echo"<h4>Event Forms: ". $row["FORMS"]. "</h4></br>";
+
 								}
 							}
 							$result->close();

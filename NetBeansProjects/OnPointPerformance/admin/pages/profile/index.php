@@ -99,7 +99,7 @@
                             <a href="../"><i class="fa fa-users fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="../admins_list.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
+                            <a href="../adminslist.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
                         </li>
                         <li>
                             <a href="../calendar.php"><i class="fa fa-calendar fa-fw"></i> Manage Calendar</a>

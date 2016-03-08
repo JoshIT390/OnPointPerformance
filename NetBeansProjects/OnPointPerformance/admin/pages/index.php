@@ -74,7 +74,9 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="./profile/"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="../../"><i class="fa fa-home fa-fw"></i> Public Website</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -94,13 +96,16 @@
                             
                         </li>
                         <li>
-                            <a href="./"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="./index.php"><i class="fa fa-users fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="./calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="./adminslist.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
                         </li>
                         <li>
-                            <a href="./email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="./calendar.php"><i class="fa fa-calendar fa-fw"></i> Manage Calendar</a>
+                        </li>
+                        <li>
+                            <a href="./email.php"><i class="fa fa-envelope-o fa-fw"></i> Email Members</a>
                         </li>
 						<li>
                             <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
@@ -132,50 +137,50 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p><h3><a href="add.php">Add a Member</a></h3>
-						 <h3> Search for a Member:</h3>
-							<form action="memberlist.php" method="post">
-							First Name: <input type="text" name="fname">
-							Last Name: <input type="text" name="lname"> 
-							Email: <input type="text" name="email"> 
-							Member Status: <select name="status"> 
-							<option value="all">All</option>
-							<option value="active">Active</option>
-							<option value="inactive">Inactive</option> </select> 
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+                            <p><h3><a href="add.php">Add a Member</a></h3>
+                             <h3> Search for a Member:</h3>
+                                    <form action="memberlist.php" method="post">
+                                    First Name: <input type="text" name="fname">
+                                    Last Name: <input type="text" name="lname"> 
+                                    Email: <input type="text" name="email"> 
+                                    Member Status: <select name="status"> 
+                                    <option value="all">All</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option> </select> 
+                                    <input type="submit" value="Submit"> </form></br> </br> 
+                                    <?php
+                                    $servername = "mysql.dnguyen94.com";
+                                    $username = "ad_victorium";
+                                    $password = "MT8AlJAM";
+                                    $database = "onpoint_performance_center_lower";
 
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+                                    // Create connection
+                                    $conn = mysqli_connect($servername, $username, $password, $database);
 
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-								if ($row["ACTIVESTATUS"] == 1){
-									$status = "Active";
-								}
-								else if($row["ACTIVESTATUS"] == 0){
-									$status = "Inactive";
-								}
-								echo "<tr> <td>". $row["FIRSTNAME"]. "</td> <td> ". $row["LASTNAME"]. "</td> <td> <a href='mailto:" . $row["MEMBER_EMAIL"] . "'>" . $row["MEMBER_EMAIL"] . " </a></td> <td>" . $row["PHONE"] . "</td> <td>" . $row["DUEDATE"] . "</td> <td>" . $status . "</td><td><form action='view.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='View'></form><form action='edit.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
-								}
-							}
-                                                        echo "</table>";
-							$result->close();
-							
-							?> 
-						</p>
+                                    // Check connection
+                                    if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                    }
+                                    $result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
+                                    printf("Returned %d row(s).", $result->num_rows);
+                                    echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
+                                    if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while($row = $result->fetch_assoc()) {
+                                            if ($row["ACTIVESTATUS"] == 1){
+                                                    $status = "Active";
+                                            }
+                                            else if($row["ACTIVESTATUS"] == 0){
+                                                    $status = "Inactive";
+                                            }
+                                            echo "<tr> <td>". $row["FIRSTNAME"]. "</td> <td> ". $row["LASTNAME"]. "</td> <td> <a href='mailto:" . $row["MEMBER_EMAIL"] . "'>" . $row["MEMBER_EMAIL"] . " </a></td> <td>" . $row["PHONE"] . "</td> <td>" . $row["DUEDATE"] . "</td> <td>" . $status . "</td><td><form action='view.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='View'></form><form action='edit.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
+                                            }
+                                    }
+                                    echo "</table>";
+                                    $result->close();
+
+                                    ?> 
+                            </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

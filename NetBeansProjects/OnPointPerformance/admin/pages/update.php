@@ -71,7 +71,9 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="./profile/"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="../../"><i class="fa fa-home fa-fw"></i> Public Website</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -91,28 +93,31 @@
                             
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="./index.php"><i class="fa fa-users fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="./adminslist.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
                         </li>
                         <li>
-                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="./calendar.php"><i class="fa fa-calendar fa-fw"></i> Manage Calendar</a>
+                        </li>
+                        <li>
+                            <a href="./email.php"><i class="fa fa-envelope-o fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.php">Front Page Banner</a>
+                                    <a href="./bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.php">Front Page Announcements</a>
+                                    <a href="./announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.php">Forms</a>
+                                    <a href="./formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -131,7 +136,7 @@
                         <h1 class="page-header">Member Management</h1>
 						<p>
 							<?php
-							$servername = "mysql.dnguyen94.com";
+							/*$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
@@ -169,8 +174,114 @@
                                                         else{
                                                             echo "Update Successful</br>";
                                                             echo "If you'd like to go back to viewing the member please click here: <form action='view.php' method='post'><input type='text' name='random' value='$memberid' hidden><input type='submit' value='View'> </form>";
-                                                        }
+                                                        }*/
 							?> 
+                                                    
+                                                        <?php
+                                                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                                                            define("DB_USER_NAME", "ad_victorium");
+                                                            define("DB_PASSWORD", "MT8AlJAM");
+                                                            define("DB_NAME", "onpoint_performance_center_lower");
+                                                            define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+                                                            define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                                            
+                                                            if (submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["phone"], $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["random"])) {
+                                                                if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["random"])) {
+                                                                    echo "Update Successful</br>";
+                                                                    echo "If you'd like to go back to viewing the member please click here: <form action='view.php' method='post'><input type='text' name='random' value='" . $_POST["random"] . "' hidden><input type='submit' value='View'> </form>";
+                                                                }
+                                                                else {
+                                                                    echo "Account information saved, but a problem has occurred with saving emergency contact information.";
+                                                                }
+                                                            }
+                                                            else {
+                                                                echo "A problem has occurred with saving account information. Emergency contact information was not saved";
+                                                            }
+                                                            
+                                                            function submitAccountInformation($submittedFirstName, $submittedLastName, $submittedDueDate, $submittedStatus, $submittedAddress, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedNotes, $submittedAdminNotes, $memberID) {
+                                                                $status;
+                                                                
+                                                                if ($submittedStatus == 'active'){
+                                                                    $status ="1";
+                                                                }
+                                                                if ($submittedStatus == 'inactive'){
+                                                                    $status = "0";
+                                                                }
+                                                                
+                                                                try {
+                                                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                                                    // Exceptions fire when occur
+                                                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                    $accountInformationUpdate = $connection->prepare('
+                                                                        UPDATE ' . USER_CREDENTIAL_TABLE . ' 
+                                                                        SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, DUEDATE = :submittedDueDate, ACTIVESTATUS = :submittedActiveStatus, ADDRESS = :submittedAddress, City = :submittedCity, State = :submittedState, ZIP = :submittedZip, PHONE = :submittedPhone, MEMBER_EMAIL = :submittedEmail, NOTES = :submittedNotes, ADMIN_NOTES = :submittedAdminNotes 
+                                                                        WHERE MEMBER_ID = :memberID');
+                                                                    
+                                                                    $accountInformationUpdate->execute(array(
+                                                                        ':submittedFirstName' => $submittedFirstName,
+                                                                        ':submittedLastName' => $submittedLastName,
+                                                                        ':submittedDueDate' => $submittedDueDate,
+                                                                        ':submittedActiveStatus' => $status,
+                                                                        ':submittedAddress' => $submittedAddress,
+                                                                        ':submittedCity' => $submittedCity,
+                                                                        ':submittedState' => $submittedState,
+                                                                        ':submittedZip' => $submittedZip,
+                                                                        ':submittedPhone' => $submittedPhone,
+                                                                        ':submittedEmail' => $submittedEmail,
+                                                                        ':submittedNotes' => $submittedNotes,
+                                                                        ':submittedAdminNotes' => $submittedAdminNotes,
+                                                                        ':memberID' => $memberID
+                                                                    ));
+                                                                }
+
+                                                                // Script halts and throws error if exception is caught
+                                                                catch(PDOException $e) {
+                                                                    echo "
+                                                                    <div>
+                                                                        Error1: " . $e->getMessage() . 
+                                                                    "</div>";
+
+                                                                    return FALSE;
+                                                                }
+                                                                
+                                                                return TRUE;
+                                                            }
+                                                            
+                                                            function submitEmergencyContactInformation($submittedFirstName, $submittedLastName, $submittedPhone, $submittedRelationship, $memberID) {
+                                                                try {
+                                                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                                                    // Exceptions fire when occur
+                                                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                                                    $accountInformationUpdate = $connection->prepare('
+                                                                        UPDATE ' . USER_EMERGENCY_CONTACT_TABLE . ' 
+                                                                        SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, PHONE = :submittedPhone, RELATIONSHIP = :submittedRelationship 
+                                                                        WHERE MEMBER_ID = :memberID'
+                                                                    );
+
+                                                                    $accountInformationUpdate->execute(array(
+                                                                        ':submittedFirstName' => $submittedFirstName,
+                                                                        ':submittedLastName' => $submittedLastName,
+                                                                        ':submittedPhone' => $submittedPhone,
+                                                                        ':submittedRelationship' => $submittedRelationship,
+                                                                        ':memberID' => $memberID
+                                                                    ));
+                                                                }
+
+                                                                // Script halts and throws error if exception is caught
+                                                                catch(PDOException $e) {
+                                                                    echo "
+                                                                    <div>
+                                                                        Error2: " . $e->getMessage() . 
+                                                                    "</div>";
+
+                                                                    return FALSE;
+                                                                }
+                                                                
+                                                                return TRUE;
+                                                            }
+                                                        ?>
 						</p>
                     </div>
                     <!-- /.col-lg-12 -->

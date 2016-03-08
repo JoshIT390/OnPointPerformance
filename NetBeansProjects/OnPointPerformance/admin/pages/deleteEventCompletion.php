@@ -140,13 +140,8 @@
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
-                                                        $name = $_POST["name"];
-                                                        $date = $_POST["date"];
-                                                        $city = $_POST["city"];
-                                                        $state = $_POST["state"];
-                                                        $zip = $_POST["zip"];
-                                                        $description = $_POST["description"];
-                                                        $forms = $_POST["forms"];
+                                                        $eventID = $_POST["eventID"];
+                                                       
                                                         
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
@@ -155,13 +150,14 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
                                                         }
-                                                        $query = "INSERT INTO CALENDAR(NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS) VALUES ('$name', '$date', '$city', '$state', '$zip', '$description', '$forms');";
+                                                        $query = "DELETE FROM CALENDAR WHERE CALENDAR_ID='$eventID' ;";
                                                         $result = mysqli_query($conn, $query);
+														
                                                         if (!$result){
                                                             die('Invalid query: ' . mysql_error());
                                                         }
                                                         else{
-                                                            echo "Successfully added event</br>";
+                                                            echo "Successfully deleted event!</br>";
                                                         }
 							?> 
 						</p>

@@ -71,7 +71,9 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="./profile/"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="../../"><i class="fa fa-home fa-fw"></i> Public Website</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="../../login/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -91,28 +93,31 @@
                             
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Member Management</a>
+                            <a href="./index.php"><i class="fa fa-users fa-fw"></i> Member Management</a>
                         </li>
                         <li>
-                            <a href="calendar.php"><i class="fa fa-table fa-fw"></i> Manage Calendar</a>
+                            <a href="./adminslist.php"><i class="fa fa-users fa-fw"></i> Admin Management</a>
                         </li>
                         <li>
-                            <a href="email.php"><i class="fa fa-edit fa-fw"></i> Email Members</a>
+                            <a href="./calendar.php"><i class="fa fa-calendar fa-fw"></i> Manage Calendar</a>
+                        </li>
+                        <li>
+                            <a href="./email.php"><i class="fa fa-envelope-o fa-fw"></i> Email Members</a>
                         </li>
 						<li>
-                            <a href="applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
+                            <a href="./applications.php"><i class="fa fa-edit fa-fw"></i> View Applications</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Website Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="bannerm.php">Front Page Banner</a>
+                                    <a href="./bannerm.php">Front Page Banner</a>
                                 </li>
                                 <li>
-                                    <a href="announcementsm.php">Front Page Announcements</a>
+                                    <a href="./announcementsm.php">Front Page Announcements</a>
                                 </li>
 								<li>
-                                    <a href="formsm.php">Forms</a>
+                                    <a href="./formsm.php">Forms</a>
                                 </li>
                             </ul>
                         </li>
@@ -129,48 +134,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-						<p><!--
-							</*?php
-                                                        function hashPassword($password) {
-                                                            $cost = 10;
-                                                            $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-                                                            $salt = sprintf("$2a$%02d$", $cost) . $salt;
-                                                            return crypt($password, $salt);
-                                                        }
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
-                                                        $fname = $_POST["fname"];
-                                                        $lname = $_POST["lname"];
-                                                        $duedate = $_POST["duesdate"];
-                                                        $status = $_POST["status"];
-                                                        $address = $_POST["street"];
-                                                        $city = $_POST["city"];
-                                                        $state = $_POST["State"];
-                                                        $zip = $_POST["zip"];
-                                                        $phone = $_POST["phone"];
-                                                        $email = $_POST["email"];
-                                                        $notes = $_POST["notes"];
-                                                        $passwordz = $_POST["password"];
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
-
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-                                                        }
-                                                        $hash = hashPassword($passwordz);
-                                                        $query = "INSERT INTO MEMBER_ACCOUNT(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL, PASSWORD) VALUES ('$fname', '$lname', '$duedate', '1', '$address', '$city', '$state', '$zip', '$phone', '$email', '$hash');";
-                                                        $result = mysqli_query($conn, $query);
-                                                        if (!$result){
-                                                            die('Invalid query: ' . mysql_error());
-                                                        }
-                                                        else{
-                                                            echo "Successfully added member</br>";
-                                                        }*/
-							?> -->
-                                                    
+						<p>                                                   
                                                         <?php
                                                             define("DB_HOST_NAME", "mysql.dnguyen94.com");
                                                             define("DB_USER_NAME", "ad_victorium");
