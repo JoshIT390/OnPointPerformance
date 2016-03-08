@@ -145,10 +145,10 @@
                                                         $query = "SELECT * FROM BANNER;";
                                                         $result = mysqli_query($conn, $query);
                                                         while($row = $result->fetch_assoc()) {
-                                                            echo "<form action='banneru.php' method='post'> Title: <input type='text' name='title' value='" . $row["TITLE"] . "'>";
-                                                            echo "Displayed Until:<input type='text' name='date' value='" . $row["DISPLAYED_UNTIL"] . "'>";
+                                                            echo "<table style='width:50%'><form action='banneru.php' method='post'> <tr><td> Title: <input type='text' name='title' value='" . $row["TITLE"] . "'></td>";
+                                                            echo "<td>Displayed Until: <input type='text' name='date' value='" . $row["DISPLAYED_UNTIL"] . "'></td></tr></table>";
                                                             echo "</br>Description:</br> <textarea rows='4' cols='100' name='desc'>" . $row["DESCRIPTION"] . "</textarea>";
-                                                            echo "<input type='submit' value='Submit'> </form>";
+                                                            echo "</br></br><input type='submit' value='Submit'> </form>";
                                                         }
                                                         if (!$result){
                                                             die('Invalid query: ' . mysql_error());

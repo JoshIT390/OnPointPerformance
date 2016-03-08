@@ -35,6 +35,8 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    
+    <link href="inline.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -128,7 +130,35 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Forms</h1>
-						<p> Put stuff here </p>
+						<p>
+                                                <h3><a href="addform.php">Add a Form</a></h3>
+                                                    <?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+							}
+							$result = mysqli_query($conn, "SELECT * FROM FORMS;");
+							printf("Returned %d row(s).", $result->num_rows);
+							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["PDF"]. "</td><td><form action='deleteform.php' method='post'><input type='text' name='random' value='" . $row["FORM_ID"] . "' hidden> <input type='submit' value='Delete'></form></tr>";
+								}
+							}
+                                                        echo "</table>";
+							$result->close();
+							
+							?>
+                                                </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
