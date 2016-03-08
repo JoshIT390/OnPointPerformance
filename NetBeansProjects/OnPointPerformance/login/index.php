@@ -42,23 +42,40 @@ and open the template in the editor.
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="../index.php">Home</a></li>
+                        <li><a href="../">Home</a></li>
                         <li><a href="../announcements/">Announcements</a></li>
-                        <li><a href="../aboutUs.php">About Us</a></li>
+                        <li><a href="../about/">About Us</a></li>
                         <li><a href="../apply/">Apply</a></li>
                         <li><a href="../events/">Events</a></li>
-                        <li><a href="../merchandise.php">Merchandise</a></li>
-                        <li><a href="../contactUs.php">Contact Us</a></li>
+                        <li><a href="../merchandise/">Merchandise</a></li>
+                        <li><a href="../contact/">Contact Us</a></li>
                     </ul>    
                     <ul class="nav navbar-nav navbar-right">
                         <?php
                             if (isset($_SESSION['member_username'])){
-                                echo '<li><a href="../members">My Account</a></li>';
-                                echo '<li><a href="./logout.php">Logout</a></li>';
+                                echo
+                                '<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"' . $_SESSION['member_username'] . ' <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="../members">Dashboard</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="./logout.php">Logout</a></li>
+                                    </ul>
+                                </li>';
+                                /*echo '<li><a href="../members">My Account</a></li>';
+                                echo '<li><a href="./logout.php">Logout</a></li>';*/
                             }
-                            if (isset($_SESSION['member_username'])){
-                                echo '<li><a href="../admin">My Account</a></li>';
-                                echo '<li><a href="./logout.php">Logout</a></li>';                            
+                            if (isset($_SESSION['admin_username'])){
+                                echo
+                                '<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' . $_SESSION['admin_username'] . ' <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="../admin">Admin Portal</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="./logout.php">Logout</a></li>
+                                    </ul>
+                                </li>';                                /*echo '<li><a href="../admin">My Account</a></li>';
+                                echo '<li><a href="./logout.php">Logout</a></li>';*/                            
                             }
                             else {
                                 echo '<li><a href="./">Log In</a></li>';
@@ -68,27 +85,23 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
-        <?php
-            include 'login.php';
-            
-            if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
-                // Reload page so that browser reads header injection up top to redirect to proper portal
-                echo '<body onload="setInterval(function() {window.location.reload();}, 3000);">';
-                
-                if (isset($_SESSION['member_username'])) {
-                    echo 
-                    "<div>
-                        You are now logged in. If this page doesn't refresh momentarily then click <a href='../members/'>here</a>.
-                    </div>";
+        <div class="body_content">
+            <?php
+                include 'login.php';
+
+                if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
+                    // Reload page so that browser reads header injection up top to redirect to proper portal
+                    /*echo '<body onload="setInterval(function() {window.location.reload();}, 2000);">';*/
+
+                    if (isset($_SESSION['member_username'])) {
+                        echo '<body onload="window.location.href = \'../members/\';">';
+                    }
+                    elseif (isset($_SESSION['admin_username'])) {
+                        echo '<body onload="window.location.href = \'../admin/\';">';
+                    }
                 }
-                elseif (isset($_SESSION['admin_username'])) {
-                    echo 
-                    "<div>
-                        You are now logged in. If this page doesn't refresh momentarily then click <a href='../admin/'>here</a>.
-                    </div>";
-                }
-            }
-        ?>
+            ?>
+        </div>
         <div class="panel panel-default">
             <div class="panel-footer">
                 <?php include ("../assets/virtual/footer.inc"); ?>
