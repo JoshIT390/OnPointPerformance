@@ -270,21 +270,27 @@
                                             </tr>";
                                     
                                     while($admin = array_shift($admins)){
+                                        $managementOptions;
+                                        
+                                        if ($admin[EMAIL] != $_SESSION['admin_username']) {
+                                            $managementOptions = 
+                                                "<form action='editadmin.php' method='post'>
+                                                    <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
+                                                    <input type='submit' class='btn btn-primary' value='Edit'>
+                                                </form>";
+                                        }
+                                        else {
+                                            $managementOptions = "<button type='button' class='btn btn-primary disabled'>Edit</button>";
+                                        }
+                                        
                                         echo 
                                             "<tr>
                                                 <td>" . $admin[FIRSTNAME] . "</td>
                                                 <td>" . $admin[LASTNAME] . "</td>
                                                 <td><a href='mailto:" . $admin[EMAIL] . "'>" . $admin[EMAIL] . "</a></td>
-                                                <td>
-                                                    <form action='viewAdmin.php' method='post'>
-                                                        <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
-                                                        <input type='submit' value='View'>
-                                                    </form>
-                                                    <form action='editAdmin.php' method='post'>
-                                                        <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
-                                                        <input type='submit' value='Edit'>
-                                                    </form>
-                                                </td>
+                                                <td>" . 
+                                                    $managementOptions . 
+                                                "</td>
                                             </tr>";
                                     }
                                     
