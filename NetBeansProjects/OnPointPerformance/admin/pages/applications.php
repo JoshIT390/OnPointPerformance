@@ -135,7 +135,74 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">View Applications</h1>
-						<p> Put stuff here </p>
+			<?php 
+                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                            define("DB_USER_NAME", "ad_victorium");
+                            define("DB_PASSWORD", "MT8AlJAM");
+                            define("DB_NAME", "onpoint_performance_center_lower");
+                            
+                            try{
+                                $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                // Exceptions fire when occur
+                                $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+                                $query = $connection->prepare('SELECT FIRSTNAME, LASTNAME, AGE, MILITARY_BG, LAW_EN_BG, COMP_ATHLETE_BG, CERTIFICATION FROM APPLICATIONS ORDER BY APP_ID asc');
+                                $query->execute();
+                            }
+                            catch(PDOException $e) {
+                                echo "<div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+            
+                                return FALSE;
+                            }
+                            
+                            $results = $query->fetchAll();
+
+                            printf("Returned %d row(s).", sizeof($results));
+                            echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Military</th><th>Law Enforcement</th><th>Competitive</th><th>Health Certification</th><th>Management</th></tr>";
+                                for ($count=0; $count<  sizeof($results); $count++) {
+                                    if ($results[$count]["MILITARY_BG"] == "0"){
+                                        $military = "No";
+                                    }else {
+                                        $military = "Yes";
+                                    }
+                                    if ($results[$count]["LAW_EN_BG"] == "0"){
+                                        $law = "No";
+                                    } else {
+                                        $law = "Yes";
+                                    }
+                                    if ($results[$count]["COMP_ATHLETE_BG"] == "0"){
+                                        $comp = "No";
+                                    } else {
+                                        $comp = "Yes";
+                                    }
+                                    if ($results[$count]["CERTIFICATION"] == "0"){
+                                        $health = "No";
+                                    } else {
+                                        $health = "Yes";
+                                    }
+                                    echo "<tr> "
+                                            . "<td>". $results[$count]["FIRSTNAME"]. "</td>"
+                                            . "<td>". $results[$count]["LASTNAME"]. "</td>"
+                                            . "<td>" . $results[$count]["AGE"] . "</td>"
+                                            . "<td>" . $military . "</td>"
+                                            . "<td>" . $law . "</td>"
+                                            . "<td>" . $comp . "</td>"
+                                            . "<td>" . $health . "</td>"
+                                            . "<td>"
+                                                . "<form action='viewApp.php' method='post'>"
+                                                    . "<input type='text' name='calendarID' value='" . $row["APP_ID"] . "' hidden>"
+                                                    . "<input type='submit' value='View'>"
+                                                . "</form>"
+                                                . "<form action='deleteApp.php' method='post'>"
+                                                    . "<input type='text' name='calendarID' value='" . $row["APP_ID"] . "' hidden> "
+                                                    . "<input type='submit' value='Delete'>"
+                                                . "</form></td>"
+                                        . "</tr>";
+                                }
+                            echo '</table>';
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

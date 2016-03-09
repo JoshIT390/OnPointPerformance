@@ -72,12 +72,11 @@ and open the template in the editor.
             checkbox and comment box
         strength background
             checkbox and comment box
-        where do you train
-            dropdown
-        days per week
-            dropdpwn
         degree/cert physical therapy's
             checkbox and comment box
+        where do you train
+        How often do you train
+        what time do you train
         comment box for additional
         -->
         
@@ -85,22 +84,29 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-lg-3"></div>
           <div class="col-lg-6">
+              <?php 
+                if ($_GET["success"] == true){
+                    echo '<div class="alert alert-dismissible alert-success">
+                            <strong>Success!</strong> Your application has been submitted.
+                        </div>';
+                }
+              ?>
             <div class="well bs-component">
-            <form class="form-horizontal">
+                <form class="form-horizontal" action="submitApp.php" method="post">
                 <fieldset>
                 <legend>Application for membership</legend>
                 <!-- FIRST NAME -->
                 <div class="form-group">
                     <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
                     <div class="col-lg-8">
-                        <input type="text" name="firstName" class="form-control" id="inputFirstName" placeholder="First Name">
+                        <input type="text" name="firstName" class="form-control" id="inputFirstName" placeholder="First Name" required>
                     </div>
                 </div>
                 <!-- LAST NAME -->
                 <div class="form-group">
                     <label for="inputLastName" class="col-lg-2 control-label">Last Name</label>
                     <div class="col-lg-8">
-                        <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="Last Name">
+                        <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="Last Name" required>
                     </div>
                 </div>
                 <!-- GENDER -->
@@ -125,21 +131,21 @@ and open the template in the editor.
                 <div class="form-group">
                     <label for="inputAge" class="col-lg-2 control-label">Age</label>
                     <div class="col-lg-8">
-                        <input type="text" name="age" class="form-control" id="inputAge" placeholder="">
+                        <input type="text" name="age" class="form-control" id="inputAge" placeholder="" required>
                     </div>
                 </div>
                 <!-- Phone Number -->
                 <div class="form-group">
                     <label for="inputPhone" class="col-lg-2 control-label">Phone Number</label>
                     <div class="col-lg-8">
-                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="555-555-5555">
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="555-555-5555" required>
                     </div>
                 </div>
                 <!-- Email -->
                 <div class="form-group">
                     <label for="inputEmail" class="col-lg-2 control-label">E-mail</label>
                     <div class="col-lg-8">
-                        <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@example.com">
+                        <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@example.com" required>
                     </div>
                 </div>
                 <!-- Military Background -->
@@ -175,20 +181,6 @@ and open the template in the editor.
                         <textarea class="form-control" rows="3" id="inputStrength" name="strengthBG"></textarea>
                     </div>
                 </div>
-                <!-- Current Training-->
-                <div class="form-group">
-                    <label for="select" class="col-lg-2 control-label">Current</label>
-                    <div class="col-lg-8">
-                        <label>Where do you currently train?</label>
-                        <select multiple="" name="currentTraining" class="form-control">
-                            <option value="Chain">Chain Gym</option>
-                            <option value="Private">Private Gym</option>
-                            <option value="Crossfit">Crossfit Gym</option>
-                            <option value="Home">Home</option>
-                            <option value="Military/Police">Military/Police Facility</option>
-                        </select>
-                    </div>
-                </div>
                 <!-- Health Background -->
                 <div class="form-group">
                     <label for="hasDegree" class="col-lg-2 control-label">Health Knowledge</label>
@@ -200,13 +192,56 @@ and open the template in the editor.
                         <textarea class="form-control" rows="3" id="inputDegree" name="healthBG"></textarea>
                     </div>
                 </div>
-                
+                <!-- Current Training-->
+                <div class="form-group">
+                    <label for="currentTraining" class="col-lg-2 control-label">Current Training</label>
+                    <div class="col-lg-8">
+                        <label>Where do you currently train?</label>
+                        <select multiple="" name="currentTraining" class="form-control" required>
+                            <option value="Chain">Chain Gym</option>
+                            <option value="Private">Private Gym</option>
+                            <option value="Crossfit">Crossfit Gym</option>
+                            <option value="Home">Home</option>
+                            <option value="Military/Police">Military/Police Facility</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Training Days -->
+                <div class="form-group">
+                    <label for="trainDays" class="col-lg-2 control-label">How often do you train?</label>
+                    <div class="col-lg-8">
+                        <label>How many days do you usually train per week?</label>
+                        <select multiple="" name="trainDays" class="form-control" required>
+                            <option value="1-2">1-2</option>
+                            <option value="3-4">3-4</option>
+                            <option value="5-6">5-6</option>
+                            <option value="Everyday">Everyday</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Training Hours -->
+                <div class="form-group">
+                    <label for="trainHours" class="col-lg-2 control-label">What time of the day do you train?</label>
+                    <div class="col-lg-8">
+                        <label>What time of day do you typically train</label>
+                        <select multiple="" name="trainHours" class="form-control" required>
+                            <option value="Morning">Morning (4am-10am)</option>
+                            <option value="Midday">Midday (10am-4pm)</option>
+                            <option value="Evening">Evening (4pm-10pm)</option>
+                            <option value="Night">Night (10pm-4am)</option>
+                        </select>
+                    </div>
+                </div>
                 <!-- Additional Information -->
                 <div class="form-group">
                     <label for="textArea" class="col-lg-2 control-label">Additional Info</label>
                     <div class="col-lg-8">
                         <textarea class="form-control" rows="3" id="textArea" name="additional"></textarea>
                     </div>
+                </div>
+                
+                <div>
+                    <input type='submit' value='Submit' class='btn btn-default'>
                 </div>
             </form>  
         </div>
