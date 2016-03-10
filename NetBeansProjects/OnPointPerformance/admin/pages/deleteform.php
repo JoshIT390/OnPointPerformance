@@ -138,33 +138,9 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Forms</h1>
 						<p>
+                                                <h3><a href="addform.php">Add a Form</a></h3>
                                                     <?php
-                                                    $target_dir = "../../forms/";
-                                                    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                                                    $uploadOk = 1;
-                                                    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-                                                    // Check if file already exists
-                                                    if (file_exists($target_file)) {
-                                                        echo "Sorry, file already exists.";
-                                                        $uploadOk = 0;
-                                                    }
-                                                    // Allow certain file formats
-                                                    if($imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx") {
-                                                        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                                                        $uploadOk = 0;
-                                                    }
-                                                    // Check if $uploadOk is set to 0 by an error
-                                                    if ($uploadOk == 0) {
-                                                        echo "Sorry, your file was not uploaded.";
-                                                    // if everything is ok, try to upload file
-                                                    } else {
-                                                        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                                                            echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='formsm.php'>Forms Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
-                                                        } else {
-                                                            echo "Sorry, there was an error uploading your file.";
-                                                        }
-                                                    }
-                                                        $filename = $_POST['filename'];
+                                                        $id = $_POST['random'];
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
@@ -177,9 +153,37 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-                                                        $query = "INSERT INTO FORMS (NAME, PDF) VALUES ('$filename', '". basename( $_FILES["fileToUpload"]["name"]) ."');";
-							$result = mysqli_query($conn, $query );
-                                                    ?>
+							$result = mysqli_query($conn, "SELECT PDF, NAME FROM FORMS WHERE FORM_ID='$id';");
+                                                        while($row = $result->fetch_assoc()) {
+                                                            $file = "../../forms/" . $row["PDF"];
+                                                            $name = $row["NAME"];
+                                                        }
+                                                        
+                                                        if (!unlink($file))
+                                                        {
+                                                        echo ("Error deleting $name");
+                                                        }
+                                                      else
+                                                        {
+                                                        echo ("Deleted $name");
+                                                        }
+                                                        echo "</br></br>";
+                                                        $result2 = mysqli_query($conn, "DELETE FROM FORMS WHERE FORM_ID='$id';");
+                                                        
+                                                        $result3 = mysqli_query($conn, "SELECT * FROM FORMS;");
+							printf("Returned %d row(s).", $result->num_rows);
+							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
+							if ($result3->num_rows > 0) {
+								// output data of each row
+								while($row = $result3->fetch_assoc()) {
+								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["PDF"]. "</td><td><form action='deleteform.php' method='post'><input type='text' name='random' value='" . $row["FORM_ID"] . "' hidden> <input type='submit' value='Delete'></form></tr>";
+								}
+							}
+                                                        echo "</table>";
+							$result3->close();
+                                                        
+                                                        
+							?>
                                                 </p>
                     </div>
                     <!-- /.col-lg-12 -->
