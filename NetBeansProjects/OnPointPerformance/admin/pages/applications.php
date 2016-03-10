@@ -137,6 +137,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">View Applications</h1>
+                        
 			<?php 
                             define("DB_HOST_NAME", "mysql.dnguyen94.com");
                             define("DB_USER_NAME", "ad_victorium");
@@ -160,6 +161,10 @@
                             }
                             
                             $results = $query->fetchAll();
+                            //print success message for app deletion
+                            if ($_GET["success"] == true){
+                                echo '<strong> The application has been deleted.</strong><br>';
+                            }
 
                             printf("Returned %d row(s).", sizeof($results));
                             echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Military</th><th>Law Enforcement</th><th>Competitive</th><th>Health Certification</th><th>Management</th></tr>";

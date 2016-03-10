@@ -202,7 +202,7 @@
                             }else{
                                 $health = "None";
                             }
-                            
+
                             echo "<table>"
                                     . "<tr><td><strong>First Name</strong></td><td>" . $results[1] . "</td></tr>"
                                     . "<tr><td><strong>Last Name</strong></td><td>" . $results[2] . "</td></tr>"
@@ -219,8 +219,8 @@
                                     . "<tr><td><strong>Training Time</strong></td><td>" . $results[15] . "</td></tr>"
                                     . "<tr><td><strong>Additional Information</strong></td><td>" . $results[18] . "</td></tr>"
                                     . "<tr><td><strong>Management</strong></td><td>"
-                                        . "<form action='deleteApplication.php'>"
-                                            . "<input type='hidden' name='appID' value='<?php echo $appID; ?>'>"
+                                        . "<form action='deleteApplication.php' method='post'>"
+                                            . "<input type='hidden' name='appID' value='" . $appID . "'>"
                                             . "<input class='btn-default' type='submit' value='Delete'>"
                                         . "</form>"
                                     . "</td></tr>"
@@ -241,10 +241,6 @@
                                 <input type="submit" value="submit">
                             </div>
                         </form>-->
-                            <form action="deleteApplication.php">
-                                <input type="hidden" name="appID" value="<?php echo $appID; ?>"
-                                <input class="btn-default" type="submit" value="Delete">
-                            </form>
                         </div>
                     </div>
                     <!-- /.col-lg-12 -->
