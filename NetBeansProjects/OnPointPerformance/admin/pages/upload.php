@@ -150,7 +150,7 @@
                                                     }
                                                     // Allow certain file formats
                                                     if($imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx") {
-                                                        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                                                        echo "Sorry, only PDF, DOC, & DOCX files are allowed.";
                                                         $uploadOk = 0;
                                                     }
                                                     // Check if $uploadOk is set to 0 by an error
@@ -160,10 +160,6 @@
                                                     } else {
                                                         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                                                             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='formsm.php'>Forms Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
-                                                        } else {
-                                                            echo "Sorry, there was an error uploading your file.";
-                                                        }
-                                                    }
                                                         $filename = $_POST['filename'];
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
@@ -179,6 +175,10 @@
 							}
                                                         $query = "INSERT INTO FORMS (NAME, PDF) VALUES ('$filename', '". basename( $_FILES["fileToUpload"]["name"]) ."');";
 							$result = mysqli_query($conn, $query );
+                                                        } else {
+                                                            echo " Sorry, there was an error uploading your file.";
+                                                        }
+                                                    }
                                                     ?>
                                                 </p>
                     </div>

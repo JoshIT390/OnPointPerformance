@@ -47,7 +47,6 @@ and open the template in the editor.
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a><span class="sr-only">(current)</span>Home</a></li>
-                        <li><a href="./announcements/">Announcements</a></li>
                         <li><a href="./about/">About Us</a></li>
                         <li><a href="./apply/">Apply</a></li>
                         <li><a href="./events/">Events</a></li>
@@ -105,42 +104,8 @@ and open the template in the editor.
         <!-- END FLEXSLIDER -->
         
         <!-- ANNOUNCEMENTS -->
-        <div class="container" style="width: auto;">
-            <div class="row-fluid" style="margin-bottom: 2em;">
-                <div class="col-lg-3" style="text-align: center;">
-                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
-                </div>
-                <div class="col-lg-9"style="text-align: center;">
-                    <div class="jumbotron" style="height: 300px;">
-                        <h1>Announcement 1</h1>
-                        <p>Announcement text will go here.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row-fluid" style="margin-bottom: 2em;">
-                <div class="col-lg-3"style="text-align: center;">
-                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
-                </div>
-                <div class="col-lg-9"style="text-align: center;">
-                    <div class="jumbotron" style="height: 300px;">
-                        <h1>Announcement 2</h1>
-                        <p>Announcement text will go here.</p>
-                    </div>
-                </div>
-            </div>
-                
-            <div class="row-fluid">
-                <div class="col-lg-3"style="text-align: center;">
-                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
-                </div>
-                <div class="col-lg-9"style="text-align: center;">
-                    <div class="jumbotron" style="height: 300px;">
-                        <h1>Announcement 3</h1>
-                        <p>Announcement text will go here.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="container-fluid">
+            <?php include 'announcements/announcements.php';?>
         </div>
         <!-- END ANNOUNCEMENTS -->
         

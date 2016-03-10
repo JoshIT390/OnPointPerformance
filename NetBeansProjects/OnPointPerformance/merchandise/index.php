@@ -27,13 +27,12 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../">On Point Performance Center</a>
+                    <a href="../"  <img src="../assets/images/Logo.png" style="width:220px; height:70px;float: left;"> </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="../">Home</a></li>
-                        <li><a href="../announcements/">Announcements</a></li>
                         <li><a href="../about/">About Us</a></li>
                         <li><a href="../apply/">Apply</a></li>
                         <li><a href="../events/">Events</a></li>
@@ -60,13 +59,11 @@ and open the template in the editor.
         </nav>
        
         <div class="container-fluid">
+            <img src="../assets/images/Logo.png" style="width:220px; height:70px;">
         <div class="col-lg-9">
         <div class="jumbotron">
   <h1>Jumbotron</h1>
-  <div class='col-lg-3'>
-                        
-     <img src=" ../assets/images/ph_300x300.gif " alt=" placeholder image " >
-             </div>
+
   <p>Merchandise Item 1</p>
   
 </div>
