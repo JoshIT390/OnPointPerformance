@@ -136,19 +136,21 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">View Applications</h1>
+                        <h1 class="page-header">View Application</h1>
 			<?php 
                             define("DB_HOST_NAME", "mysql.dnguyen94.com");
                             define("DB_USER_NAME", "ad_victorium");
                             define("DB_PASSWORD", "MT8AlJAM");
                             define("DB_NAME", "onpoint_performance_center_lower");
                             
+                            $appID = $_POST["appID"];
+                            
                             try{
                                 $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
                                 // Exceptions fire when occur
                                 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-                                $query = $connection->prepare('SELECT FIRSTNAME, LASTNAME, AGE, MILITARY_BG, LAW_EN_BG, COMP_ATHLETE_BG, CERTIFICATION, APP_ID FROM APPLICATIONS ORDER BY APP_ID asc');
+                                $query = $connection->prepare('SELECT * FROM APPLICATIONS WHERE APP_ID=' . $appID);
                                 $query->execute();
                             }
                             catch(PDOException $e) {
@@ -158,50 +160,92 @@
             
                                 return FALSE;
                             }
+                            $results = $query->fetch();
+                            /*
+                             * ["APP_ID"]=>[0]
+                             * ["FIRSTNAME"]=>[1]
+                             * ["LASTNAME"]=>[2]
+                             * ["PHONE"]=>[3]
+                             * ["EMAIL"]=>[4]
+                             * ["AGE"]=>[5]
+                             * ["GENDER"]=>[6]
+                             * ["MILITARY_BG"]=>[7]
+                             * ["MILITARY_BG_COMMENTS"]=>[8]
+                             * ["LAW_EN_BG"]=>[9]
+                             * ["LAW_EN_BG_COMMENTS"]=>[10]
+                             * ["COMP_ATHLETE_BG"]=>[11]
+                             * ["COMP_ATHLETE_BG_COMMENTS"]=>[12]
+                             * ["CURRENTLY_TRAIN"]=>[13]
+                             * ["DAYS_PER_WEEK_TRAINING"]=>[14]
+                             * ["TRAINING_TIME"]=>[15]
+                             * ["CERTIFICATION"]=>[16]
+                             * ["CERTIFICATION_COMMENTS"]=>[17]
+                             * ["ADDITIONAL_COMMENTS"]=>[18]
+                            */
+                            if ($results[7] == "1"){
+                                $military = $results[8];
+                            }else {
+                                $military = "None";
+                            }
+                            if ($results[9] == "1"){
+                                $law = $results[10];
+                            }else{
+                                $law = "None";
+                            }
+                            if ($results[11] == "1"){
+                                $strength = $results[12];
+                            }else{
+                                $strength = "None";
+                            }
+                            if ($results[16] == "1"){
+                                $health = $results[17];
+                            }else{
+                                $health = "None";
+                            }
                             
-                            $results = $query->fetchAll();
-
-                            printf("Returned %d row(s).", sizeof($results));
-                            echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Military</th><th>Law Enforcement</th><th>Competitive</th><th>Health Certification</th><th>Management</th></tr>";
-                                for ($count=0; $count<  sizeof($results); $count++) {
-                                    if ($results[$count]["MILITARY_BG"] == "0"){
-                                        $military = "No";
-                                    }else {
-                                        $military = "Yes";
-                                    }
-                                    if ($results[$count]["LAW_EN_BG"] == "0"){
-                                        $law = "No";
-                                    } else {
-                                        $law = "Yes";
-                                    }
-                                    if ($results[$count]["COMP_ATHLETE_BG"] == "0"){
-                                        $comp = "No";
-                                    } else {
-                                        $comp = "Yes";
-                                    }
-                                    if ($results[$count]["CERTIFICATION"] == "0"){
-                                        $health = "No";
-                                    } else {
-                                        $health = "Yes";
-                                    }
-                                    echo "<tr> "
-                                            . "<td>". $results[$count]["FIRSTNAME"]. "</td>"
-                                            . "<td>". $results[$count]["LASTNAME"]. "</td>"
-                                            . "<td>" . $results[$count]["AGE"] . "</td>"
-                                            . "<td>" . $military . "</td>"
-                                            . "<td>" . $law . "</td>"
-                                            . "<td>" . $comp . "</td>"
-                                            . "<td>" . $health . "</td>"
-                                            . "<td>"
-                                                . "<form action='viewApplication.php' method='post'>"
-                                                    . "<input type='text' name='appID' value='" . $results[$count]["APP_ID"] . "' hidden>"
-                                                    . "<input type='submit' value='View'>"
-                                                . "</form>"
-                                                . "</td>"
-                                        . "</tr>";
-                                }
-                            echo '</table>';
+                            echo "<table>"
+                                    . "<tr><td><strong>First Name</strong></td><td>" . $results[1] . "</td></tr>"
+                                    . "<tr><td><strong>Last Name</strong></td><td>" . $results[2] . "</td></tr>"
+                                    . "<tr><td><strong>Age</strong></td><td>" . $results[5] . "</td></tr>"
+                                    . "<tr><td><strong>Gender</strong></td><td>" . $results[6] . "</td></tr>"
+                                    . "<tr><td><strong>Phone</strong></td><td>" . $results[3] . "</td></tr>"
+                                    . "<tr><td><strong>E-mail</strong></td><td>" . $results[4] . "</td></tr>"
+                                    . "<tr><td><strong>Military</strong></td><td>" . $military . "</td></tr>"
+                                    . "<tr><td><strong>Law Enforcement</strong></td><td>" . $law . "</td></tr>"
+                                    . "<tr><td><strong>Competitive</strong></td><td>" . $strength . "</td></tr>"
+                                    . "<tr><td><strong>Health Certification</strong></td><td>" . $health . "</td></tr>"
+                                    . "<tr><td><strong>Current Gym</strong></td><td>" . $results[13] . "</td></tr>"
+                                    . "<tr><td><strong>Training Days (per week)</strong></td><td>" . $results[14] . "</td></tr>"
+                                    . "<tr><td><strong>Training Time</strong></td><td>" . $results[15] . "</td></tr>"
+                                    . "<tr><td><strong>Additional Information</strong></td><td>" . $results[18] . "</td></tr>"
+                                    . "<tr><td><strong>Management</strong></td><td>"
+                                        . "<form action='deleteApplication.php'>"
+                                            . "<input type='hidden' name='appID' value='<?php echo $appID; ?>'>"
+                                            . "<input class='btn-default' type='submit' value='Delete'>"
+                                        . "</form>"
+                                    . "</td></tr>"
+                                . "</table>";
+                            
+                            
                         ?>
+                        <div class="container" style="text-align: center;">
+                        <!--<form action="appComment.php" method="post">
+                            <div class="row" style="text-align: center;">
+                                <label for="adminComments"><h3>Add/Edit Admin Comments:</h3></label>
+                            </div>
+                            <div class="row">
+                                <textarea name="adminComments" rows="4"><?php echo $results[19];?></textarea>
+                            </div>
+                            <div class="row" style="text-align: center;">
+                                <input type="hidden" name="appID" value="<?php echo $appID; ?>">
+                                <input type="submit" value="submit">
+                            </div>
+                        </form>-->
+                            <form action="deleteApplication.php">
+                                <input type="hidden" name="appID" value="<?php echo $appID; ?>"
+                                <input class="btn-default" type="submit" value="Delete">
+                            </form>
+                        </div>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
