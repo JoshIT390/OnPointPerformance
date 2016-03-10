@@ -165,7 +165,8 @@
                             if ($_GET["success"] == true){
                                 echo '<strong> The application has been deleted.</strong><br>';
                             }
-
+                            
+                            if (sizeof($results) > 0){
                             printf("Returned %d row(s).", sizeof($results));
                             echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Age</th><th>Military</th><th>Law Enforcement</th><th>Competitive</th><th>Health Certification</th><th>Management</th></tr>";
                                 for ($count=0; $count<  sizeof($results); $count++) {
@@ -206,6 +207,9 @@
                                         . "</tr>";
                                 }
                             echo '</table>';
+                            }else {
+                                echo '<h3>No applications to show.</h3>';
+                            }
                         ?>
                     </div>
                     <!-- /.col-lg-12 -->
