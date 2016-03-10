@@ -138,7 +138,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Admin Management</h1>
                         <p>
-                            <h3><a href="addAdmin.php">Add an Admin</a></h3>
+                            <h3><a href="addadmin.php">Add an Admin</a></h3>
                             <h3> Search for an Admin:</h3>
                             <form action="adminslist.php" method="post">
                                 First Name: <input type="text" name="search_fname">
@@ -154,154 +154,194 @@
                                 define("DB_NAME", "onpoint_performance_center_lower");
                                 define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
                                 
-                                try {
-                                    $adminsQuery;
-                                    
-                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
-                                    // Exceptions fire when occur
-                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                    // Default view
-                                    if (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->query('SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID FROM ' . USER_CREDENTIAL_TABLE);
-                                    }
-                                    // First name search
-                                    elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE FIRSTNAME LIKE :searchedFirstName');
-                                        
-                                        $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
-                                        $adminsQuery->bindParam(':searchedFirstName', $searchedFirstName);
-                                        $adminsQuery->execute();
-                                    }
-                                    // Last name search
-                                    elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE LASTNAME LIKE :searchedLastName');
-                                        
-                                        $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
-                                        $adminsQuery->bindParam(':searchedLastName', $searchedLastName);
-                                        $adminsQuery->execute();
-                                    }
-                                    // Email search
-                                    elseif (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE EMAIL LIKE :searchedEmail');
-                                        
-                                        $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
-                                        $adminsQuery->bindParam(':searchedEmail', $searchedEmail);
-                                        $adminsQuery->execute();
-                                    }
-                                    // First and last name search
-                                    elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName');
-                                        
-                                        $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
-                                        $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
-                                        $adminsQuery->execute(array(
-                                            ':searchedFirstName' => $searchedFirstName,
-                                            ':searchedLastName' => $searchedLastName
-                                        ));
-                                    }
-                                    // First name and email search
-                                    elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE FIRSTNAME LIKE :searchedFirstName AND EMAIL LIKE :searchedEmail');
-                                        
-                                        $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
-                                        $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
-                                        $adminsQuery->execute(array(
-                                            ':searchedFirstName' => $searchedFirstName,
-                                            ':searchedEmail' => $searchedEmail
-                                        ));
-                                    }
-                                    // Last name and email search
-                                    elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
-                                        
-                                        $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
-                                        $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
-                                        $adminsQuery->execute(array(
-                                            ':searchedLastName' => $searchedLastName,
-                                            ':searchedEmail' => $searchedEmail
-                                        ));
-                                    }
-                                    // First name, last name, and email search
-                                    elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
-                                        $adminsQuery = $connection->prepare(
-                                            'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . '
-                                            WHERE FIRSTNAME LIKE :searchedLastName AND LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
-                                        
-                                        $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
-                                        $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
-                                        $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
-                                        $adminsQuery->execute(array(
-                                            ':searchedFirstName' => $searchedFirstName,
-                                            ':searchedLastName' => $searchedLastName,
-                                            ':searchedEmail' => $searchedEmail
-                                        ));
-                                    }
-                                    
-                                    $admins = $adminsQuery->fetchAll(PDO::FETCH_ASSOC);
-                                    
-                                    echo 
-                                        "<br /><br /><div>Returned " . count($admins) . " row(s)</div>
-                                        <table style='width:100%'>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Email Address</th>
-                                                <th>Management</th>
-                                            </tr>";
-                                    
-                                    while($admin = array_shift($admins)){
-                                        $managementOptions;
-                                        
-                                        if ($admin[EMAIL] != $_SESSION['admin_username']) {
-                                            $managementOptions = 
-                                                "<form action='editadmin.php' method='post'>
-                                                    <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
-                                                    <input type='submit' class='btn btn-primary' value='Edit'>
-                                                </form>";
-                                        }
-                                        else {
-                                            $managementOptions = "<button type='button' class='btn btn-primary disabled'>Edit</button>";
-                                        }
-                                        
-                                        echo 
-                                            "<tr>
-                                                <td>" . $admin[FIRSTNAME] . "</td>
-                                                <td>" . $admin[LASTNAME] . "</td>
-                                                <td><a href='mailto:" . $admin[EMAIL] . "'>" . $admin[EMAIL] . "</a></td>
-                                                <td>" . 
-                                                    $managementOptions . 
-                                                "</td>
-                                            </tr>";
-                                    }
-                                    
-                                    echo "</table>";
+                                if (isset($_POST["deleteAdminID"])) {
+                                    deleteAdmin($_POST["deleteAdminID"]);
+                                    generatePage();
                                 }
-                                // Script halts and throws error if exception is caught
-                                catch(PDOException $e) {
-                                    echo "
-                                    <div>
-                                        Error: " . $e->getMessage() . 
-                                    "</div>";
+                                else {
+                                    generatePage();
+                                }
+                                
+                                function deleteAdmin($adminID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $accountInformationQuery = $connection->query('
+                                            DELETE FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                            WHERE ADMIN_ID = '. $connection->quote($adminID)
+                                        );
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return TRUE;
+                                }
+                                
+                                function generatePage() {
+                                    try {
+                                        $adminsQuery;
+
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        // Default view
+                                        if (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->query('SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID FROM ' . USER_CREDENTIAL_TABLE);
+                                        }
+                                        // First name search
+                                        elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $adminsQuery->bindParam(':searchedFirstName', $searchedFirstName);
+                                            $adminsQuery->execute();
+                                        }
+                                        // Last name search
+                                        elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE LASTNAME LIKE :searchedLastName');
+
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $adminsQuery->bindParam(':searchedLastName', $searchedLastName);
+                                            $adminsQuery->execute();
+                                        }
+                                        // Email search
+                                        elseif (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE EMAIL LIKE :searchedEmail');
+
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $adminsQuery->bindParam(':searchedEmail', $searchedEmail);
+                                            $adminsQuery->execute();
+                                        }
+                                        // First and last name search
+                                        elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $adminsQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedLastName' => $searchedLastName
+                                            ));
+                                        }
+                                        // First name and email search
+                                        elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND EMAIL LIKE :searchedEmail');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $adminsQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+                                        // Last name and email search
+                                        elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
+
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $adminsQuery->execute(array(
+                                                ':searchedLastName' => $searchedLastName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+                                        // First name, last name, and email search
+                                        elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $adminsQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedLastName AND LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $adminsQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedLastName' => $searchedLastName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+
+                                        $admins = $adminsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo 
+                                            "<br /><br /><div>Returned " . count($admins) . " row(s)</div>
+                                            <table style='width:100%'>
+                                                <tr>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email Address</th>
+                                                    <th>Management</th>
+                                                </tr>";
+
+                                        while($admin = array_shift($admins)){
+                                            $managementOptions;
+
+                                            if ($admin[EMAIL] != $_SESSION['admin_username']) {
+                                                $managementOptions = 
+                                                    "<form action='editadmin.php' method='post'>
+                                                        <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
+                                                        <input type='submit' class='btn btn-primary' value='Edit'>
+                                                    </form>
+                                                    <form action='adminslist.php' method='post'>
+                                                        <input type='text' name='deleteAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
+                                                        <input type='submit' class='btn btn-warning' value='Delete'>
+                                                    </form>";
+                                            }
+                                            else {
+                                                $managementOptions = 
+                                                    "<button type='button' class='btn btn-primary disabled'>Edit</button>
+                                                    <button type='button' class='btn btn-warning disabled'>Delete</button>";
+                                            }
+
+                                            echo 
+                                                "<tr>
+                                                    <td>" . $admin[FIRSTNAME] . "</td>
+                                                    <td>" . $admin[LASTNAME] . "</td>
+                                                    <td><a href='mailto:" . $admin[EMAIL] . "'>" . $admin[EMAIL] . "</a></td>
+                                                    <td>" . 
+                                                        $managementOptions . 
+                                                    "</td>
+                                                </tr>";
+                                        }
+
+                                        echo "</table>";
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                    }
                                 }
                             ?> 
                         </p>
