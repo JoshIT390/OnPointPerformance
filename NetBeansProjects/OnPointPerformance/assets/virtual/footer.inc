@@ -1,1 +1,4 @@
-<center><table style='width:75%'><tr><td>Open to members only, if you are interested in becoming a member please apply on our <a hidden="apply/index.php">Application Page</a></td><td>567-B North Cameron Street, Winchester, VA 22601</td><td><a href="https://dnguyen94.com/OnPointPerformance/contact/">Contact Us</a></td></tr></center>
+<div class="container">
+    &copy; 2016 On Point Performance Center. All rights reserved.
+</div>
+
