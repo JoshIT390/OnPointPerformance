@@ -27,7 +27,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../">On Point Performance Center</a>
+                   <a href="../"> <img src="../assets/images/Logo.png" style="width:220px; height:50px;float: left;"> </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,6 +55,7 @@ and open the template in the editor.
                         ?>
                     </ul>
                 </div>
+                <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
             </div>
         </nav>
         
