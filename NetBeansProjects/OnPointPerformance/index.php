@@ -75,25 +75,25 @@ and open the template in the editor.
         <!-- END NAVBAR -->
         
         <!-- FLEXSLIDER -->
-        <div class="container-fluid">
+        <div class="container">
             <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
-                <ul class="slides" style="width:900px; height:auto; display:block; margin-left:auto; margin-right:auto;">
+                <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
                     <li>
-                        <img src="./assets//images/slide1.jpg" style="height:585px;" />
+                        <img src="./assets//images/slide1.jpg" style="height:auto;" />
                         <div class="flex-caption">
                             <h1>Dual Purpose Gym</h1>
                             <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
                         </div>
                     </li>
                     <li>
-                        <img src="./assets/images/slide2.jpg" style="height:585px;"/>
+                        <img src="./assets/images/slide2.jpg" style="height:auto;"/>
                         <div class="flex-caption">
                             <h1>Strength Training</h1>
                             <h4>Our strength training section has all the equipment you needed to get stronger</h4>
                         </div>
                     </li>
                     <li>
-                        <img src="./assets/images/slide3.jpg" style="height:585px;"/>
+                        <img src="./assets/images/slide3.jpg" style="height:auto;"/>
                         <div class="flex-caption">
                             <h1>Tactical Training</h1>
                             <h4>Our tactical section is set up for practicing military and police routines</h4>
