@@ -33,7 +33,7 @@ and open the template in the editor.
     <body>
         <!-- NAVBAR -->
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -41,12 +41,13 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand">On Point Performance Center</a>
+                    <a href="./"> <img src="./assets/images/Logo.png" style="width:220px; height:50px;float: left;"> </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a><span class="sr-only">(current)</span>Home</a></li>
+                
                         <li><a href="./about/">About Us</a></li>
                         <li><a href="./apply/">Apply</a></li>
                         <li><a href="./events/">Events</a></li>
@@ -75,24 +76,24 @@ and open the template in the editor.
         
         <!-- FLEXSLIDER -->
         <div class="container-fluid">
-            <div class="flexslider">
-                <ul class="slides">
+            <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
+                <ul class="slides" style="width:900px; height:auto; display:block; margin-left:auto; margin-right:auto;">
                     <li>
-                        <img src="./assets//images/slide1.jpg" />
+                        <img src="./assets//images/slide1.jpg" style="height:585px;" />
                         <div class="flex-caption">
                             <h1>Dual Purpose Gym</h1>
                             <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
                         </div>
                     </li>
                     <li>
-                        <img src="./assets/images/slide2.jpg" />
+                        <img src="./assets/images/slide2.jpg" style="height:585px;"/>
                         <div class="flex-caption">
                             <h1>Strength Training</h1>
                             <h4>Our strength training section has all the equipment you needed to get stronger</h4>
                         </div>
                     </li>
                     <li>
-                        <img src="./assets/images/slide3.jpg" />
+                        <img src="./assets/images/slide3.jpg" style="height:585px;"/>
                         <div class="flex-caption">
                             <h1>Tactical Training</h1>
                             <h4>Our tactical section is set up for practicing military and police routines</h4>
@@ -103,9 +104,47 @@ and open the template in the editor.
         </div>
         <!-- END FLEXSLIDER -->
         
-        <!-- ANNOUNCEMENTS -->
-        <div class="container-fluid">
-            <?php include 'announcements/announcements.php';?>
+        <!-- ANNOUNCEMENTS 
+        <div class="container" style="width: auto;">
+            <div class="row-fluid" style="margin-bottom: 2em;">
+                <div class="col-lg-3" style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 1</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row-fluid" style="margin-bottom: 2em;">
+                <div class="col-lg-3"style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 2</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="row-fluid">
+                <div class="col-lg-3"style="text-align: center;">
+                    <img src="./assets/images/ph_300x300.gif" alt="placeholder">
+                </div>
+                <div class="col-lg-9"style="text-align: center;">
+                    <div class="jumbotron" style="height: 300px;">
+                        <h1>Announcement 3</h1>
+                        <p>Announcement text will go here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		-->
+		 <div class="container-fluid">
+            <?php include 'announcements.php';?>
         </div>
         <!-- END ANNOUNCEMENTS -->
         
