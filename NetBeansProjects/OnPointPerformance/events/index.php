@@ -16,6 +16,17 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Events</title>
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
+        
+        <!-- FLEXSLIDER IMPORTS -->
+        <link rel="stylesheet" href="../flexslider.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="../jquery.flexslider.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(window).load(function() {
+                $('.flexslider').flexslider();
+            });
+        </script>
+        <!-- END FLEXSLIDER IMPORTS -->
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -58,13 +69,30 @@ and open the template in the editor.
             </div>
         </nav>
         
+        <!-- FLEXSLIDER -->
         <div class="container">
-            <div class="jumbotron" style="text-align: center;">
+            <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
+                <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
+                    <li>
+                        <img src="../assets/images/eventsImage.jpg" style="height:auto;" />
+                        <div class="flex-caption">
+                            <h1>Upcoming Events</h1>
+                            <h4>Come Join Us for these special events.</h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END FLEXSLIDER -->
+        
+        
+        <div class="container">
+        <!--<div class="jumbotron" style="text-align: center;">
                 <h1>Upcoming Events</h1>
                 <p>Come join us.</p>
             </div>
+        -->
             <?php include 'events.php'; ?>
-            
         </div>
         
         <div class="panel panel-default">
