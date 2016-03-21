@@ -60,7 +60,7 @@ and open the template in the editor.
         </nav>
        
         <div class="container-fluid">
-            <img src="../assets/images/Logo.png" style="width:220px; height:70px;">
+            
         <div class="col-lg-9">
         <div class="jumbotron">
   <h1>Jumbotron</h1>
