@@ -70,7 +70,7 @@ and open the template in the editor.
                         ?>
                     </ul>
                 </div>
- <a href="./"> <img src="./assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>               
+ <a> <img src="./assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>               
             </div>
         </nav>
         <!-- END NAVBAR -->
