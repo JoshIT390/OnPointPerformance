@@ -7270,3 +7270,24 @@ a.list-group-item-danger.active:focus {
 .panel-info .panel-heading {
   border-color: #000;
 }
+
+
+/*Custom CSS*/
+.jumbotron-events {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #1c1e22;
+    width: 100%;
+    height: 100%;
+    background-image: url('')!important;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #33373D;
+}

@@ -29,7 +29,7 @@ and open the template in the editor.
     </head>
     <body>
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -37,7 +37,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">On Point Performance Center</a>
+                    <a href="../"> <img src="../assets/images/Logo.png" style="width:220px; height:50px;float: left;"> </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -85,27 +85,27 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
-        <div class="body_content">
-            <?php
-                include 'login.php';
+        <div class="container">
+            <div class="row-fluid">
+                <?php
+                    include 'login.php';
 
-                if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
-                    // Reload page so that browser reads header injection up top to redirect to proper portal
-                    /*echo '<body onload="setInterval(function() {window.location.reload();}, 2000);">';*/
+                    if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
+                        // Reload page so that browser reads header injection up top to redirect to proper portal
+                        /*echo '<body onload="setInterval(function() {window.location.reload();}, 2000);">';*/
 
-                    if (isset($_SESSION['member_username'])) {
-                        echo '<body onload="window.location.href = \'../members/\';">';
+                        if (isset($_SESSION['member_username'])) {
+                            echo '<body onload="window.location.href = \'../members/\';">';
+                        }
+                        elseif (isset($_SESSION['admin_username'])) {
+                            echo '<body onload="window.location.href = \'../admin/\';">';
+                        }
                     }
-                    elseif (isset($_SESSION['admin_username'])) {
-                        echo '<body onload="window.location.href = \'../admin/\';">';
-                    }
-                }
-            ?>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-footer">
-                <?php include ("../assets/virtual/footer.inc"); ?>
+                ?>
             </div>
         </div>
+        <footer class="footer">
+            <?php include ("../assets/virtual/footer.inc"); ?>
+        </footer>
     </body>
 </html>
