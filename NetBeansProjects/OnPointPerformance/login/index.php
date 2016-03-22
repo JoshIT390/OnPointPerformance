@@ -83,10 +83,10 @@ and open the template in the editor.
                         ?>
                     </ul>
                 </div>
+                <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
             </div>
         </nav>
         <div class="container">
-            <div class="row-fluid">
                 <?php
                     include 'login.php';
 
@@ -102,10 +102,7 @@ and open the template in the editor.
                         }
                     }
                 ?>
-            </div>
         </div>
-        <footer class="footer">
-            <?php include ("../assets/virtual/footer.inc"); ?>
-        </footer>
+        <?php include ("../assets/virtual/footer.inc"); ?>
     </body>
 </html>

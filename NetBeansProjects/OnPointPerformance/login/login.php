@@ -7,7 +7,7 @@
     // If first time logging in or inputted incorrect credentials
     if (!isset($_SESSION["admin_username"]) || !isset($_SESSION["member_username"])) {
         if (!isset($_POST["username"]) && !isset($_POST["password"])) {
-            echo outputLoginForm() . "\n";
+            echo outputLoginForm("") . "\n";
         }
         else {
             // Saves username and password to session cookie if inputted correctly
@@ -19,40 +19,56 @@
             }
             // Error if not inputted correctly
             else {
-                echo "
-                <div class='alert alert-dismissible alert-warning'>
-                    Your username or password is incorrect. Please re-enter your credentials.
-                </div>" . outputLoginForm() . "\n";
+                echo outputLoginForm("login_error");
             }
         }   
     }
     
     // Outputs login form with username and password fields - passes to index.php
-    function outputLoginForm() {
+    function outputLoginForm($errorMessage) {
+        $errorBanner;
+        
+        if ($errorMessage == "login_error") {
+            $errorBanner = 
+                "<div class='alert alert-dismissible alert-warning'>
+                    Your username or password is incorrect. Please re-enter your credentials.
+                </div>";
+        }
+        
         return '
-            <div class="well well-login">
-                <form class="form-horizontal" method="post" action="./" id="sign_in">
-                    <fieldset>
-                        <legend>Login</legend>
-                        <div class="form-group">
-                            <label for="inputEmail" class="col-lg-2 control-label">Username</label> 
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="inputUsername" name="username" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;" />
-                            </div>
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="well bs-component">
+                            <form class="form-horizontal" method="post" action="./" id="sign_in">
+                                <fieldset>
+                                    <legend style="font-weight: bold; color:#ffffff">PORTAL SIGN IN</legend>' . 
+                                    $errorBanner . 
+                                    '<div class="form-group">
+                                        <div class="col-lg-10">
+                                            <input type="text" placeholder="Username" class="form-control" id="inputUsername" name="username" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            <input type="password" placeholder="Password" class="form-control" id="inputPassword" name="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;" required />
+                                        </div>
+                                    </div></br>
+                                    <div style="text-align: right">
+                                        <div class="col-lg-10 col-lg-offset-2">                                       
+                                            Forgot your password? Click <a href="../password">here</a>&nbsp;&nbsp;
+                                            <input type="submit" class="btn btn-default" value="Login" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                            <div class="col-lg-10">
-                                <input type="password" class="form-control" id="inputPassword" name="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-10 col-lg-offset-2">
-                                <input type="submit" class="btn btn-default" value="Login" />
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
             </div>';
     }
 
