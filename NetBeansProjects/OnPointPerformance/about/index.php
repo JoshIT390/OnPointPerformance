@@ -19,7 +19,7 @@ and open the template in the editor.
     </head>
     <body>
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -60,10 +60,9 @@ and open the template in the editor.
         </nav>
         
         <div class="jumbotron">
+            <div class="container">
             <h1>On Point Performance Center</h1>
             <p>OPPC is a physical training approach for elite and tactical athletes. It’s not just gym or a workout, it is a mindset and an approach to existence. We exist for the purpose of creating mission-capable athletes who compete on the platform, in the streets and on the battlefield. Participation in this program is limited and by invitation or application only. It is not for the general population and the core focus and mission of OPPC will be vigorously protected. The owners and trainers of this facility have years of Special Forces experience and decades of institutional and experiential knowledge in the field of training athletes to become stronger, faster and more mentally tough than their competition, their adversaries or their enemies.</p>
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-            <div>
                 
             </div>
         </div>

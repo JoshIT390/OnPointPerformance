@@ -14,19 +14,10 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Events</title>
+        <title>Forms</title>
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
         
-        <!-- FLEXSLIDER IMPORTS -->
-        <link rel="stylesheet" href="../flexslider.css" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-        <script src="../jquery.flexslider.js"></script>
-        <script type="text/javascript" charset="utf-8">
-            $(window).load(function() {
-                $('.flexslider').flexslider();
-            });
-        </script>
-        <!-- END FLEXSLIDER IMPORTS -->
+        
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -46,7 +37,7 @@ and open the template in the editor.
                         <li><a href="../">Home</a></li>
                         <li><a href="../about/">About Us</a></li>
                         <li><a href="../apply/">Apply</a></li>
-                        <li class="active"><a href=><span class="sr-only">(current)</span>Events</a></li>
+                        <li><a href="../events/">Events</a></li>
                         <li><a href="../merchandise/">Merchandise</a></li>
                         <li><a href="../contact/">Contact Us</a></li>
                     </ul>    
@@ -70,30 +61,38 @@ and open the template in the editor.
             </div>
         </nav>
         
-        <!-- FLEXSLIDER -->
-        <div class="container">
-            <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
-                <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
-                    <li>
-                        <img src="../assets/images/eventsImage.jpg" style="height:auto;" />
-                        <div class="flex-caption">
-                            <h1>Upcoming Events</h1>
-                            <h4>Come Join Us for these special events.</h4>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- END FLEXSLIDER -->
         
         
         <div class="container">
-        <!--<div class="jumbotron" style="text-align: center;">
-                <h1>Upcoming Events</h1>
-                <p>Come join us.</p>
+            <div class="jumbotron" style="text-align: center;">
+                <h1>Forms</h1>
             </div>
-        -->
-            <?php include 'events.php'; ?>
+            <?php
+							$servername = "mysql.dnguyen94.com";
+							$username = "ad_victorium";
+							$password = "MT8AlJAM";
+							$database = "onpoint_performance_center_lower";
+                                                        $memberid = $_POST["random"];
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password, $database);
+
+							// Check connection
+							if ($conn->connect_error) {
+								die("Connection failed: " . $conn->connect_error);
+                                                        }
+                            $query = "SELECT * FROM FORMS;";
+							$result = mysqli_query($conn, $query);
+                                                        while($row = $result->fetch_assoc()) {
+                                                            echo "<div class='panel panel-danger'>
+  <div class='panel-heading'>
+    <h3 class='panel-title'>" . $row["NAME"] . "</h3>
+  </div>
+  <div class='panel-body'> <a href='" . $row["PDF"] . "'>" . $row["PDF"] . "</a></div>
+</div>";                                                      }
+                                                        $result->close();
+			?>
+			
         </div>
         
         <div class="panel panel-default">

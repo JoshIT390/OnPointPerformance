@@ -30,7 +30,7 @@ and open the template in the editor.
     </head>
     <body>
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -38,18 +38,17 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">On Point Performance Center</a>
+                   <a href="../"> <img src="../../assets/images/Logo.png" style="width:220px; height:50px;float: left;"> </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="../">Home</a></li>
-                        <li><a href="../announcements/">Announcements</a></li>
-                        <li><a href="../about/">About Us</a></li>
-                        <li><a href="../apply/">Apply</a></li>
-                        <li><a href="../events/">Events</a></li>
-                        <li><a href="../merchandise/">Merchandise</a></li>
-                        <li><a href="../contact/">Contact Us</a></li>
+                        <li><a href="../../">Home</a></li>
+                        <li><a href="../../about/">About Us</a></li>
+                        <li><a href="../../apply/">Apply</a></li>
+                        <li><a href="../../events/">Events</a></li>
+                        <li><a href="../../merchandise/">Merchandise</a></li>
+                        <li><a href="../../contact/">Contact Us</a></li>
                     </ul>    
                     <ul class="nav navbar-nav navbar-right">
                         <?php
@@ -63,6 +62,7 @@ and open the template in the editor.
                         ?>
                     </ul>
                 </div>
+                                <a> <img src="../../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
             </div>
         </nav>
         
