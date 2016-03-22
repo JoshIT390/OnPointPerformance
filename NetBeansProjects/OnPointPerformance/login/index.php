@@ -43,7 +43,6 @@ and open the template in the editor.
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="../">Home</a></li>
-                        <li><a href="../announcements/">Announcements</a></li>
                         <li><a href="../about/">About Us</a></li>
                         <li><a href="../apply/">Apply</a></li>
                         <li><a href="../events/">Events</a></li>
