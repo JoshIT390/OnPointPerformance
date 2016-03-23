@@ -10,11 +10,9 @@
             $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
             // Exceptions fire when occur
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $nameQuery = $connection->query('SELECT FIRSTNAME, LASTNAME FROM ' . USER_CREDENTIAL_TABLE . ' WHERE MEMBER_EMAIL = ' . $connection->quote($username));
+            $nameQuery = $connection->query('SELECT FIRSTNAME, LASTNAME FROM ' . USER_CREDENTIAL_TABLE . ' WHERE MEMBER_EMAIL = '. $connection->quote($username));
 
             $name = $nameQuery->fetch();
-
             return $name[0] . ' ' . $name[1];
         }
         // Script halts and throws error if exception is caught

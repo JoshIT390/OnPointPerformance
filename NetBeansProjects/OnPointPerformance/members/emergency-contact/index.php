@@ -71,40 +71,25 @@ and open the template in the editor.
                 </div>
             </nav>
             <div class="container">
-                <?php
-                    if (isset($_SESSION['member_username'])){
-                        include './account_password.php';
+            <?php
+                if (isset($_SESSION['member_username'])){
+                    include './emergency_contact.php';
 
-                        echo '<div><a href="../">Your Account</a> › Change Password</div>';
-                        
-                        if (isset($_POST["currentPassword"]) && isset($_POST["newPassword1"]) && isset($_POST["newPassword2"])) {
-                            if (checkCurrentPassword($_SESSION['member_username'], $_POST["currentPassword"])) {                       
-                                if (checkNewPasswordMatch($_POST["newPassword1"], $_POST["newPassword2"])) {
-                                    if (checkNewPasswordRequirements($_POST["newPassword1"])) {
-                                        if (submitPassword($_SESSION['member_username'], $_POST["newPassword1"])) {
-                                            displayPasswordForm("success");
-                                        }
-                                        else {
-                                            displayPasswordForm("fail");
-                                        }
-                                    }
-                                    else {
-                                        displayPasswordForm("fail_new_password_requirements");
-                                    }
-                                }
-                                else {
-                                   displayPasswordForm("fail_new_password_match"); 
-                                }
-                            }
-                            else {
-                                displayPasswordForm("fail_current_password");
-                            }
-                        }
-                        else {
-                            displayPasswordForm("");
-                        }
+                    echo '<div><a href="../">Your Account</a> › View/change Emergency Contact</div>';
+
+                    if (!isset($_POST["submit"])) {
+                        displayEmergencyContact($_SESSION['member_username'], $relationships);
                     }
-                ?>
+                    else {
+                        echo 
+                        '<div>
+                            Changes saved
+                        </div>';
+                        submitEmergencyContact(trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["phone"]), $_POST["relationship"], $_POST["emergencyContactID"]);
+                        displayEmergencyContact($_SESSION['member_username'], $relationships);
+                    }
+                }
+            ?>
             </div>
         </div>
         <?php include ("../../assets/virtual/footer_in.inc"); ?>
