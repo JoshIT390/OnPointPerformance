@@ -84,6 +84,16 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-lg-3"></div>
           <div class="col-lg-6">
+              <h1 style="color:#ffffff; font-weight: bold"> APPLICATION FOR MEMBERSHIP</h1>
+              <hr style="height: 1px; background-color:#ffffff; color:#ffffff" />
+              <p class='linez'> In order to be considered for membership you must fill out an application on this page or download a copy from the <a href="../forms">forms page</a> to fill out and deliver to the gym.
+                  On Point Performance Center is an exclusive gym with members who have high ambitions and prefer surround themselves with like minded individuals.
+                  The members work as a team when in the gym and push each other to be the best they can be regardless of whether their goals are strength focused or tactical.
+                  Because of this we screen incoming members to ensure that their goals and interests are compatible with our goals and the goals of our members.
+                  In order to best gauge your suitability please answer the following form to the best of your ability. 
+                  If there are any special conditions surrounding your potential membership please state it the additional information box and we will do our best to accommodate you.
+              </p>
+
               <?php 
                 if ($_GET["success"] == true){
                     echo '<div class="alert alert-dismissible alert-success">
@@ -94,7 +104,6 @@ and open the template in the editor.
             <div class="well bs-component">
                 <form class="form-horizontal" action="submitApp.php" method="post">
                 <fieldset>
-                <legend>Application for membership</legend>
                 <!-- FIRST NAME -->
                 <div class="form-group">
                     <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
