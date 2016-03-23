@@ -1,52 +1,49 @@
 <?php 
     function displayForm() {
         echo 
-        '<div class="container">
-            <div class="row" style="text-align: center;">
-                <div class="col-lg-8">
-                    <div class="well bs-component">
-                        <form class="form-horizontal" method="post" action="./" id="contact_form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label for="inputName" class="col-lg-2 control-label">
-                                        Your name
-                                    </label>
-                                    <div class="col-lg-5">
-                                        <input type="text" class="form-control" name="name" required/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="col-lg-2 control-label">
-                                        Your email
-                                    </label>
-                                    <div class="col-lg-5">
-                                        <input type="email" class="form-control" name="email" required/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="textArea" class="col-lg-2 control-label">
-                                        Your message
-                                    </label>
-                                    <div class="col-lg-5">
-                                        <textarea name="message" class="form-control" rows="4" cols="5" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="textArea" class="col-lg-2 control-label"></label>
-                                    <div class="col-lg-5">
-                                        <div class="g-recaptcha" data-sitekey="6LfnWRgTAAAAAJbrj6wxghHWppYqZK59I02w64ij"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label style="text-align: left;" for="inputEmail" class="col-lg-2 control-label">
-                                        <input type="hidden" name="submit" value="TRUE" />
-                                        <input type="submit" class="btn btn-primary" value="Send" />
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+        '<div class="col-lg-6">
+            <div class="well bs-component">
+                <fieldset>
+                    <legend style="font-weight: bold; color:#ffffff">GOT SOMETHING TO SAY?</legend>
+                    <form class="form-horizontal" method="post" action="./" id="contact_form">                 
+                        <div class="form-group">
+                            <label for="inputName" class="col-lg-3 control-label">
+                                Your name
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="name" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-3 control-label">
+                                Your email
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="email" class="form-control" name="email" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textArea" class="col-lg-3 control-label">
+                                Your message
+                            </label>
+                            <div class="col-lg-8">
+                                <textarea name="message" class="form-control" rows="4" cols="5" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textArea" class="col-lg-3 control-label"></label>
+                            <div class="col-lg-8">
+                                <div class="g-recaptcha" data-sitekey="6LfnWRgTAAAAAJbrj6wxghHWppYqZK59I02w64ij"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left;" for="inputEmail" class="col-lg-2 control-label">
+                                <input type="hidden" name="submit" value="TRUE" />
+                                <input type="submit" class="btn btn-default" value="Send" />
+                            </div>
+                        </div>                    
+                    </form>
+                </fieldset>
             </div>
         </div>';
     }
