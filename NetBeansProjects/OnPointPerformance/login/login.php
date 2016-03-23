@@ -12,10 +12,10 @@
         else {
             // Saves username and password to session cookie if inputted correctly
             if (checkLogin(trim($_POST["username"]), $_POST["password"]) == "admin") {
-                $_SESSION["admin_username"] = $_POST["username"];
+                $_SESSION["admin_username"] = trim($_POST["username"]);
             }
             elseif (checkLogin(trim($_POST["username"]), $_POST["password"]) == "member") {
-                $_SESSION["member_username"] = $_POST["username"];
+                $_SESSION["member_username"] = trim($_POST["username"]);
             }
             // Error if not inputted correctly
             else {
