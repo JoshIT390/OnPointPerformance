@@ -96,9 +96,13 @@ and open the template in the editor.
                 
                 <div class="row-fluid">
                     <?php 
-                        if ($_GET["success"] == true){
+                        if ($_POST["success"]){
                             echo '<div class="alert alert-dismissible alert-success">
                                     <strong>Success!</strong> Your application has been submitted.
+                                </div>';
+                        }else if (!$_POST["success"] && $_SERVER['HTTP_REFERER'] == "https://dnguyen94.com/OnPointPerformance/apply/"){
+                            echo '<div class="alert alert-dismissible alert-danger">
+                                    <strong>Error!</strong> Your application has not been submitted. Please make sure to enter proper Information.
                                 </div>';
                         }
                     ?>
