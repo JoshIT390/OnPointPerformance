@@ -89,6 +89,10 @@ and open the template in the editor.
 
 
             <div class="container">
+                <p class='linez'> On Point Performance Center hosts a variety of events throughout the year from powerlifting meets to lifting seminars put on my major names in the lifting industry.
+                We also do road trips to other big lifting gyms on the east coast to learn from some of the best raw and equipped lifters in the nation.
+                If you're interested in participating in one of our events please RSVP with us so that we know that you plan on attending.
+                If a form for that event is required please fill it out and turn it in to us before the event takes place.</p>
             <!--<div class="jumbotron" style="text-align: center;">
                     <h1>Upcoming Events</h1>
                     <p>Come join us.</p>
