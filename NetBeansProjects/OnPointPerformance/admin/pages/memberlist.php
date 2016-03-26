@@ -168,7 +168,7 @@
 							if ($status == "all"){
 								$search = $search . " (ACTIVESTATUS='0' OR ACTIVESTATUS='1')";
 							}
-							$search = $search . ";";
+							$search = $search . "ORDER BY LASTNAME;";
 
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);

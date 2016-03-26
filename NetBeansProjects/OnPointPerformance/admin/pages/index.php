@@ -161,7 +161,7 @@
                                     if ($conn->connect_error) {
                                             die("Connection failed: " . $conn->connect_error);
                                     }
-                                    $result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
+                                    $result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT ORDER BY LASTNAME;");
                                     printf("Returned %d row(s).", $result->num_rows);
                                     echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
                                     if ($result->num_rows > 0) {

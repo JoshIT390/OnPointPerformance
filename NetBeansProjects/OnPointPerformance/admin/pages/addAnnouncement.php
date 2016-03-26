@@ -39,7 +39,7 @@
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
-	<!-- Inline Forms -->
+	    <!-- Inline Forms -->
     <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
             
              <!-- /.navbar-header -->
@@ -137,34 +137,17 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<h3><a href="addEvent.php">Add Event</a></h3>
-						<p> <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
-
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
-
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR ORDER BY DATE desc;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><th>Name</th><th>DATE</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>DESCRIPTION</th><th>FORMS</th><th>Management</th></tr>";
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-							
-								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["CITY"] . "</td> <td>" . $row["STATE"] . "</td> <td>" . $row["ZIP"] . "</td><td>" . $row["DESCRIPTION"] . "</td><td>" . $row["FORMS"] . "</td> <td><form action='viewEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Edit'></form><form action='deleteEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Delete'></form></td></tr>";
-								}
-							}
-							$result->close();
-							
-							?>  </p>
+                        <h1 class="page-header">Announcements</h1>
+						<p>  <h3> Add an Announcement:</h3>
+							<form action="addAnnouncementCompletion.php" method="post" enctype="multipart/form-data">
+							<div>Title: <input type="text" name="title" required>
+							Date: <input type="text" name="date" required>
+							Description: <input type="text" name="description" required></div></br>
+							<div>Select Image to Upload: <input type="file" name="imgUpload" id="imageUpload" required></div></br>
+							<div>Image Description: <input type="text" name="imgDescription" required></div></br>
+							<input type="submit" value="Submit"> </form></br> </br> 
+							<a href="announcementsm.php">Manage Announcements Home Page</a> </br>
+						</p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

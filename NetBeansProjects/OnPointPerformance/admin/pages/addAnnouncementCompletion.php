@@ -38,9 +38,6 @@
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-	<!-- Inline Forms -->
-    <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,9 +61,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
             </div>
-            
              <!-- /.navbar-header -->
              
             <ul class="nav navbar-top-links navbar-right">
@@ -137,34 +133,64 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<h3><a href="addEvent.php">Add Event</a></h3>
-						<p> <?php
+                        <h1 class="page-header">Announcements</h1>
+						<p>
+							<?php
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
-
+							$title = $_POST["title"];
+							$date = $_POST["date"];
+							$description = $_POST["description"];
+							$imgDescription = $_POST["imgDescription"];
+							$target_dir = "../../images/";
+							$target_file = $target_dir . basename($_FILES["imgUpload"]["name"]);
+							$uploadOk = 1;
+							$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+							// Check if file already exists
+							if (file_exists($target_file)) {
+								echo "Sorry, file already exists.";
+								$uploadOk = 0;
+							}
+							// Allow certain file formats
+							if($imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif" && $imageFileType != "jpg") {
+								echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+								$uploadOk = 0;
+							}
+							// Check if $uploadOk is set to 0 by an error
+							if ($uploadOk == 0) {
+								echo "Sorry, your file was not uploaded.";
+							// if everything is ok, try to upload file
+							} else {
+								if (move_uploaded_file($_FILES["imgUpload"]["tmp_name"], $target_file)) {
+									//echo "The file ". basename( $_FILES["imgUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='announcementsm.php'>Announcements Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
 
 							// Check connection
-							if ($conn->connect_error) {
+							if ($conn->connect_error) 
+							{
 								die("Connection failed: " . $conn->connect_error);
+                            }
+							$query = "INSERT INTO ANNOUNCEMENT(DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT) VALUES ('$description', '$title', '$date', '". basename( $_FILES["imgUpload"]["name"]) ."', '$imgDescription');";
+							$result = mysqli_query($conn, $query);
+							if (!$result)
+							{
+								die('Invalid query: ' . mysql_error());
 							}
-							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR ORDER BY DATE desc;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><th>Name</th><th>DATE</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>DESCRIPTION</th><th>FORMS</th><th>Management</th></tr>";
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-							
-								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["CITY"] . "</td> <td>" . $row["STATE"] . "</td> <td>" . $row["ZIP"] . "</td><td>" . $row["DESCRIPTION"] . "</td><td>" . $row["FORMS"] . "</td> <td><form action='viewEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Edit'></form><form action='deleteEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Delete'></form></td></tr>";
+							else
+							{
+								echo "Successfully Added Announcement!</br>";
+							}
+								} else {
+									echo "Sorry, there was an error uploading your file.";
 								}
 							}
-							$result->close();
+                                                        
 							
-							?>  </p>
+							?> 
+						</p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

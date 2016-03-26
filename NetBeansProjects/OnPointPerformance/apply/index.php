@@ -14,7 +14,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Apply</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
         
         <!-- Custom JavaScript to change css classes -->
@@ -114,11 +115,9 @@ and open the template in the editor.
                   <h1 style="color:#ffffff; font-weight: bold"> APPLICATION FOR MEMBERSHIP</h1>
 
                   <p class='linez'> In order to be considered for membership you must fill out an application on this page or download a copy from the <a href="../forms">forms page</a> to fill out and deliver to the gym.
-                      On Point Performance Center is an exclusive gym with members who have high ambitions and prefer to surround themselves with like minded individuals.
-                      The members work as a team when in the gym and push each other to be the best they can be regardless of whether their goals are strength focused or tactical.
-                      Because of this we screen incoming members to ensure that their goals and interests are compatible with our goals and the goals of our members.
-                      In order to best gauge your suitability please answer the following form to the best of your ability. 
-                      If there are any special conditions surrounding your potential membership please state it the additional information box and we will do our best to accommodate you.
+                      On Point Performance Center is a private gym limited to members who are competitive athletes or members of the law enforcement, military and public safety communities. 
+                      We screen incoming members to ensure that their goals and interests are compatible with the training environment we have created at On Point Performance Center. 
+                      If there are any special conditions surrounding your application for membership, please state them in the additional information box.
                   </p>
                   <hr>
                   <p>
