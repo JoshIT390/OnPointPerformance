@@ -65,8 +65,8 @@ and open the template in the editor.
                 
                   
                     <div class="jumbotron" style="height:550px;">
-                        <div class="col-lg-4" style="float:right; margin-right:30%;">
-                            <div class="panel panel-danger" style="width:600px;">
+                        <div class="col-lg-4" style="float:right;">
+                            <div class="panel panel-danger">
                                 <div class="panel-heading">
                         <h2>On Point Performance Center T-Shirt</h2>
                                 </div>
@@ -76,6 +76,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <img src="../assets/images/Item1.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
+                         <img src="../assets/images/Item2.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
                         
                     </div>
                     
