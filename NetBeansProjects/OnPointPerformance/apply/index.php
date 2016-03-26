@@ -16,6 +16,34 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title>Apply</title>
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
+        
+        <!-- Custom JavaScript to change css classes -->
+        <script type="text/javascript">
+            function changeCSS(){
+                var fNameValid = <?php Print($_SESSION['appErrors']['fNameError']); ?>;
+                var lNameValid = <?php Print($_SESSION['appErrors']['lNameError']); ?>;
+                var phoneValid = <?php echo json_encode($_SESSION['appErrors']['phoneError']); ?>;
+                var ageValid = <?php echo json_encode($_SESSION['appErrors']['ageError']); ?>;
+                
+                if (!fNameValid){
+                    document.getElementById("fNameDiv").setAttribute("class", "form-group has-error");
+                    document.getElementById("fNameLabel").innerHTML = "First Name (Name can only contain letters)";
+                }
+                if (!lNameValid){
+                    document.getElementById("lNameDiv").setAttribute("class", "form-group has-error");
+                    document.getElementById("lNameLabel").innerHTML = "Last Name (Name can only contain letters)";
+                }
+                if (!phoneValid){
+                    document.getElementById("phoneDiv").setAttribute("class", "form-group has-error");
+                    document.getElementById("phoneLabel").innerHTML = "Phone Number (Please use proper format and with no spaces)";
+                }
+                if (!ageValid){
+                    document.getElementById("ageDiv").setAttribute("class", "form-group has-error");
+                    document.getElementById("ageLabel").innerHTML = "Age (Age must be a 2 digit number)";
+                }
+            }
+            window.addEventListener("load", changeCSS(), false);
+        </script>
     </head>
     <body>
         <div class="wrap">
@@ -92,6 +120,10 @@ and open the template in the editor.
                       In order to best gauge your suitability please answer the following form to the best of your ability. 
                       If there are any special conditions surrounding your potential membership please state it the additional information box and we will do our best to accommodate you.
                   </p>
+                  <hr>
+                  <p>
+                      <?php var_dump($_SESSION['appErrors'])?>
+                  </p>
                 </div>
                 
                 <div class="row-fluid">
@@ -111,15 +143,15 @@ and open the template in the editor.
                             <form class="form-horizontal" action="submitApp.php" method="post">
                                 <legend style="font-weight: bold; color:#ffffff">PERSONAL INFORMATION</legend>
                                 <!-- FIRST NAME -->
-                                <div class="form-group">
-                                    <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
+                                <div class="form-group" id="fNameDiv">
+                                    <label for="inputFirstName" class="col-lg-2 control-label" id="fNameLabel">First Name</label>
                                     <div class="col-lg-8">
                                         <input type="text" name="firstName" class="form-control" id="inputFirstName" placeholder="First Name" required>
                                     </div>
                                 </div>
                                 <!-- LAST NAME -->
-                                <div class="form-group">
-                                    <label for="inputLastName" class="col-lg-2 control-label">Last Name</label>
+                                <div class="form-group" id="lNameDiv">
+                                    <label for="inputLastName" class="col-lg-2 control-label" id="lNameLabel">Last Name</label>
                                     <div class="col-lg-8">
                                         <input type="text" name="lastName" class="form-control" id="inputLastName" placeholder="Last Name" required>
                                     </div>
@@ -143,15 +175,15 @@ and open the template in the editor.
                                     </div>
                                 </div>
                                 <!-- Age -->
-                                <div class="form-group">
-                                    <label for="inputAge" class="col-lg-2 control-label">Age</label>
+                                <div class="form-group" id="ageDiv">
+                                    <label for="inputAge" class="col-lg-2 control-label" id="ageLabel">Age</label>
                                     <div class="col-lg-8">
                                         <input type="text" name="age" class="form-control" id="inputAge" placeholder="" required>
                                     </div>
                                 </div>
                                 <!-- Phone Number -->
-                                <div class="form-group">
-                                    <label for="inputPhone" class="col-lg-2 control-label">Phone Number</label>
+                                <div class="form-group" id="phoneDiv">
+                                    <label for="inputPhone" class="col-lg-2 control-label" id="phoneLabel">Phone Number</label>
                                     <div class="col-lg-8">
                                         <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="555-555-5555" required>
                                     </div>
@@ -170,7 +202,7 @@ and open the template in the editor.
                                     <label for="isMilitary" class="col-lg-2 control-label">Military</label>
                                     <div class="col-lg-8" style="text-align: left;">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" name="isMilitary">Do You have a Military background? </label>
+                                            <label>Do You have a Military background? (Check for Yes)<input type="checkbox" name="isMilitary"></label>
                                         </div>
                                         <label for="inputMilitary">If yes, what is your Military background?</label>
                                         <textarea class="form-control" rows="3" id="inputMilitary" name="militaryBG"></textarea>
@@ -181,7 +213,7 @@ and open the template in the editor.
                                     <label for="isLaw" class="col-lg-2 control-label">Law Enforcement</label>
                                     <div class="col-lg-8">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" name="isLaw">Do You have a Law Enforcement background?</label>
+                                            <label>Do You have a Law Enforcement background? (Check for Yes)<input type="checkbox" name="isLaw"></label>
                                         </div>
                                         <label for="inputLaw">If yes, what is your Law Enforcement background?</label>
                                         <textarea class="form-control" rows="3" id="inputLaw" name="lawBG"></textarea>
@@ -192,7 +224,7 @@ and open the template in the editor.
                                     <label for="isStrength" class="col-lg-2 control-label">Strength</label>
                                     <div class="col-lg-8">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" name="isStrength">Are you an competitive Strength Athlete?</label>
+                                            <label>Are you an competitive Strength Athlete? (Check for Yes)<input type="checkbox" name="isStrength"></label>
                                         </div>
                                         <label for="inputStrength">If yes, what is your Competitive Strength Training background</label>
                                         <textarea class="form-control" rows="3" id="inputStrength" name="strengthBG"></textarea>

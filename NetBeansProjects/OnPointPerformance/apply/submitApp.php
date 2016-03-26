@@ -5,7 +5,12 @@
     define("DB_NAME", "onpoint_performance_center_lower");
     define("USER_CREDENTIAL_TABLE", "APPLICATIONS");
     
+    /* Using session to pass variables */
+    if(session_id() == '' || !isset($_SESSION)) {
+        session_start();
+    }
     
+    /* convert checkbox selection into tiny int to match DB*/
     if (isset($_POST['isMilitary'])) {
         $militaryBG = 1;
     } else { 
@@ -27,11 +32,12 @@
         $healthBG = 0;
     }
     
+    /* get input data from post*/
     $firstName = $_POST["firstName"];
     $lastName = $_POST["lastName"];
     $phone = $_POST["phone"];
     $amail = $_POST["email"];
-    $age = $_POST["age"];
+    $age = intval($_POST["age"]);
     $gender = $_POST["gender"];
     $militaryComments = $_POST["militaryBG"];
     $lawComments = $_POST["lawBG"];
@@ -42,57 +48,79 @@
     $healthComments = $_POST["healthBG"];
     $additional = $_POST["additional"];
     
+    /* Check for valid input */
     $fNameValid = nameValidator($firstName);
     $lNameValid = nameValidator($lastName);
     $phoneValid = phoneValidator($phone);
+    $ageValid = ageValidator($age);
     
     
-    if ($fNameValid && $lNameValid && $phoneValid){
-    try{
-        $aonnection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
-        // Exceptions fire when occur
-        $aonnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if ($fNameValid && $lNameValid && $phoneValid && $ageValid){
+        try{
+            $aonnection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+            // Exceptions fire when occur
+            $aonnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $submitApplication = $aonnection->prepare('
-            INSERT INTO ' . USER_CREDENTIAL_TABLE . '(FIRSTNAME, LASTNAME, PHONE, EMAIL, AGE, GENDER, MILITARY_BG, MILITARY_BG_COMMENTS, 
-                                    LAW_EN_BG, LAW_EN_BG_COMMENTS, COMP_ATHLETE_BG, COMP_ATHLETE_BG_COMMENTS, CURRENTLY_TRAIN,
-                                    DAYS_PER_WEEK_TRAINING, TRAINING_TIME, CERTIFICATION, CERTIFICATION_COMMENTS, ADDITIONAL_COMMENTS) 
-            VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedEmail, :submittedAge, :submittedGender, 
-                    :submittedMilitaryBg, :submittedMilitaryComments, :submittedLawBg, :submittedLawComments, :submittedStrengthBg, 
-                    :submittedStrengthComments, :submittedCurrent, :submittedDays, :submittedHours, :submittedHealthBG, :submittedHealthComments, 
-                    :submittedAdditional)'
-            );
-        $submitApplication->execute(array(
-            ':submittedFirstName' => $firstName,
-            ':submittedLastName' => $lastName,
-            ':submittedPhone' => $phone,
-            ':submittedEmail' => $amail,
-            ':submittedAge' => $age,
-            ':submittedGender' => $gender,
-            ':submittedMilitaryBg' => $militaryBG,
-            ':submittedMilitaryComments' => $militaryComments,
-            ':submittedLawBg' => $lawBG,
-            ':submittedLawComments' => $lawComments,
-            ':submittedStrengthBg' => $strengthBG,
-            ':submittedStrengthComments' => $strengthComments,
-            ':submittedCurrent' => $aurrentPlace,
-            ':submittedDays' => $aays,
-            ':submittedHours' => $hours,
-            ':submittedHealthBG' => $healthBG,
-            ':submittedHealthComments' => $healthComments,
-            ':submittedAdditional' => $additional
-        ));
-        
-        header('Location: ' . $_SERVER['HTTP_REFERER']. '?success=true');
-    }
-    catch(PDOException $a) {
-        echo "<div>
-                Error: " . $a->getMessage() . 
-            "</div>";
+            $submitApplication = $aonnection->prepare('
+                INSERT INTO ' . USER_CREDENTIAL_TABLE . '(FIRSTNAME, LASTNAME, PHONE, EMAIL, AGE, GENDER, MILITARY_BG, MILITARY_BG_COMMENTS, 
+                                        LAW_EN_BG, LAW_EN_BG_COMMENTS, COMP_ATHLETE_BG, COMP_ATHLETE_BG_COMMENTS, CURRENTLY_TRAIN,
+                                        DAYS_PER_WEEK_TRAINING, TRAINING_TIME, CERTIFICATION, CERTIFICATION_COMMENTS, ADDITIONAL_COMMENTS) 
+                VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedEmail, :submittedAge, :submittedGender, 
+                        :submittedMilitaryBg, :submittedMilitaryComments, :submittedLawBg, :submittedLawComments, :submittedStrengthBg, 
+                        :submittedStrengthComments, :submittedCurrent, :submittedDays, :submittedHours, :submittedHealthBG, :submittedHealthComments, 
+                        :submittedAdditional)'
+                );
+            $submitApplication->execute(array(
+                ':submittedFirstName' => $firstName,
+                ':submittedLastName' => $lastName,
+                ':submittedPhone' => $phone,
+                ':submittedEmail' => $amail,
+                ':submittedAge' => $age,
+                ':submittedGender' => $gender,
+                ':submittedMilitaryBg' => $militaryBG,
+                ':submittedMilitaryComments' => $militaryComments,
+                ':submittedLawBg' => $lawBG,
+                ':submittedLawComments' => $lawComments,
+                ':submittedStrengthBg' => $strengthBG,
+                ':submittedStrengthComments' => $strengthComments,
+                ':submittedCurrent' => $aurrentPlace,
+                ':submittedDays' => $aays,
+                ':submittedHours' => $hours,
+                ':submittedHealthBG' => $healthBG,
+                ':submittedHealthComments' => $healthComments,
+                ':submittedAdditional' => $additional
+            ));
             
-        return FALSE;
-    }
+            /* Sets form errors to not show errors on valid submit, after an invalid submit */
+            if (isset($_SESSION['appErrors'])){
+                $errorArray = [
+                    "fNameError" => $fNameValid,
+                    "lNameError" => $lNameValid,
+                    "phoneError" => $phoneValid,
+                    "ageError" => $ageValid
+                ];
+        
+                $_SESSION['appErrors'] = $errorArray;
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']. '?success=true');
+        }catch(PDOException $a) {
+            echo "<div>
+                    Error: " . $a->getMessage() . 
+                "</div>";
+            
+            return FALSE;
+        }
     }else {
+        /* Make an array for correct/incorrect values*/
+        $errorArray = [
+            "fNameError" => $fNameValid,
+            "lNameError" => $lNameValid,
+            "phoneError" => $phoneValid,
+            "ageError" => $ageValid
+        ];
+        
+        $_SESSION['appErrors'] = $errorArray;
+        
         header('Location: ' . $_SERVER['HTTP_REFERER']. '?success=false');
     }
     
@@ -164,6 +192,15 @@
             return true;
         }
     }
+    
+    function ageValidator($ageNum) {
+        if ($ageNum < 1 || $ageNum > 99){
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     
     
