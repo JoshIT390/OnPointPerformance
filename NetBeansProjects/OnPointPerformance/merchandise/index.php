@@ -61,12 +61,17 @@ and open the template in the editor.
             </nav>
 
             <div class="container">
+                
                 <div class="row-fluid">
+                    <div class='col-lg-3'>
+                        <img src="../assets//images/item1.jpg" style="float:left;" />
                     <div class="jumbotron">
                         <h1>Jumbotron</h1>
                         <p>Merchandise Item 1</p>
                     </div>
+                    </div>
                 </div>
+               
                 <div class="row-fluid">
                    <div class="jumbotron">
                         <h1>Jumbotron</h1>
