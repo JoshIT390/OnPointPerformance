@@ -68,32 +68,7 @@ and open the template in the editor.
                 <div class="jumbotron" style="text-align: center;">
                     <h1>Forms</h1>
                 </div>
-                <?php
-                                                            $servername = "mysql.dnguyen94.com";
-                                                            $username = "ad_victorium";
-                                                            $password = "MT8AlJAM";
-                                                            $database = "onpoint_performance_center_lower";
-                                                            $memberid = $_POST["random"];
-
-                                                            // Create connection
-                                                            $conn = mysqli_connect($servername, $username, $password, $database);
-
-                                                            // Check connection
-                                                            if ($conn->connect_error) {
-                                                                    die("Connection failed: " . $conn->connect_error);
-                                                            }
-                                $query = "SELECT * FROM FORMS;";
-                                                            $result = mysqli_query($conn, $query);
-                                                            while($row = $result->fetch_assoc()) {
-                                                                echo "<div class='panel panel-danger'>
-      <div class='panel-heading'>
-        <h3 class='panel-title'>" . $row["NAME"] . "</h3>
-      </div>
-      <div class='panel-body'> <a href='" . $row["PDF"] . "'>" . $row["PDF"] . "</a></div>
-    </div>";                                                      }
-                                                            $result->close();
-                            ?>
-
+                <?php include 'getforms.php';?>
             </div>
         </div>
         
