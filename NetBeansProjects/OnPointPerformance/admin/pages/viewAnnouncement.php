@@ -137,8 +137,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<h3><a href="addEvent.php">Add Event</a></h3>
+                        <h1 class="page-header">Manage Announcements</h1>
 						<p> <?php
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
@@ -147,19 +146,23 @@
 
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
-
+							$annID=$_POST['annID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR ORDER BY DATE desc;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><th>Name</th><th>DATE</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>DESCRIPTION</th><th>FORMS</th><th>Management</th></tr>";
+							$result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM ANNOUNCEMENT WHERE ANN_ID='" . $annID . "';");
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
-							
-								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["CITY"] . "</td> <td>" . $row["STATE"] . "</td> <td>" . $row["ZIP"] . "</td><td>" . $row["DESCRIPTION"] . "</td><td>" . $row["FORMS"] . "</td> <td><form action='viewEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Edit'></form><form action='deleteEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Delete'></form></td></tr>";
+								$image='../../images/';
+								$image.=$row["IMG_URL"];
+								echo"<h4>Title: ". $row["TITLE"]. "</h4></br>";
+								echo"<h4>Date: ". $row["DATE"]. "</h4></br>";
+								echo"<h4>Description: ". $row["DESCRIPTION"]. "</h4></br>";
+								echo"<h4>Image URL: <a href=".$image.">". $row["IMG_URL"]. "</a></h4></br>";
+								echo"<h4>Image Description: ". $row["IMG_ALT"]. "</h4></br>";
+
 								}
 							}
 							$result->close();
