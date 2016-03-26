@@ -26,7 +26,7 @@
     <meta name="author" content="">
 
     <title>OPPC Admin Page</title>
-
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
