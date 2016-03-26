@@ -23,7 +23,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Members Self-Service Portal</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <link href="../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
         <script href="../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
         <script href="../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
