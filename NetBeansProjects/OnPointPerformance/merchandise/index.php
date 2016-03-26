@@ -62,15 +62,24 @@ and open the template in the editor.
 
             <div class="container">
                 
-                <div class="row-fluid">
-                    <div class='col-lg-3'>
-                        <img src="../assets//images/item1.jpg" style="float:left;" />
-                    <div class="jumbotron">
-                        <h1>Jumbotron</h1>
-                        <p>Merchandise Item 1</p>
+                
+                  
+                    <div class="jumbotron" style="height:550px;">
+                        <div class="col-lg-4" style="float:right; margin-right:30%;">
+                            <div class="panel panel-danger" style="width:600px;">
+                                <div class="panel-heading">
+                        <h2>On Point Performance Center T-Shirt</h2>
+                                </div>
+                                <div class="panel-body">
+                        <p>Call for more details.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="../assets/images/Item1.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
+                        
                     </div>
-                    </div>
-                </div>
+                    
+                
                
                 <div class="row-fluid">
                    <div class="jumbotron">
