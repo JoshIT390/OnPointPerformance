@@ -71,7 +71,7 @@ and open the template in the editor.
                         <h2>On Point Performance Center T-Shirt</h2>
                                 </div>
                                 <div class="panel-body">
-                        <p>Call for more details.</p>
+                        <p>On Point Performance Center merchandise will be available while supplies last. If you are interested in a product, contact us via email or phone to inquire about availability, pricing and payment methods. Thank you.</p>
                                 </div>
                             </div>
                         </div>
