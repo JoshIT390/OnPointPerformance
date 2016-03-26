@@ -152,7 +152,7 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT * FROM FORMS;");
+							$result = mysqli_query($conn, "SELECT * FROM FORMS ORDER BY NAME;");
 							printf("Returned %d row(s).", $result->num_rows);
 							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {
