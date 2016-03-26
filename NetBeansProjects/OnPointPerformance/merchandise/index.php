@@ -14,7 +14,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Merchandise</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
     </head>
     <body>
@@ -61,21 +62,25 @@ and open the template in the editor.
             </nav>
 
             <div class="container">
-                
+                <div class="row-fluid">
+                    <h1 style="color:#ffffff; font-weight: bold">MERCHANDISE</h1>
+                    <hr style="border: 0; border-bottom: 1px #ffffff; background: #999;" />
+                </div>
                 
                   
                     <div class="jumbotron" style="height:550px;">
-                        <div class="col-lg-4" style="float:right; margin-right:30%;">
-                            <div class="panel panel-danger" style="width:600px;">
+                        <div class="col-lg-4" style="float:right;">
+                            <div class="panel panel-danger">
                                 <div class="panel-heading">
                         <h2>On Point Performance Center T-Shirt</h2>
                                 </div>
                                 <div class="panel-body">
-                        <p>On Point Performance Center merchandise will be available while supplies last. If you are interested in a product, contact us via email or phone to inquire about availability, pricing and payment methods. Thank you.</p>
+                        <p>Call for more details.</p>
                                 </div>
                             </div>
                         </div>
                         <img src="../assets/images/Item1.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
+                         <img src="../assets/images/Item2.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
                         
                     </div>
                     
