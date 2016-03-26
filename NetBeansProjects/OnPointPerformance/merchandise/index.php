@@ -61,7 +61,10 @@ and open the template in the editor.
             </nav>
 
             <div class="container">
-                
+                <div class="row-fluid">
+                    <h1 style="color:#ffffff; font-weight: bold">MERCHANDISE</h1>
+                    <hr style="border: 0; border-bottom: 1px #ffffff; background: #999;" />
+                </div>
                 
                   
                     <div class="jumbotron" style="height:550px;">
