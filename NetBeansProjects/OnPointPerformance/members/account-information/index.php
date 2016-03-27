@@ -72,6 +72,7 @@ and open the template in the editor.
                 </div>
             </nav>
             <div class="container">
+                <div class="row-fluid">
                 <?php
                     if (isset($_SESSION['member_username'])){
                         include './account_information.php';
@@ -94,6 +95,7 @@ and open the template in the editor.
                         }
                     }
                 ?>
+                </div>
             </div>
         </div>
         
