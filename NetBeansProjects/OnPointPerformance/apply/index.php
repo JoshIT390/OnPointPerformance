@@ -20,30 +20,30 @@ and open the template in the editor.
         
         <!-- Custom JavaScript to change css classes -->
         <script type="text/javascript">
-            function changeCSS(){
-                var fNameValid = <?php Print($_SESSION['appErrors']['fNameError']); ?>;
-                var lNameValid = <?php Print($_SESSION['appErrors']['lNameError']); ?>;
+        window.onload = function changeCSS(){
+                var fNameValid = <?php echo json_encode($_SESSION['appErrors']['fNameError']); ?>;
+                var lNameValid = <?php echo json_encode($_SESSION['appErrors']['lNameError']); ?>;
                 var phoneValid = <?php echo json_encode($_SESSION['appErrors']['phoneError']); ?>;
                 var ageValid = <?php echo json_encode($_SESSION['appErrors']['ageError']); ?>;
                 
-                if (!fNameValid){
+                if (!fNameValid && fNameValid != null){
                     document.getElementById("fNameDiv").setAttribute("class", "form-group has-error");
                     document.getElementById("fNameLabel").innerHTML = "First Name (Name can only contain letters)";
                 }
-                if (!lNameValid){
+                if (!lNameValid && lNameValid != null){
                     document.getElementById("lNameDiv").setAttribute("class", "form-group has-error");
                     document.getElementById("lNameLabel").innerHTML = "Last Name (Name can only contain letters)";
                 }
-                if (!phoneValid){
+                if (!phoneValid && phoneValid != null){
                     document.getElementById("phoneDiv").setAttribute("class", "form-group has-error");
                     document.getElementById("phoneLabel").innerHTML = "Phone Number (Please use proper format and with no spaces)";
                 }
-                if (!ageValid){
+                if (!ageValid && ageValid != null){
                     document.getElementById("ageDiv").setAttribute("class", "form-group has-error");
                     document.getElementById("ageLabel").innerHTML = "Age (Age must be a 2 digit number)";
                 }
             }
-            window.addEventListener("load", changeCSS(), false);
+            //window.addEventListener('DOMContentLoaded', setTimeout(changeCSS(), 1000), false);
         </script>
     </head>
     <body>
@@ -112,29 +112,27 @@ and open the template in the editor.
 
             <div class="container">
                 <div class="row-fluid">
-                  <h1 style="color:#ffffff; font-weight: bold"> APPLICATION FOR MEMBERSHIP</h1>
+                    <h1 style="color:#ffffff; font-weight: bold"> APPLICATION FOR MEMBERSHIP</h1>
 
-                  <p class='linez'> In order to be considered for membership you must fill out an application on this page or download a copy from the <a href="../forms">forms page</a> to fill out and deliver to the gym.
-                      On Point Performance Center is a private gym limited to members who are competitive athletes or members of the law enforcement, military and public safety communities. 
-                      We screen incoming members to ensure that their goals and interests are compatible with the training environment we have created at On Point Performance Center. 
-                      If there are any special conditions surrounding your application for membership, please state them in the additional information box.
-                  </p>
-                  <hr>
-                  <p>
-                      <?php var_dump($_SESSION['appErrors'])?>
-                  </p>
+                    <p class='linez'> In order to be considered for membership you must fill out an application on this page or download a copy from the <a href="../forms">forms page</a> to fill out and deliver to the gym.
+                        On Point Performance Center is a private gym limited to members who are competitive athletes or members of the law enforcement, military and public safety communities. 
+                        We screen incoming members to ensure that their goals and interests are compatible with the training environment we have created at On Point Performance Center. 
+                        If there are any special conditions surrounding your application for membership, please state them in the additional information box.
+                    </p>
                 </div>
                 
                 <div class="row-fluid">
-                    <?php 
-                        if ($_POST["success"]){
-                            echo '<div class="alert alert-dismissible alert-success">
-                                    <strong>Success!</strong> Your application has been submitted.
-                                </div>';
-                        }else if (!$_POST["success"] && $_SERVER['HTTP_REFERER'] == "https://dnguyen94.com/OnPointPerformance/apply/"){
-                            echo '<div class="alert alert-dismissible alert-danger">
-                                    <strong>Error!</strong> Your application has not been submitted. Please make sure to enter proper Information.
-                                </div>';
+                    <?php
+                        if (isset($_GET["success"])){
+                            if ($_GET["success"] == "true"){
+                                echo '<div class="alert alert-dismissible alert-success">
+                                        <strong>Success!</strong> Your application has been submitted.
+                                    </div>';
+                            }else if ($_GET["success"] == "false"){
+                                echo '<div class="alert alert-dismissible alert-danger">
+                                        <strong>Error!</strong> Your application has not been submitted. Please fix errors highlighted below.
+                                    </div>';
+                            }
                         }
                     ?>
                     <div class="well bs-component">
@@ -201,7 +199,9 @@ and open the template in the editor.
                                     <label for="isMilitary" class="col-lg-2 control-label">Military</label>
                                     <div class="col-lg-8" style="text-align: left;">
                                         <div class="checkbox">
-                                            <label>Do You have a Military background? (Check for Yes)<input type="checkbox" name="isMilitary"></label>
+                                            <p style="margin-bottom: 0px;">Do You have a Military background?</p>
+                                            <label><input type="checkbox" name="isMilitary">(Check for Yes)</label>
+                                            <br>
                                         </div>
                                         <label for="inputMilitary">If yes, what is your Military background?</label>
                                         <textarea class="form-control" rows="3" id="inputMilitary" name="militaryBG"></textarea>
@@ -212,7 +212,8 @@ and open the template in the editor.
                                     <label for="isLaw" class="col-lg-2 control-label">Law Enforcement</label>
                                     <div class="col-lg-8">
                                         <div class="checkbox">
-                                            <label>Do You have a Law Enforcement background? (Check for Yes)<input type="checkbox" name="isLaw"></label>
+                                            <p style="margin-bottom: 0px;">Do You have a Law Enforcement background?</p>
+                                            <label><input type="checkbox" name="isLaw">(Check for Yes)</label>
                                         </div>
                                         <label for="inputLaw">If yes, what is your Law Enforcement background?</label>
                                         <textarea class="form-control" rows="3" id="inputLaw" name="lawBG"></textarea>
@@ -223,7 +224,8 @@ and open the template in the editor.
                                     <label for="isStrength" class="col-lg-2 control-label">Strength</label>
                                     <div class="col-lg-8">
                                         <div class="checkbox">
-                                            <label>Are you an competitive Strength Athlete? (Check for Yes)<input type="checkbox" name="isStrength"></label>
+                                            <p style="margin-bottom: 0px;">Are you an competitive Strength Athlete?</p>
+                                            <label><input type="checkbox" name="isStrength">(Check for Yes)</label>
                                         </div>
                                         <label for="inputStrength">If yes, what is your Competitive Strength Training background</label>
                                         <textarea class="form-control" rows="3" id="inputStrength" name="strengthBG"></textarea>
@@ -234,7 +236,8 @@ and open the template in the editor.
                                     <label for="hasDegree" class="col-lg-2 control-label">Health Knowledge</label>
                                     <div class="col-lg-8">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" name="hasDegree">Do You have a Degree or Certification regarding sports health/training?</label>
+                                            <p style="margin-bottom: 0px;">Do You have a Degree or Certification regarding sports health/training?</p>
+                                            <label><input type="checkbox" name="hasDegree">(Check for Yes)</label>
                                         </div>
                                         <label for="inputDegree">If yes, what is your Degree or Certification?</label>
                                         <textarea class="form-control" rows="3" id="inputDegree" name="healthBG"></textarea>
