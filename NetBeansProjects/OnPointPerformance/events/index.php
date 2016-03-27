@@ -90,7 +90,7 @@ and open the template in the editor.
 
 
             <div class="container">
-                <p class='linez' style="padding-bottom:10px;">On Point Performance Center hosts seminars throughout the year. 
+                <p class='linez' style="padding-bottom:15px;font-size: 12pt;">On Point Performance Center hosts seminars throughout the year. 
                     For these seminars, we will bring in subject matter experts that will provide knowledge and training on topics such as strength training, functional medicine, nutrition for the athlete, active shooter training, self-defense and more. 
                     The seminars are usually open to the public and will often feature presenters who are well-known in the national and international physical training and tactical communities.</p>
             <!--<div class="jumbotron" style="text-align: center;">
