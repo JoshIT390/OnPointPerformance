@@ -137,77 +137,458 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
                         
-                        <p> 
-                            <h3> Add a Member:</h3>
-                            <form action="addmember.php" method="post">
-                                <div>
-                                    First Name: <input type="text" name="fname" required>
-                                    Last Name: <input type="text" name="lname" required>
-                                    Dues End Date: <input type="text" name="duesdate" required>
-                                </div></br></br>
-                                <div>
-                                    Street Address: <input type="text" name="street" required>
-                                    City: <input type="text" name="city" required>
-                                    State:
-                                    <select name='state'>         
-                                        <?php        
-                                            function createStateOptions($states) {
-                                                $stateOptions;
+                        <p>                            
+                            <?php
+                                include '../../mail/welcome_member.php';
+                                include '../../mail/audit_alert.php';
 
-                                                foreach ($states as &$state) {
-                                                    $stateOptions .= '<option value="' . $state . '">' . $state . '</option>';
+                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                                define("DB_USER_NAME", "ad_victorium");
+                                define("DB_PASSWORD", "MT8AlJAM");
+                                define("DB_NAME", "onpoint_performance_center_lower");
+                                define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+                                define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
+                                define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+
+                                $us_state_abbrevs = array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY');
+                                $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
+
+                                // Regular view
+                                if (!isset($_POST["submit"])) {
+                                    displayForm($us_state_abbrevs, $relationships, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                                }
+                                else {
+                                    // Account information and manually entered password
+                                    if (
+                                        !empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duesdate"]) && !empty($_POST["street"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"]) &&
+                                        (empty($_POST["generatePassword"]) && (!empty($_POST["newPassword1"]) || !empty($_POST["newPassword2"])))
+                                    ) {
+                                        if (verifyEmail(trim($_POST["email"]))) {
+                                            if(verifyPassword($_POST["newPassword1"], $_POST["newPassword2"])) {
+                                                if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), 1, trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], $_POST["newPassword2"])) {
+                                                    if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["email"])) {
+                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
+                                                        displayForm($us_state_abbrevs, $relationships, "success_manual", "", "", "", "", "", "", "", "", "", "", "", "", "", "");                                                        
+                                                    }
                                                 }
-
-                                                return $stateOptions;
-                                            }
-
-                                            echo createStateOptions(array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY')) 
-                                        ?>
-                                    </select>
-                                    Zip Code: <input type="text" name="zip" required>
-                                </div></br>
-                                <div>
-                                    Phone Number: <input type="text" name="phone" required>
-                                    Email Address: <input type="text" name="email" required>
-                                </div></br>
-                                <div>
-                                    Password: <input type="text" name="password" required>
-                                </div></br>
-                                <div>
-                                    Administrator Notes:
-                                </div>
-                                <div>
-                                    <textarea rows='4' cols='100' name='notes'></textarea>
-                                </div></br>
-
-                                <h4> Emergency Contact:</h4>
-                                <div>
-                                    First Name: <input type="text" name="emergency_fname" required>
-                                    Last Name: <input type="text" name="emergency_lname" required>
-                                    Phone Number: <input type="text" name="emergency_phone" required>                                    
-                                    Relationship:
-                                    <select name='emergency_relationship'>
-                                        <?php        
-                                            function createRelationshipsOptions($relationships) {
-                                                $relationshipsOptions;
-
-                                                foreach ($relationships as &$relationship) {
-                                                    $relationshipsOptions .= '<option value="' . $relationship . '">' . $relationship . '</option>';
+                                                else {
+                                                    displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                                 }
-
-                                                return $relationshipsOptions;
                                             }
+                                            else {
+                                                displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                            }
+                                        }
+                                        else {
+                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                        }
+                                    }
+                                    // Account information entered, but no password
+                                    elseif (
+                                        !empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duesdate"]) && !empty($_POST["street"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"]) && 
+                                        (empty($_POST["generatePassword"]) && (empty($_POST["newPassword1"]) || empty($_POST["newPassword2"])))
+                                    ) {
+                                        displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                    }
+                                    // Account information and password generator requested
+                                    elseif (
+                                        !empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duesdate"]) && !empty($_POST["street"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"])
 
-                                            echo createRelationshipsOptions(array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend')) 
-                                        ?>
-                                    </select>
-                                </div></br></br>
-                                <div>
-                                    <input type='submit' value='Submit' class='btn btn-default'>
-                                </div>
-                            </form>
-                            </br> </br> 
-                            <a href="index.php">Member Management Home Page</a> </br>
+                                        && ($_POST["generatePassword"] == TRUE)
+                                    ) {
+                                        $accountInfoStatus = FALSE;
+
+                                        if (verifyEmail(trim($_POST["email"]))) {
+                                            $password = generatePassword();
+
+                                            if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), 1, trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], $_POST["newPassword2"])) {
+                                                if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["email"])) {
+                                                    if(sendMail(trim($_POST["email"]), $password)) {
+                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
+                                                        displayForm($us_state_abbrevs, $relationships, "success_auto", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                                                        
+                                                    }
+                                                    else {
+                                                        displayForm($us_state_abbrevs, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"])); 
+                                                    }   
+                                                }
+                                            }
+                                            else {
+                                                displayForm($us_state_abbrevs, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"])); 
+                                            }
+                                        }
+                                        else {
+                                            displayForm($us_state_abbrevs, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                        }
+                                    }
+                                }
+
+                                function createStateAbbrevOptions($us_state_abbrevs, $submittedState) {
+                                    $stateAbbrevOptions;
+
+                                    foreach ($us_state_abbrevs as &$stateAbbrev) {
+                                        if ($stateAbbrev == $submittedState) {
+                                            $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '" selected>' . $stateAbbrev . '</option>';
+                                        }
+                                        else {
+                                            $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '">' . $stateAbbrev . '</option>';
+                                        }
+                                    }
+
+                                    return $stateAbbrevOptions;
+                                }
+
+                                function createRelationshipsOptions($relationships, $submittedEmergencyContactRelationship) {
+                                    $relationshipsOptions;
+
+                                    foreach ($relationships as &$relationship) {
+                                        if ($relationship == $submittedEmergencyContactRelationship) {
+                                            $relationshipsOptions .= '<option value="' . $relationship . '" selected>' . $relationship . '</option>';
+                                        }
+                                        else {
+                                            $relationshipsOptions .= '<option value="' . $relationship . '">' . $relationship . '</option>';
+                                        }
+                                    }
+
+                                    return $relationshipsOptions;
+                                }
+
+                                function generatePassword() {
+                                    $password_string = '!@#$%*&abcdefghijklmnpqrstuwxyzABCDEFGHJKLMNPQRSTUWXYZ23456789';                                       
+                                    return substr(str_shuffle($password_string), 0, 12);                                       
+                                }
+
+                                function getMemberID($email) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $memberIDQuery = $connection->query('
+                                            SELECT MEMBER_ID 
+                                            FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                            WHERE MEMBER_EMAIL = '. $connection->quote($email)
+                                        );
+
+                                        $memberID = $memberIDQuery->fetch();
+                                        return $memberID[0];
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error3: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+                                }
+
+                                function submitAccountInformation($submittedFirstName, $submittedLastName, $submittedDueDate, $submittedStatus, $submittedAddress, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedAdminNotes, $submittedPassword) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $accountInformationUpdate = $connection->prepare('
+                                            INSERT INTO ' . USER_CREDENTIAL_TABLE . '(FIRSTNAME, LASTNAME, DUEDATE, ACTIVESTATUS, ADDRESS, CITY, STATE, ZIP, PHONE, MEMBER_EMAIL, ADMIN_NOTES, PASSWORD) 
+                                            VALUES (:submittedFirstName, :submittedLastName, :submittedDueDate, :submittedActiveStatus, :submittedAddress, :submittedCity, :submittedState, :submittedZip, :submittedPhone, :submittedEmail, :submittedAdminNotes, :submittedPassword)'
+                                        );
+
+                                        $accountInformationUpdate->execute(array(
+                                            ':submittedFirstName' => $submittedFirstName,
+                                            ':submittedLastName' => $submittedLastName,
+                                            ':submittedDueDate' => $submittedDueDate,
+                                            ':submittedActiveStatus' => $submittedStatus,
+                                            ':submittedAddress' => $submittedAddress,
+                                            ':submittedCity' => $submittedCity,
+                                            ':submittedState' => $submittedState,
+                                            ':submittedZip' => $submittedZip,
+                                            ':submittedPhone' => $submittedPhone,
+                                            ':submittedEmail' => $submittedEmail,
+                                            ':submittedAdminNotes' => $submittedAdminNotes,
+                                            ':submittedPassword' => hashPassword($submittedPassword)
+                                        ));
+                                    }
+
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error1: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+
+                                    return TRUE;
+                                }
+
+                                function submitEmergencyContactInformation($submittedFirstName, $submittedLastName, $submittedPhone, $submittedRelationship, $submittedEmail) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $accountInformationUpdate = $connection->prepare("
+                                            INSERT INTO " . USER_EMERGENCY_CONTACT_TABLE . "(FIRSTNAME, LASTNAME, PHONE, RELATIONSHIP, MEMBER_ID)
+                                            VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedRelationship, '" . getMemberID($submittedEmail) . "')"
+                                        );
+
+                                        $accountInformationUpdate->execute(array(
+                                            ':submittedFirstName' => $submittedFirstName,
+                                            ':submittedLastName' => $submittedLastName,
+                                            ':submittedPhone' => $submittedPhone,
+                                            ':submittedRelationship' => $submittedRelationship,
+                                        ));
+                                    }
+
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error2: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+
+                                    return TRUE;
+                                }
+
+                                function submitInformation($submittedFirstName, $submittedLastName, $submittedEmail, $submittedPassword) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $accountInformationUpdate = $connection->prepare(
+                                                'INSERT INTO ' . USER_CREDENTIAL_TABLE . ' (FIRSTNAME, LASTNAME, EMAIL, PASSWORD) 
+                                                VALUES (:submittedFirstName, :submittedLastName, :submittedEmail, :submittedPassword)');
+
+                                        $accountInformationUpdate->execute(array(
+                                            ':submittedFirstName' => $submittedFirstName,
+                                            ':submittedLastName' => $submittedLastName,
+                                            ':submittedEmail' => $submittedEmail,
+                                            ':submittedPassword' => hashPassword($submittedPassword)
+                                        ));
+                                    }
+
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+
+                                    return TRUE;
+                                }
+
+                                // Applies random salt to inputted password and hashes
+                                function hashPassword($password) {
+                                    $cost = 10;
+                                    $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+                                    $salt = sprintf("$2a$%02d$", $cost) . $salt;
+                                    return crypt($password, $salt);
+                                }
+
+                                function verifyPassword($newPassword1, $newPassword2) { 
+                                    if ($newPassword1 != $newPassword2) {
+                                        return FALSE;
+                                    }
+                                    else {
+                                        // Must be greater than or equal to eight characters and use numbers, lower-case letters, upper-case letters, and special characters
+                                        if ((strlen($newPassword1) >= 8) &&  preg_match("#[0-9]+#", $newPassword1) && preg_match("#[a-z]+#", $newPassword1) && preg_match("#[A-Z]+#", $newPassword1) &&  preg_match("#\W+#", $newPassword1)) {
+                                            return TRUE;
+                                        }
+                                        else {
+                                            return FALSE;
+                                        }
+                                    }
+                                }
+
+                                function verifyEmail($submittedEmail) {
+                                    // No matches in both admin and member tables
+                                    if (!findAdminEmailMatch($submittedEmail) && !findMemberEmailMatch($submittedEmail)) {
+                                        return TRUE;
+                                    }
+                                    else {
+                                        return FALSE;
+                                    }
+                                }
+
+                                function findAdminEmailMatch($submittedEmail) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $adminEmailQuery = $connection->prepare('
+                                            SELECT EMAIL 
+                                            FROM ' . USER_CREDENTIAL_TABLE2 . ' 
+                                            WHERE EMAIL LIKE :submittedEmail'
+                                        );
+
+                                        $adminEmailQuery->execute(array(
+                                            ':submittedEmail' => $submittedEmail                                                                    
+                                        ));
+
+                                        $adminEmail = $adminEmailQuery->fetch(PDO::FETCH_NUM);
+                                        return $adminEmail;
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                    }
+                                }
+
+                                function findMemberEmailMatch($submittedEmail) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $memberEmailQuery = $connection->prepare('
+                                            SELECT MEMBER_EMAIL 
+                                            FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                            WHERE MEMBER_EMAIL LIKE :submittedEmail'
+                                        );
+
+                                        $memberEmailQuery->execute(array(
+                                            ':submittedEmail' => $submittedEmail                                                                    
+                                        ));
+
+                                        $memberEmail = $memberEmailQuery->fetch(PDO::FETCH_NUM);
+                                        return $memberEmail;
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                    }
+                                }
+
+                                function displayForm($us_state_abbrevs, $relationships, $status, $submittedFirstName, $submittedLastName, $submittedDuesDate, $submittedStreet, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedEmergencyFirstName, $submittedEmergencyLastName, $submittedEmergencyPhone, $submittedEmergencyRelationship) {
+                                    $notice = "";
+
+                                    if ($status == "success_manual") {
+                                        $notice = 
+                                            "<div class='alert alert-success alert-dismissable'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                User successfully created.
+                                            </div>";
+                                    }
+                                    elseif ($status == "success_auto") {
+                                        $notice = 
+                                            "<div class='alert alert-success alert-dismissable'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                User successfully created. A welcome email with instructions to reset his/her password was sent.
+                                            </div>";
+                                    }
+                                    elseif ($status == "fail_email") {
+                                        $notice = 
+                                            "<div class='alert alert-danger alert-dismissable'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                There was a problem creating this user. Please choose a different email address and try again.
+                                            </div>";
+                                    }
+                                    elseif ($status == "fail_password") {
+                                        $notice = 
+                                            "<div class='alert alert-danger alert-dismissable'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                There was a problem creating this user. Please follow the password requirements and try again.
+                                            </div>";
+                                    }
+                                    elseif ($status == "tech_diff") {
+                                        $notice = 
+                                            "<div class='alert alert-danger alert-dismissable'>
+                                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                                There was a problem creating this user. Please try again.
+                                            </div>";
+                                    }
+
+                                    echo 
+                                        "<form action='add.php' method='post'>
+                                                <h3> Add a Member</h3></br>" . 
+                                                $notice . 
+                                                "<div>
+                                                    First Name: <input type='text' name='fname' value='" . $submittedFirstName . "' required />
+                                                    Last Name: <input type='text' name='lname' value='" . $submittedLastName . "' required />
+                                                    Dues End Date: <input type='date' name='duesdate' value='" . $submittedDuesDate . "' required />
+                                                </div><br />
+                                                <div>
+                                                    Street Address: <input type='text' name='street' value='" . $submittedStreet . "' required />
+                                                    City: <input type='text' name='city' value='" . $submittedCity . "' required />
+                                                    State:
+                                                    <select name='state'>" . 
+                                                        createStateAbbrevOptions($us_state_abbrevs, $submittedState) . 
+                                                    "</select>
+                                                    Zip Code: <input type='text' name='zip' value='" . $submittedZip . "' required />
+                                                </div><br />
+                                                <div>
+                                                    Phone Number: <input type='text' name='phone' value='" . $submittedPhone . "' required />
+                                                    Email Address: <input type='text' name='email' value='" . $submittedEmail . "' required />
+                                                </div>
+                                                <br />
+                                                <div>
+                                                    Administrator Notes:
+                                                </div>
+                                                <div>
+                                                    <textarea rows='4' cols='100' name='notes'></textarea>
+                                                </div>
+                                                <hr />
+                                                <h4> Emergency Contact:</h4>
+                                                <div>
+                                                    First Name: <input type='text' name='emergency_fname' value='" . $submittedEmergencyFirstName . "' required />
+                                                    Last Name: <input type='text' name='emergency_lname' value='" . $submittedEmergencyLastName . "' required />
+                                                    Phone Number: <input type='text' name='emergency_phone' value='" . $submittedEmergencyPhone . "' required />                                    
+                                                    Relationship:
+                                                    <select name='emergency_relationship'>" . 
+                                                        createRelationshipsOptions($relationships, $submittedEmergencyRelationship) . 
+                                                    "</select>
+                                            <hr />
+                                            <div>
+                                                <h4>Password</h4>
+                                                <script type='text/javascript'>
+                                                    function ShowHideDiv(generatePassword) {
+                                                        var passwordInformation = document.getElementById('passwordInformation');
+                                                        passwordInformation.style.display = generatePassword.checked ? 'none' : 'block';
+                                                    }
+                                                </script>
+
+                                                <div class='checkbox' for='generatePassword'>
+                                                    <label>
+                                                        <input type='checkbox' name='generatePassword' id='generatePassword' onclick = 'ShowHideDiv(this)' value='TRUE'> Generate password
+                                                    </label>
+                                                </div><br />
+                                                <div id='passwordInformation' style='display: hidden'>
+                                                The user's password must be eight or more characters and have at least one of each:
+                                                <ul>
+                                                    <li>Lower-case letter</li>
+                                                    <li>Upper-case letter</li>
+                                                    <li>Number</li>
+                                                    <li>Special characters</li>
+                                                </ul>
+
+                                                Enter the user's password: <input type='password' name='newPassword1'/><br /><br />
+                                                Re-enter the user's password: <input type='password' name='newPassword2'/><br /><br />
+                                            </div>
+                                            <hr />
+                                            <div>
+                                                <input type='text' name='submit' value='TRUE' hidden>
+                                                <input type='submit' class='btn btn-default' value='Submit' />
+                                            </div>
+                                        </form>";
+                                }
+                            ?>
                         </p>                       
                     </div>
                     <!-- /.col-lg-12 -->
