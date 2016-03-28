@@ -38,6 +38,9 @@
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<!-- Inline Forms -->
+    <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,6 +66,7 @@
                 </button>
                 <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
+            
              <!-- /.navbar-header -->
              
             <ul class="nav navbar-top-links navbar-right">
@@ -133,34 +137,37 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<p>
-							<?php
+                        <h1 class="page-header">Manage Announcements</h1>
+						<p> <?php
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
-                                                        $eventID = $_POST["eventID"];
-                                                       
-                                                        
+
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
-
+							$annID=$_POST['annID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
-                                                        }
-                                                        $query = "DELETE FROM CALENDAR WHERE CALENDAR_ID='$eventID' ;";
-                                                        $result = mysqli_query($conn, $query);
-														
-                                                        if (!$result){
-                                                            die('Invalid query: ' . mysql_error());
-                                                        }
-                                                        else{
-                                                            echo "Successfully deleted event!</br>";
-                                                        }
-							?> 
-						</p>
+							}
+							$result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM ANNOUNCEMENT WHERE ANN_ID='" . $annID . "';");
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+								$image='../../images/';
+								$image.=$row["IMG_URL"];
+								echo"<h4>Title: ". $row["TITLE"]. "</h4></br>";
+								echo"<h4>Date: ". $row["DATE"]. "</h4></br>";
+								echo"<h4>Description: ". $row["DESCRIPTION"]. "</h4></br>";
+								echo"<h4>Image URL: <a href=".$image.">". $row["IMG_URL"]. "</a></h4></br>";
+								echo"<h4>Image Description: ". $row["IMG_ALT"]. "</h4></br>";
+
+								}
+							}
+							$result->close();
+							
+							?>  </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

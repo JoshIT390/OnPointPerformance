@@ -26,7 +26,7 @@
     <meta name="author" content="">
 
     <title>OPPC Admin Page</title>
-
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -38,6 +38,9 @@
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	    <!-- Inline Forms -->
+    <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
             
              <!-- /.navbar-header -->
@@ -135,7 +138,35 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-						<p> Put stuff here </p>
+						<p><h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
+						<p>  <?php
+                                    $servername = "mysql.dnguyen94.com";
+                                    $username = "ad_victorium";
+                                    $password = "MT8AlJAM";
+                                    $database = "onpoint_performance_center_lower";
+
+                                    // Create connection
+                                    $conn = mysqli_connect($servername, $username, $password, $database);
+									
+                                    // Check connection
+                                    if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                    }
+                                    $result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM ANNOUNCEMENT ORDER BY DATE desc;");
+                                    printf("Returned %d row(s).", $result->num_rows);
+                                    echo "<table style='width:100%'><tr><th>Title</th><th>Date</th><th>Description</th><th>Image URL</th><th>Image Description</th><th>Management</th></tr>";
+                                    if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while($row = $result->fetch_assoc()) {
+                                            $image='../../images/';
+											$image.=$row["IMG_URL"];
+                                            echo "<tr> <td>". $row["TITLE"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["DESCRIPTION"] . "</td> <td><a href=".$image.">" . $row["IMG_URL"] . "</a></td><td>" . $row["IMG_ALT"] . "</td><td><form action='viewAnnouncement.php' method='post'><input type='text' name='annID' value='" . $row["ANN_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editAnnouncement.php' method='post'><input type='text' name='annID' value='" . $row["ANN_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
+                                            }
+                                    }
+                                    echo "</table>";
+                                    $result->close();
+
+                                    ?>  </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

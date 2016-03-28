@@ -37,15 +37,15 @@
         try{
             $result = $query->fetch();
             if ($result == NULL){ break;}
-            echo "<div class='row-fluid'>"
-                    . "<div class='col-lg-3'>"
+            echo "<div class='row-fluid' >"
+                    . "<div class='col-lg-4'>"
                         //todo: replace this with img url
                         . "<img src='images/" . $result[4] . "' alt='" . $result[5] . "' >"
                     . "</div>"
-                    . "<div class='col-lg-9'>"
-                        . "<div class='jumbotron'>"
+                    . "<div class='col-lg-8' >"
+                        . "<div class='jumbotron' >"
                             . "<h1>" . $result[2] . "</h1>"
-                            . "<p> Description: \n" . $result[1] . "</p>"
+                            . "<p> " . $result[1] . "</p>"
                             . "<p> Date: " . $result[3] . "</p>"
                         . "</div>"
                     . "</div>"

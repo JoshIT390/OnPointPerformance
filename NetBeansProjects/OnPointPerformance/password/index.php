@@ -27,6 +27,7 @@ and open the template in the editor.
         <title>On Point Performance Center</title>
         <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
+         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <div class="wrap">
@@ -79,7 +80,7 @@ and open the template in the editor.
                                     echo '<li><a href="./logout.php">Logout</a></li>';*/                            
                                 }
                                 else {
-                                    echo '<li><a href="./">Log In</a></li>';
+                                    echo '<li><a href="../login">Log In</a></li>';
                                 }
                             ?>
                         </ul>
@@ -92,7 +93,7 @@ and open the template in the editor.
     
             <div class="container">
                     <?php
-                        include 'login.php';
+                        include 'password_reset.php';
 
                         if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
                             // Reload page so that browser reads header injection up top to redirect to proper portal

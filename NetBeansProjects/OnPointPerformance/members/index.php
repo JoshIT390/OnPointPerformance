@@ -23,7 +23,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Members Self-Service Portal</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <link href="../assets/bootstrapMain/css/bootstrap.css" rel="stylesheet" type="text/css" >
         <script href="../assets/bootstrapMain/js/bootstrap.js" type="text/javascript" ></script>
         <script href="../assets/bootstrapMain/js/bootstrap.min.js" type="text/javascript" ></script>
@@ -70,6 +71,9 @@ and open the template in the editor.
                     <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
                 </div>
             </nav>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
             <div class="container">
                 <?php            
                     if (isset($_SESSION['member_username'])){

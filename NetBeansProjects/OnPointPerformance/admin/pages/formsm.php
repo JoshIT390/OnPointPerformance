@@ -26,7 +26,7 @@
     <meta name="author" content="">
 
     <title>OPPC Admin Page</title>
-
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -63,7 +63,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
             
              <!-- /.navbar-header -->
@@ -152,7 +152,7 @@
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT * FROM FORMS;");
+							$result = mysqli_query($conn, "SELECT * FROM FORMS ORDER BY NAME;");
 							printf("Returned %d row(s).", $result->num_rows);
 							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {

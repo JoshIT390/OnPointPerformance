@@ -38,6 +38,9 @@
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	    <!-- Inline Forms -->
+    <link href="inline.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,6 +66,7 @@
                 </button>
                 <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
+            
              <!-- /.navbar-header -->
              
             <ul class="nav navbar-top-links navbar-right">
@@ -133,34 +137,38 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<p>
-							<?php
-							$servername = "mysql.dnguyen94.com";
+                        <h1 class="page-header">Announcements</h1>
+						<p><h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
+						<p>  <?php
+                            $servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
-                                                        $eventID = $_POST["eventID"];
-                                                       
-                                                        
+
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
-
+							$annID=$_POST['annID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
-                                                        }
-                                                        $query = "DELETE FROM CALENDAR WHERE CALENDAR_ID='$eventID' ;";
-                                                        $result = mysqli_query($conn, $query);
-														
-                                                        if (!$result){
-                                                            die('Invalid query: ' . mysql_error());
-                                                        }
-                                                        else{
-                                                            echo "Successfully deleted event!</br>";
-                                                        }
-							?> 
-						</p>
+							}
+							$result = mysqli_query($conn, "SELECT TITLE, DATE, DESCRIPTION FROM ANNOUNCEMENT WHERE ANN_ID='" . $annID . "';");
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+								echo'<form action="updateAnnouncement.php" method="post">
+								<p>Title: <input type="text" name="title" value="'.$row["TITLE"].'"/>
+								Date: <input type="text" name="date" value="'.$row["DATE"].'"/></p>
+								<p>Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
+								<p><input type="hidden" name="annID" value="'.$annID.'"/></p>
+								<p><input type="submit" value="Update"/></p>
+								</form>';
+								
+								}
+							}
+							$result->close();
+							
+                             ?>  </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

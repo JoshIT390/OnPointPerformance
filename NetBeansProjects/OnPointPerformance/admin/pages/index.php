@@ -26,7 +26,7 @@
     <meta name="author" content="">
 
     <title>OPPC Admin Page</title>
-
+    <link rel="shortcut icon" href="../../assets/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -64,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">On Point Performance Administration Page</a>
+                <a class="navbar-brand" href="index.php">On Point Performance Administration Page</a>
             </div>
              <!-- /.navbar-header -->
              
@@ -137,50 +137,283 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
-                            <p><h3><a href="add.php">Add a Member</a></h3>
-                             <h3> Search for a Member:</h3>
-                                    <form action="memberlist.php" method="post">
-                                    First Name: <input type="text" name="fname">
-                                    Last Name: <input type="text" name="lname"> 
-                                    Email: <input type="text" name="email"> 
-                                    Member Status: <select name="status"> 
-                                    <option value="all">All</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option> </select> 
-                                    <input type="submit" value="Submit"> </form></br> </br> 
-                                    <?php
-                                    $servername = "mysql.dnguyen94.com";
-                                    $username = "ad_victorium";
-                                    $password = "MT8AlJAM";
-                                    $database = "onpoint_performance_center_lower";
+                        <p>
+                            <h3><a href="add.php">Add a Member</a></h3>
+                            <h3> Search for a Member:</h3>
+                            <form action="index.php" method="post">
+                                First Name: <input type="text" name="search_fname">
+                                Last Name: <input type="text" name="search_lname"> 
+                                Email: <input type="text" name="search_email">
+                                Member Status: 
+                                    <select name="search_status"> 
+                                        <option value="all" selected>All</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option> 
+                                    </select> 
+                                <input type='submit' value='Search' class='btn btn-default'>
+                            </form>
+                            
+                            <?php
+                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                                define("DB_USER_NAME", "ad_victorium");
+                                define("DB_PASSWORD", "MT8AlJAM");
+                                define("DB_NAME", "onpoint_performance_center_lower");
+                                define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+                                define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                
+                                if (isset($_POST["deleteMemberID"])) {
+                                    deleteEmergencyContact($_POST["deleteMemberID"]);
+                                    deleteMember($_POST["deleteMemberID"]);
+                                    generatePage();
+                                }
+                                else {
+                                    generatePage();
+                                }
 
-                                    // Create connection
-                                    $conn = mysqli_connect($servername, $username, $password, $database);
+                                function deleteEmergencyContact($memberID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    // Check connection
-                                    if ($conn->connect_error) {
-                                            die("Connection failed: " . $conn->connect_error);
+                                        $accountInformationQuery = $connection->query('
+                                            DELETE FROM ' . USER_EMERGENCY_CONTACT_TABLE . ' 
+                                            WHERE MEMBER_ID = '. $connection->quote($memberID)
+                                        );
                                     }
-                                    $result = mysqli_query($conn, "SELECT MEMBER_ID, FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS FROM MEMBER_ACCOUNT;");
-                                    printf("Returned %d row(s).", $result->num_rows);
-                                    echo "<table style='width:100%'><tr><th>First Name</th><th>Last Name</th><th>Email Address</th><th>Phone Number</th><th>Dues Paid Until</th><th>Member Status</th><th>Management</th></tr>";
-                                    if ($result->num_rows > 0) {
-                                            // output data of each row
-                                            while($row = $result->fetch_assoc()) {
-                                            if ($row["ACTIVESTATUS"] == 1){
-                                                    $status = "Active";
-                                            }
-                                            else if($row["ACTIVESTATUS"] == 0){
-                                                    $status = "Inactive";
-                                            }
-                                            echo "<tr> <td>". $row["FIRSTNAME"]. "</td> <td> ". $row["LASTNAME"]. "</td> <td> <a href='mailto:" . $row["MEMBER_EMAIL"] . "'>" . $row["MEMBER_EMAIL"] . " </a></td> <td>" . $row["PHONE"] . "</td> <td>" . $row["DUEDATE"] . "</td> <td>" . $status . "</td><td><form action='view.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='View'></form><form action='edit.php' method='post'><input type='text' name='random' value='" . $row["MEMBER_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
-                                            }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
                                     }
-                                    echo "</table>";
-                                    $result->close();
+                                    
+                                    return TRUE;
+                                }
+                                
+                                function deleteMember($memberID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    ?> 
-                            </p>
+                                        $accountInformationQuery = $connection->query('
+                                            DELETE FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                            WHERE MEMBER_ID = '. $connection->quote($memberID)
+                                        );
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return TRUE;
+                                }
+                                
+                                function generatePage() {
+                                    $searchStatusString = "";
+                                    
+                                    if ($_POST["search_status"] == "inactive") {
+                                        $searchStatusString = " AND ACTIVESTATUS = 0";
+                                    }
+                                    elseif ($_POST["search_status"] == "active") {
+                                        $searchStatusString = " AND ACTIVESTATUS = 1";
+                                    }
+                                    
+                                    try {
+                                        $membersQuery;
+
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        // Default view or member status search only
+                                        if (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {   
+                                            if (empty($_POST["search_status"]) || $_POST["search_status"] == "all") {
+                                                $membersQuery = $connection->query(
+                                                    'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                    FROM ' . USER_CREDENTIAL_TABLE . 
+                                                    ' ORDER BY LASTNAME');
+                                            }
+                                            elseif ($_POST["search_status"] == "inactive") {
+                                                $membersQuery = $connection->query(
+                                                    'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                    FROM ' . USER_CREDENTIAL_TABLE . 
+                                                    ' WHERE ACTIVESTATUS = 0 
+                                                    ORDER BY LASTNAME');
+                                            }
+                                            elseif ($_POST["search_status"] == "active") {
+                                                $membersQuery = $connection->query(
+                                                    'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                    FROM ' . USER_CREDENTIAL_TABLE . 
+                                                    ' WHERE ACTIVESTATUS = 1 
+                                                    ORDER BY LASTNAME');
+                                            }
+                                        }
+                                        // First name search
+                                        elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName' . $searchStatusString);
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $membersQuery->bindParam(':searchedFirstName', $searchedFirstName);
+                                            $membersQuery->execute();
+                                        }
+                                        // Last name search
+                                        elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE LASTNAME LIKE :searchedLastName' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $membersQuery->bindParam(':searchedLastName', $searchedLastName);
+                                            $membersQuery->execute();
+                                        }
+                                        // Email search
+                                        elseif (empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $membersQuery->bindParam(':searchedEmail', $searchedEmail);
+                                            $membersQuery->execute();
+                                        }
+                                        // First and last name search
+                                        elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $membersQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedLastName' => $searchedLastName
+                                            ));
+                                        }
+                                        // First name and email search
+                                        elseif (!empty($_POST["search_fname"]) && empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID  
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $membersQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+                                        // Last name and email search
+                                        elseif (empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID 
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE LASTNAME LIKE :searchedLastName AND MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $membersQuery->execute(array(
+                                                ':searchedLastName' => $searchedLastName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+                                        // First name, last name, and email search
+                                        elseif (!empty($_POST["search_fname"]) && !empty($_POST["search_lname"]) && !empty($_POST["search_email"])) {
+                                            $membersQuery = $connection->prepare(
+                                                'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID  
+                                                FROM ' . USER_CREDENTIAL_TABLE . '
+                                                WHERE FIRSTNAME LIKE :searchedLastName AND LASTNAME LIKE :searchedLastName AND MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
+                                                ' ORDER BY LASTNAME');
+
+                                            $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
+                                            $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
+                                            $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
+                                            $membersQuery->execute(array(
+                                                ':searchedFirstName' => $searchedFirstName,
+                                                ':searchedLastName' => $searchedLastName,
+                                                ':searchedEmail' => $searchedEmail
+                                            ));
+                                        }
+
+                                        $members = $membersQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo 
+                                            "<br /><br /><div>Returned " . count($members) . " row(s)</div>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Email Address</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Dues Paid Until</th>
+                                                        <th>Member Status</th>
+                                                        <th>Management</th>
+                                                    </tr>
+                                                </thead>";
+
+                                        while($member = array_shift($members)){
+                                            $formattedActiveStatus = "Active";
+                                            if ($member[ACTIVESTATUS] == 0) $formattedActiveStatus = "Inactive";
+                                            
+                                            echo 
+                                                "<tr>
+                                                    <td>" . $member[FIRSTNAME] . "</td>
+                                                    <td>" . $member[LASTNAME] . "</td>
+                                                    <td><a href='mailto:" . $member[MEMBER_EMAIL] . "'>" . $member[MEMBER_EMAIL] . "</a></td>
+                                                    <td>" . $member[PHONE] . "</td>
+                                                    <td>" . $member[DUEDATE] . "</td>
+                                                    <td>" . $formattedActiveStatus . "</td>
+                                                    <td>
+                                                        <form action='view.php' method='post'>
+                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
+                                                            <input type='submit' class='btn btn-primary' value='View'>
+                                                        </form>
+                                                        <form action='edit.php' method='post'>
+                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
+                                                            <input type='submit' class='btn btn-primary' value='Edit'>
+                                                        </form>
+                                                        <form action='index.php' method='post'>
+                                                            <input type='text' name='deleteMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
+                                                            <input type='submit' class='btn btn-warning' value='Delete'>
+                                                        </form>
+                                                    </td>
+                                                </tr>";
+                                        }
+
+                                        echo "</table>";
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                    }
+                                }
+                            ?> 
+                        </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

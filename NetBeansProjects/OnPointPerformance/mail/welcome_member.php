@@ -22,7 +22,7 @@
 
         $mail->isHTML(true);                                  // Set email format to HTML
 
-        $mail->Subject = 'Admin account added';
+        $mail->Subject = 'Welcome to On Point Performance Center!';
         $mail->Body    = 
                 '<p>
                     Your username is: ' . $email . 

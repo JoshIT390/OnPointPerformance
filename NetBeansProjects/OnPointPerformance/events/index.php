@@ -14,7 +14,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Events</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
         
         <!-- FLEXSLIDER IMPORTS -->
@@ -70,6 +71,8 @@ and open the template in the editor.
                     <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
                 </div>
             </nav>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
             <!-- FLEXSLIDER -->
             <div class="container">
@@ -89,10 +92,9 @@ and open the template in the editor.
 
 
             <div class="container">
-                <p class='linez'> On Point Performance Center hosts a variety of events throughout the year from powerlifting meets to lifting seminars put on my major names in the lifting industry.
-                We also do road trips to other big lifting gyms on the east coast to learn from some of the best raw and equipped lifters in the nation.
-                If you're interested in participating in one of our events please RSVP with us so that we know that you plan on attending.
-                If a form for that event is required please fill it out and turn it in to us before the event takes place.</p>
+                <p class='linez' style="padding-bottom:15px;font-size: 12pt;">On Point Performance Center hosts seminars throughout the year. 
+                    For these seminars, we will bring in subject matter experts that will provide knowledge and training on topics such as strength training, functional medicine, nutrition for the athlete, active shooter training, self-defense and more. 
+                    The seminars are usually open to the public and will often feature presenters who are well-known in the national and international physical training and tactical communities.</p>
             <!--<div class="jumbotron" style="text-align: center;">
                     <h1>Upcoming Events</h1>
                     <p>Come join us.</p>

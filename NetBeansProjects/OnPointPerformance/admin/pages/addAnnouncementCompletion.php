@@ -133,32 +133,62 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
+                        <h1 class="page-header">Announcements</h1>
 						<p>
 							<?php
 							$servername = "mysql.dnguyen94.com";
 							$username = "ad_victorium";
 							$password = "MT8AlJAM";
 							$database = "onpoint_performance_center_lower";
-                                                        $eventID = $_POST["eventID"];
-                                                       
-                                                        
+							$title = $_POST["title"];
+							$date = $_POST["date"];
+							$description = $_POST["description"];
+							$imgDescription = $_POST["imgDescription"];
+							$target_dir = "../../images/";
+							$target_file = $target_dir . basename($_FILES["imgUpload"]["name"]);
+							$uploadOk = 1;
+							$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+							// Check if file already exists
+							if (file_exists($target_file)) {
+								echo "Sorry, file already exists.";
+								$uploadOk = 0;
+							}
+							// Allow certain file formats
+							if($imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif" && $imageFileType != "jpg") {
+								echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+								$uploadOk = 0;
+							}
+							// Check if $uploadOk is set to 0 by an error
+							if ($uploadOk == 0) {
+								echo "Sorry, your file was not uploaded.";
+							// if everything is ok, try to upload file
+							} else {
+								if (move_uploaded_file($_FILES["imgUpload"]["tmp_name"], $target_file)) {
+									//echo "The file ". basename( $_FILES["imgUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='announcementsm.php'>Announcements Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password, $database);
 
 							// Check connection
-							if ($conn->connect_error) {
+							if ($conn->connect_error) 
+							{
 								die("Connection failed: " . $conn->connect_error);
-                                                        }
-                                                        $query = "DELETE FROM CALENDAR WHERE CALENDAR_ID='$eventID' ;";
-                                                        $result = mysqli_query($conn, $query);
-														
-                                                        if (!$result){
-                                                            die('Invalid query: ' . mysql_error());
-                                                        }
-                                                        else{
-                                                            echo "Successfully deleted event!</br>";
-                                                        }
+                            }
+							$query = "INSERT INTO ANNOUNCEMENT(DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT) VALUES ('$description', '$title', '$date', '". basename( $_FILES["imgUpload"]["name"]) ."', '$imgDescription');";
+							$result = mysqli_query($conn, $query);
+							if (!$result)
+							{
+								die('Invalid query: ' . mysql_error());
+							}
+							else
+							{
+								echo "Successfully Added Announcement!</br>";
+							}
+								} else {
+									echo "Sorry, there was an error uploading your file.";
+								}
+							}
+                                                        
+							
 							?> 
 						</p>
                     </div>

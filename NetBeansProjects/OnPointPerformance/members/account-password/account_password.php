@@ -46,22 +46,42 @@
         
         echo 
         '<div class="row-fluid">
-            Your new password must be eight or more characters and have at least one each:
-            <ul>
-                <li>Lower-case letter</li>
-                <li>Upper-case letter</li>
-                <li>Number</li>
-                <li>Special characters</li>
-            </ul>
-        </div>
-        <div class="row-fluid">' . 
-            $message . 
-            '<form method="post" action="./" id="account_update">
-                Enter your current password <input type="password" name="currentPassword" /><br /><br />                            
-                Enter your new password <input type="password" name="newPassword1" /><br /><br />
-                Re-enter your new password <input type="password" name="newPassword2" /><br /><br />
-                <input type="submit" value="Save changes" />
-            </form>
+            <div class="well bs-component">
+                Your new password must be eight or more characters and have at least one each:
+                <ul>
+                    <li>Lower-case letter</li>
+                    <li>Upper-case letter</li>
+                    <li>Number</li>
+                    <li>Special characters</li>
+                </ul>
+                
+                <div class="row-fluid">' . 
+                    $message . 
+                    '<form method="post" action="./" id="account_update">
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Enter your current password</label>
+                            <div class="col-lg-8">
+                                <input type="password" name="currentPassword" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Enter your new password</label>
+                            <div class="col-lg-8">
+                                <input type="password" name="newPassword1" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Re-enter your new password</label>
+                            <div class="col-lg-8">
+                                <input type="password" name="newPassword2" />
+                            </div>
+                        </div>
+                        <div>
+                            <input type="submit" value="Save changes" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>';
     }
 

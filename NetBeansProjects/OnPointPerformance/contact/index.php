@@ -15,7 +15,8 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Contact Us</title>
+        <title>On Point Performance Center</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
@@ -61,6 +62,8 @@ and open the template in the editor.
                     <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
                 </div>
             </nav>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
             <div class="container">        
@@ -110,7 +113,16 @@ and open the template in the editor.
                         ?>
                     </div>
                     <div class="span6">
-                        <div class="pull-right">
+                        <div class="pull-right">                            
+                            <div>
+                                <h3 style="font-weight: bold; color:#ffffff">CONNECT WITH US</h3>
+                                <hr style="height: 1px; background-color:#ffffff; color:#ffffff" />
+                                <div style="height: 60px">
+                                    <a href="https://www.facebook.com/On-POINT-Performance-Center-773104732833906/" target="_blank">
+                                        <i class="fa fa-facebook-official fa-3x"></i>
+                                    </a>
+                                </div>
+                            </div>
                             <div>
                                 <h3 style="font-weight: bold; color:#ffffff">OUR LOCATION</h3>
                                 <hr style="height: 1px; background-color:#ffffff; color:#ffffff" />
@@ -120,10 +132,6 @@ and open the template in the editor.
                                     Winchester, VA 22601
                                 </div><br />
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d919.3066800457663!2d-78.16116457542195!3d39.19249507007405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b5ee35e994fc51%3A0x3e77c2192738fe80!2s567+N+Cameron+St%2C+Winchester%2C+VA+22601!5e0!3m2!1sen!2sus!4v1457649163764" width="380" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
-                            </div>
-                            <div>
-                                <h3 style="font-weight: bold; color:#ffffff">SOCIAL MEDIA</h3>
-                                <hr style="height: 1px; background-color:#ffffff; color:#ffffff" />
                             </div>
                         </div>
                     </div>
