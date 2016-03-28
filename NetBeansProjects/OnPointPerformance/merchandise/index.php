@@ -84,7 +84,7 @@ and open the template in the editor.
                     </div>
                     
                 
-               
+               <!--
                 <div class="row-fluid">
                    <div class="jumbotron">
                         <h1>Jumbotron</h1>
@@ -103,6 +103,7 @@ and open the template in the editor.
                         </p>
                     </div>
                 </div>
+                -->
             </div>
         </div>
         <?php include ("../assets/virtual/footer.inc"); ?>
