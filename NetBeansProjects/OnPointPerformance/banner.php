@@ -26,9 +26,9 @@
     for ($count=0; $count<1; $count++) 
 	{
       $result = $query->fetch();
-	  if($result[1] > date("Y-m-d") ){
-	  echo "<div class='banner' style = 'text-align:center; background-color: #FF2600; border: 5px solid black; color: white;'>";
-	  echo "<h1>" . $result[2] . ": " . $result[3] . "</h1>";
+	  if($result[1] >= date("Y-m-d") ){
+	  echo "<div class='alert alert-dismissible alert-danger' style = 'text-align:center;'>";
+	  echo "<h1><Strong>" . $result[2] . ":</strong> " . $result[3] . "</h1>";
 	  echo "</div>";
 	  echo "</br>";
 	  } 

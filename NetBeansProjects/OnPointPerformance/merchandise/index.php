@@ -60,7 +60,9 @@ and open the template in the editor.
                     <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
                 </div>
             </nav>
-
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
             <div class="container">
                 <div class="row-fluid">
                     <h1 style="color:#ffffff; font-weight: bold">MERCHANDISE</h1>

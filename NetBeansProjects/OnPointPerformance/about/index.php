@@ -35,7 +35,7 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="../">Home</a></li>
-                            <li class="active"><a><span class="sr-only">(current)</span>About Us</a></li>
+                            <li class="active"><a href="#"><span class="sr-only">(current)</span>About Us</a></li>
                             <li><a href="../apply/">Apply</a></li>
                             <li><a href="../events/">Events</a></li>
                             <li><a href="../merchandise/">Merchandise</a></li>
@@ -60,6 +60,8 @@ and open the template in the editor.
                     <a> <img src="../assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>
                 </div>
             </nav>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             
             <div class="container">
             <div class="jumbotron">

@@ -49,7 +49,7 @@ and open the template in the editor.
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a><span class="sr-only">(current)</span>Home</a></li>
+                            <li class="active"><a href="#"><span class="sr-only">(current)</span>Home</a></li>
                             <li><a href="./about/">About Us</a></li>
                             <li><a href="./apply/">Apply</a></li>
                             <li><a href="./events/">Events</a></li>
@@ -72,11 +72,14 @@ and open the template in the editor.
                             ?>
                         </ul>
                     </div>
-     <a> <img src="./assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>               
+                    <a> <img src="./assets/images/red slash.png" style="width:100%; height:15px;float: left;"> </a>               
                 </div>
             </nav>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <!-- END NAVBAR -->
-					<div class="container"><?php include 'banner.php';?> </div>
+            
+            <div class="container"><?php include 'banner.php';?> </div>
 			
             <!-- FLEXSLIDER 
             <div class="container">
@@ -107,44 +110,44 @@ and open the template in the editor.
                 </div>
             </div>
             END FLEXSLIDER -->
-			<!-- NEW SLIDESHOW CODE -->
-			<div class="container">
-                            <div id="captioned-gallery" >
-                                <figure class="slider">
-                                    <figure>
-                                        <img src="./assets/images/slide1.jpg" style="height:auto;" />
-                                        <figcaption>
-                                            <h1>Dual Purpose Gym</h1>
-                                            <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
-                                        </figcaption>
-                                    </figure>
-                                    <figure>
-                                        <img src="./assets/images/slide2.jpg" style="height:auto;"/>
-                                        <figcaption>
-                                            <h1>Strength Training</h1>
-                                            <h4>Our strength training section has all the equipment you need to get stronger</h4>
-                                        </figcaption>
-                                    </figure>
-                                    <figure>
-                                        <img src="./assets/images/slide3.jpg" style="height:auto;"/>
-                                            <figcaption>
-                                                <h1>Tactical Training</h1>
-                                                <h4>Our tactical section is set up for practicing military and police routines</h4>
-                                            </figcaption>
-                                    </figure>
-                                    <figure>
-                                        <img src="./assets/images/slide1.jpg" style="height:auto;" />
-                                            <figcaption>
-                                                <h1>Dual Purpose Gym</h1>
-                                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
-                                            </figcaption>
-                                    </figure>
-                                </figure>
-                            </div>
-			</div>
-			</br>
-			</br>
-			<!-- END NEW SLIDESHOW CODE -->
+            <!-- NEW SLIDESHOW CODE -->
+            <div class="container">
+                <div id="captioned-gallery" >
+                    <figure class="slider">
+                        <figure>
+                            <img src="./assets/images/slide1.jpg" style="height:auto;" />
+                            <figcaption>
+                                <h1>Dual Purpose Gym</h1>
+                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./assets/images/slide2.jpg" style="height:auto;"/>
+                            <figcaption>
+                                <h1>Strength Training</h1>
+                                <h4>Our strength training section has all the equipment you need to get stronger</h4>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./assets/images/slide3.jpg" style="height:auto;"/>
+                            <figcaption>
+                                <h1>Tactical Training</h1>
+                                <h4>Our tactical section is set up for practicing military and police routines</h4>
+                            </figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./assets/images/slide1.jpg" style="height:auto;" />
+                            <figcaption>
+                                <h1>Dual Purpose Gym</h1>
+                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                            </figcaption>
+                        </figure>
+                    </figure>
+                </div>
+            </div>
+            </br>
+            </br>
+            <!-- END NEW SLIDESHOW CODE -->
             <!-- ANNOUNCEMENTS 
             <div class="container" style="width: auto;">
                 <div class="row-fluid" style="margin-bottom: 2em;">
@@ -186,7 +189,7 @@ and open the template in the editor.
                     -->
 					
 			
-                     <div class="container">
+            <div class="container">
                 <?php include 'announcements.php';?>
             </div>
         </div>
