@@ -1,0 +1,36 @@
+@import url(http://fonts.googleapis.com/css?family=Istok+Web);
+@keyframes slidy {
+0% { left: 0%; }
+20% { left: 0%; }
+35% { left: -100%; }
+55% { left: -100%; }
+70% { left: -200%; }
+90% { left: -200%; }
+100% { left: -300%; }
+
+}
+figure { 
+  margin: 0; background: #101010;
+  font-family: Istok Web, sans-serif;
+  font-weight: 100;
+}
+div#captioned-gallery { 
+  width: 100%; overflow: hidden; 
+  border: 5px solid #000000;
+}
+figure.slider { 
+  position: relative; width: 500%;
+  font-size: 0; animation: 18s slidy infinite; 
+}
+figure.slider figure { 
+  width: 20%; height: auto;
+  display: inline-block;  position: inherit; 
+}
+figure.slider img { width: 100%; height: auto}
+figure.slider figure figcaption { 
+  position: absolute; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  color: #fff; width: 100%;
+  font-size: 2rem; padding: .6rem; 
+  text-align: center;
+}

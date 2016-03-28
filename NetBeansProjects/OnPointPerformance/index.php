@@ -18,8 +18,10 @@ and open the template in the editor.
         <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
         <?php include ("./assets/virtual/mainBootstrap.inc"); ?>
-        
-        <!-- FLEXSLIDER IMPORTS -->
+        <!-- New Slideshow CSS -->
+		<link rel="stylesheet" href="slideshow.css" type="text/css">
+		<!-- End New Slideshow CSS -->
+        <!-- FLEXSLIDER IMPORTS 
         <link rel="stylesheet" href="flexslider.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script src="jquery.flexslider.js"></script>
@@ -28,7 +30,7 @@ and open the template in the editor.
                 $('.flexslider').flexslider();
             });
         </script>
-        <!-- END FLEXSLIDER IMPORTS -->
+         END FLEXSLIDER IMPORTS -->
     </head>
     <body>
         <div class="wrap">
@@ -48,7 +50,6 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active"><a><span class="sr-only">(current)</span>Home</a></li>
-
                             <li><a href="./about/">About Us</a></li>
                             <li><a href="./apply/">Apply</a></li>
                             <li><a href="./events/">Events</a></li>
@@ -75,13 +76,14 @@ and open the template in the editor.
                 </div>
             </nav>
             <!-- END NAVBAR -->
-
-            <!-- FLEXSLIDER -->
+					<div class="container"><?php include 'banner.php';?> </div>
+			
+            <!-- FLEXSLIDER 
             <div class="container">
                 <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
                     <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
                         <li>
-                            <img src="./assets//images/slide1.jpg" style="height:auto;" />
+                            <img src="./assets/images/slide1.jpg" style="height:auto;" />
                             <div class="flex-caption">
                                 <h1>Dual Purpose Gym</h1>
                                 <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
@@ -91,7 +93,7 @@ and open the template in the editor.
                             <img src="./assets/images/slide2.jpg" style="height:auto;"/>
                             <div class="flex-caption">
                                 <h1>Strength Training</h1>
-                                <h4>Our strength training section has all the equipment you needed to get stronger</h4>
+                                <h4>Our strength training section has all the equipment you need to get stronger</h4>
                             </div>
                         </li>
                         <li>
@@ -104,8 +106,45 @@ and open the template in the editor.
                     </ul>
                 </div>
             </div>
-            <!-- END FLEXSLIDER -->
-
+            END FLEXSLIDER -->
+			<!-- NEW SLIDESHOW CODE -->
+			<div class="container">
+                            <div id="captioned-gallery" >
+                                <figure class="slider">
+                                    <figure>
+                                        <img src="./assets/images/slide1.jpg" style="height:auto;" />
+                                        <figcaption>
+                                            <h1>Dual Purpose Gym</h1>
+                                            <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                                        </figcaption>
+                                    </figure>
+                                    <figure>
+                                        <img src="./assets/images/slide2.jpg" style="height:auto;"/>
+                                        <figcaption>
+                                            <h1>Strength Training</h1>
+                                            <h4>Our strength training section has all the equipment you need to get stronger</h4>
+                                        </figcaption>
+                                    </figure>
+                                    <figure>
+                                        <img src="./assets/images/slide3.jpg" style="height:auto;"/>
+                                            <figcaption>
+                                                <h1>Tactical Training</h1>
+                                                <h4>Our tactical section is set up for practicing military and police routines</h4>
+                                            </figcaption>
+                                    </figure>
+                                    <figure>
+                                        <img src="./assets/images/slide1.jpg" style="height:auto;" />
+                                            <figcaption>
+                                                <h1>Dual Purpose Gym</h1>
+                                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                                            </figcaption>
+                                    </figure>
+                                </figure>
+                            </div>
+			</div>
+			</br>
+			</br>
+			<!-- END NEW SLIDESHOW CODE -->
             <!-- ANNOUNCEMENTS 
             <div class="container" style="width: auto;">
                 <div class="row-fluid" style="margin-bottom: 2em;">
@@ -145,7 +184,9 @@ and open the template in the editor.
                 </div>
             </div>
                     -->
-                     <div class="container-fluid">
+					
+			
+                     <div class="container">
                 <?php include 'announcements.php';?>
             </div>
         </div>
