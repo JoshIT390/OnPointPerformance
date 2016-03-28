@@ -15,6 +15,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Merchandise</title>
+        <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
     </head>
     <body>
