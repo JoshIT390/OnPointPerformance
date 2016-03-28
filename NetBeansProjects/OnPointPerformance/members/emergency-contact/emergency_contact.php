@@ -40,17 +40,41 @@
 
             echo 
             '<div class="row-fluid">
+                <div class="well bs-component">
                 <form method="post" action="./" id="emergency_contact_update">
                     <div>
-                        First name <input type="text" name="firstName" value="' . $emergencyContact[0] . '" required/><br /><br />
-                        Last name <input type="text" name="lastName" value="' . $emergencyContact[1] . '" required/><br /><br />
-                        Phone number <input type="tel" name="phone" value="' . $emergencyContact[2] . '" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" maxlength="13" required/><br /><br />
-                        Relationship <select name="relationship">' . createRelationshipsOptions($relationships, $emergencyContact[3]) . '</select><br /><br />
-                        <input type="hidden" name="emergencyContactID" value="' . $emergencyContact[4] . '" />   
-                        <input type="hidden" name="submit" value="TRUE" />
-                        <input type="submit" value="Save changes" />
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">First name</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="firstName" value="' . $emergencyContact[0] . '" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Last name</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="lastName" value="' . $emergencyContact[1] . '" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Phone number</label>
+                            <div class="col-lg-8">
+                                <input type="tel" name="phone" value="' . $emergencyContact[2] . '" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" maxlength="13" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label">Relationship</label>
+                            <div class="col-lg-8">
+                                <select name="relationship">' . createRelationshipsOptions($relationships, $emergencyContact[3]) . '</select>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="hidden" name="emergencyContactID" value="' . $emergencyContact[4] . '" />   
+                            <input type="hidden" name="submit" value="TRUE" />
+                            <input type="submit" value="Save changes" />
+                        </div>
                     </div>
                 </form>
+                </div>
             </div>';
         }
         // Script halts and throws error if exception is caught
