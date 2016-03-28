@@ -71,7 +71,7 @@ and open the template in the editor.
             </div>
             <div class="container">
                         <div class="jumbotron">
-                            <img src="../assets/images/ph_300x300.gif" alt="Picture of Rusty Pugh" style="float:left;padding-right:15px;">
+						<img src="RustyPugh.jpg" alt="Picture of Rusty Pugh" style="float:left;padding-right:15px;">
                             <h1>Rusty Pugh</h1>
                             <p class='linez' style="font-size: 12pt">Rusty served 14 years in the U.S. Army's elite Special Forces, known as the Green Berets. During this time Rusty operated in several high threat missions overseas. These included tours in Central America and Afghanistan where he was awarded the Bronze Star Medal and the Combat Infantry Badge. Rusty served the majority of his military  career on an Operational Detachment Alpha, otherwise known as a Special Forces A Team. Rusty was a graduate of the Special Forces Advanced Urban Combat Course as well as the Special Operations Combat Diver Qualification Course, one of the most physically demanding military courses in the world. Rusty has also competed in Tactical 3 Gun and International Practical Shooting Confederation at a National level. Rusty holds Elite / Pro totals in 2 weight classes as a powerlifter  and has squatted 800 pounds and bench pressed 650 pounds in sanctioned powerlifting meets. Rusty has coached several powerlifters to achieve Elite/Pro totals. He has a personal training certificate from the Cooper Institute in Dallas Texas.</p>
                         </div> 
