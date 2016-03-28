@@ -75,13 +75,20 @@ and open the template in the editor.
                         <h2>On Point Performance Center T-Shirt</h2>
                                 </div>
                                 <div class="panel-body">
-                        <p>Call for more details.</p>
+                        <p>Pre-shrunk cotton</p>
+                        <p>On Point Performance Center logo on the front</p>
+                        <p>Color: Olive drab</p>
+                        <p>Sizes: Large to XXXL.</p>
+                        <p>Call or email for prices and availability</p>
                                 </div>
                             </div>
                         </div>
+                         <div class="col-lg-4">
                         <img src="../assets/images/Item1.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
+                          </div>
+                         <div class="col-lg-4">
                          <img src="../assets/images/Item2.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
-                        
+                        </div>
                     </div>
                     
                 
