@@ -66,15 +66,15 @@
             }
             else {
                 // Must be greater than or equal to eight characters and use numbers, lower-case letters, upper-case letters, and special characters
-                if ((strlen($newPassword1) < 8) &&  !preg_match("#[0-9]+#", $newPassword1) && !preg_match("#[a-z]+#", $newPassword1) && !preg_match("#[A-Z]+#", $newPassword1) &&  !preg_match("#\W+#", $newPassword1)) {
+                if ((strlen($newPassword1) >= 8) &&  preg_match("#[0-9]+#", $newPassword1) && preg_match("#[a-z]+#", $newPassword1) && preg_match("#[A-Z]+#", $newPassword1) &&  preg_match("#\W+#", $newPassword1)) {
+                    return TRUE;
+                }
+                else {
                     echo 
                     "<div>
                         Please follow the password instructions above.
                     </div>";
-                    return false;
-                }
-                else {
-                    return true;
+                    return FALSE;
                 }
             }
         }
