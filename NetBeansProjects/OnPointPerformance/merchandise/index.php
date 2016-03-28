@@ -83,27 +83,6 @@ and open the template in the editor.
                          <img src="../assets/images/Item2.jpg" alt="OnPointPerformance Shirt" style="float:left;" />
                         
                     </div>
-                    
-                
-               
-                <div class="row-fluid">
-                   <div class="jumbotron">
-                        <h1>Jumbotron</h1>
-                        <p>Merchandise Item 2</p>
-                        <p>
-                            <a class="btn btn-primary btn-lg">Learn more</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="jumbotron">
-                        <h1>Jumbotron</h1>
-                        <p>Merchandise Item 3</p>
-                        <p>
-                            <a class="btn btn-primary btn-lg">Learn more</a>
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
         <?php include ("../assets/virtual/footer.inc"); ?>
