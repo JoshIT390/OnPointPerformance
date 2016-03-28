@@ -6,10 +6,10 @@
     define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
     define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
     
-    if (!isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && !isset($_POST["username"])) {
+    if (empty($_POST["submit"]) && empty($_POST["g-recaptcha-response"]) && empty($_POST["username"])) {
         displayForm("");
     }
-    if (!empty($_POST["submit"]) && empty($_POST["g-recaptcha-response"]) && empty($_POST["username"])) {
+    if (!empty($_POST["submit"]) && (empty($_POST["g-recaptcha-response"]) || empty($_POST["username"]))) {
         displayForm("incomplete");
     }
     elseif (!empty($_POST["submit"]) && !empty($_POST["g-recaptcha-response"]) && !empty($_POST["username"])) {
@@ -168,6 +168,12 @@
             $errorBanner = 
                 "<div class='alert alert-dismissible alert-warning'>
                     There has been a problem with submission. Please try again.
+                </div>";
+        }
+        elseif ($status == "incomplete") {
+            $errorBanner = 
+                "<div class='alert alert-dismissible alert-warning'>
+                    Please make sure all fields are complete and try again.
                 </div>";
         }
         elseif ($status == "success") {
