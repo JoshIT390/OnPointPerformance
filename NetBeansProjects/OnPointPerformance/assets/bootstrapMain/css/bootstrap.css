@@ -18,9 +18,11 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  height: 100%
 }
 body {
   margin: 0;
+  height: 100%;
 }
 article,
 aside,
@@ -205,7 +207,7 @@ th {
     background: transparent !important;
     color: #000 !important;
     -webkit-box-shadow: none !important;
-            box-shadow: none !important;
+    box-shadow: none !important;
     text-shadow: none !important;
   }
   a,
@@ -5098,7 +5100,7 @@ a.thumbnail.active {
   color: #e6e6e6;
 }
 .alert-danger {
-  background-color: #cc0000;
+  background-color: #ee5f5b;
   border-color: #ed4d63;
   color: #ffffff;
 }
@@ -7287,8 +7289,16 @@ a.list-group-item-danger.active:focus {
     background-image: url('')!important;
 }
 
-.footer {
-  width: 100%;
+.wrap {
+  min-height: 100%;
   height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -130px;
+  /* Pad bottom by footer height */
+  padding: 0 0 130px;
+}
+
+.footer {
+  height: 130px;
   background-color: #33373D;
 }
