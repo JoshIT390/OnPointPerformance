@@ -70,25 +70,25 @@
                         '<div class="form-group row">
                             <label class="col-lg-2 control-label">First name </label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" name="firstName" value="' . $accountInformationResult[0] . '" required/>
+                                <input class="form-control" type="text" name="firstName" value="' . htmlentities($accountInformationResult[0], ENT_QUOTES) . '" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">Last name </label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" name="lastName" value="' . $accountInformationResult[1] . '" required/>
+                                <input class="form-control" type="text" name="lastName" value="' . htmlentities($accountInformationResult[1], ENT_QUOTES) . '" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">Address </label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" name="address" value="' . $accountInformationResult[2] . '" required/>
+                                <input class="form-control" type="text" name="address" value="' . htmlentities($accountInformationResult[2], ENT_QUOTES) . '" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">City </label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" name="city" value="' . $accountInformationResult[3] . '" required/>
+                                <input class="form-control" type="text" name="city" value="' . htmlentities($accountInformationResult[3], ENT_QUOTES) . '" required/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -112,7 +112,7 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">Email </label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="email" name="email" value="' . $accountInformationResult[7] . '" required/>
+                                <input class="form-control" type="email" name="email" value="' . htmlentities($accountInformationResult[7], ENT_QUOTES) . '" required/>
                             </div>
                         </div>
                         <div class="form-group row">

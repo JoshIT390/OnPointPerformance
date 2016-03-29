@@ -91,7 +91,7 @@ and open the template in the editor.
                         displayEmergencyContact($_SESSION['member_username'], $relationships, "");
                     }
                     else {
-                        if (submitEmergencyContact(htmlentities(trim($_POST["firstName"])), htmlentities(trim($_POST["lastName"])), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), $_POST["relationship"], $_POST["emergencyContactID"])) {
+                        if (submitEmergencyContact(trim($_POST["firstName"]), trim($_POST["lastName"]), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), $_POST["relationship"], $_POST["emergencyContactID"])) {
                             displayEmergencyContact($_SESSION['member_username'], $relationships, "success");
                         }
                         else {

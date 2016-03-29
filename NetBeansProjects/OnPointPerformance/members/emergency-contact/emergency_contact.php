@@ -65,13 +65,13 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">First name</label>
                             <div class="col-lg-8">
-                                <input type="text" name="firstName" value="' . $emergencyContact[0] . '" class="form-control" required/>
+                                <input type="text" name="firstName" value="' . htmlentities($emergencyContact[0], ENT_QUOTES) . '" class="form-control" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">Last name</label>
                             <div class="col-lg-8">
-                                <input type="text" name="lastName" value="' . $emergencyContact[1] . '" class="form-control" required/>
+                                <input type="text" name="lastName" value="' . htmlentities($emergencyContact[1], ENT_QUOTES) . '" class="form-control" required/>
                             </div>
                         </div>
                         <div class="form-group row">
