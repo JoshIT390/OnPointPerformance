@@ -16,7 +16,7 @@
         $mail->Port = 465;                                    // TCP port to connect to
 
         $mail->setFrom('noreply@dnguyen94.com', 'OnPoint Performance Center');
-        $mail->addAddress($emailAddress);     // Add a recipient
+        $mail->addAddress(html_entity_decode($emailAddress, ENT_QUOTES));     // Add a recipient
         $mail->addReplyTo('noreply@dnguyen94.com', 'OnPoint Performance Center');
 
         $mail->isHTML(true);                                  // Set email format to HTML
