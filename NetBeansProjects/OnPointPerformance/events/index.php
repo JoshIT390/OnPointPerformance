@@ -19,14 +19,7 @@ and open the template in the editor.
         <?php include ("../assets/virtual/mainBootstrap2.inc"); ?>
         
         <!-- FLEXSLIDER IMPORTS -->
-        <link rel="stylesheet" href="../flexslider.css" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-        <script src="../jquery.flexslider.js"></script>
-        <script type="text/javascript" charset="utf-8">
-            $(window).load(function() {
-                $('.flexslider').flexslider();
-            });
-        </script>
+        <link rel="stylesheet" href="./slideshow.css" type="text/css">
         <!-- END FLEXSLIDER IMPORTS -->
     </head>
     <body>
@@ -76,23 +69,23 @@ and open the template in the editor.
 
             <!-- FLEXSLIDER -->
             <div class="container">
-                <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
-                    <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
-                        <li>
+                <div id="captioned-gallery" >
+                    <figure class="slider">
+                        <figure>
                             <img src="../assets/images/eventsImage.jpg" style="height:auto;" />
-                            <div class="flex-caption">
+                            <figcaption>
                                 <h1>Upcoming Events</h1>
                                 <h4>Come Join Us for these special events.</h4>
-                            </div>
-                        </li>
-                    </ul>
+                            </figcaption>
+                        </figure>
+                    </figure>
                 </div>
             </div>
             <!-- END FLEXSLIDER -->
 
 
             <div class="container">
-                <p class='linez' style="padding-bottom:15px;font-size: 12pt;">On Point Performance Center hosts seminars throughout the year. 
+                <p class='linez' style="padding-bottom:20px;padding-top: 20px;font-size: 12pt;">On Point Performance Center hosts seminars throughout the year. 
                     For these seminars, we will bring in subject matter experts that will provide knowledge and training on topics such as strength training, functional medicine, nutrition for the athlete, active shooter training, self-defense and more. 
                     The seminars are usually open to the public and will often feature presenters who are well-known in the national and international physical training and tactical communities.</p>
             <!--<div class="jumbotron" style="text-align: center;">

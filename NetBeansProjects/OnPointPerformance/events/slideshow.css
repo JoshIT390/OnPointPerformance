@@ -20,7 +20,7 @@ div#captioned-gallery {
 }
 figure.slider { 
   position: relative; width: 500%;
-  font-size: 0; animation: 18s slidy infinite; 
+  font-size: 0; 
 }
 figure.slider figure { 
   width: 20%; height: auto;
