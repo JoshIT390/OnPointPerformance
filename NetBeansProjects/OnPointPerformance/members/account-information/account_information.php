@@ -118,7 +118,7 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label">Notes </label>
                             <div class="col-lg-6">
-                                <textarea class="form-control" rows="5" name="notes" value="' . $accountInformationResult[8] . '"></textarea>
+                                <textarea class="form-control" rows="5" name="notes">' . $accountInformationResult[8] . '</textarea>
                             </div>
                         </div>
                         <div>
