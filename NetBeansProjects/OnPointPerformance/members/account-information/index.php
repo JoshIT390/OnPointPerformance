@@ -92,7 +92,7 @@ and open the template in the editor.
                         }
                         else {
                             if (verifyEmail(trim($_POST["email"]))) {
-                                if (submitAccountInformation($_SESSION["member_username"], htmlentities(trim($_POST["firstName"])), htmlentities(trim($_POST["lastName"])), htmlentities(trim($_POST["address"])), htmlentities(trim($_POST["city"])), htmlentities(trim($_POST["state"])), trim($_POST["zip"]), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["notes"])), trim($_POST["email"]))) {
+                                if (submitAccountInformation($_SESSION["member_username"], htmlentities(trim($_POST["firstName"])), htmlentities(trim($_POST["lastName"])), htmlentities(trim($_POST["address"])), htmlentities(trim($_POST["city"])), htmlentities(trim($_POST["state"])), trim($_POST["zip"]), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["notes"])), htmlentities(trim($_POST["email"])))) {
                                     $_SESSION['member_username'] = $_POST["email"];
                                     displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs, "success");
                                 }
