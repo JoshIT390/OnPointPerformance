@@ -79,18 +79,24 @@ and open the template in the editor.
                 if (isset($_SESSION['member_username'])){
                     include './emergency_contact.php';
 
-                    echo '<div><a href="../">Your Account</a> › View/change Emergency Contact</div>';
+                    echo 
+                        '<div class="row-fluid">
+                            <ul class="breadcrumb">
+                                <li><a href="../">Your Account</a></li>
+                                <li class="active">View/change Emergency Contact</li>
+                            </ul>
+                        </div>';
 
                     if (!isset($_POST["submit"])) {
-                        displayEmergencyContact($_SESSION['member_username'], $relationships);
+                        displayEmergencyContact($_SESSION['member_username'], $relationships, "");
                     }
                     else {
-                        echo 
-                        '<div>
-                            Changes saved
-                        </div>';
-                        submitEmergencyContact(trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["phone"]), $_POST["relationship"], $_POST["emergencyContactID"]);
-                        displayEmergencyContact($_SESSION['member_username'], $relationships);
+                        if (submitEmergencyContact(htmlentities(trim($_POST["firstName"])), htmlentities(trim($_POST["lastName"])), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), $_POST["relationship"], $_POST["emergencyContactID"])) {
+                            displayEmergencyContact($_SESSION['member_username'], $relationships, "success");
+                        }
+                        else {
+                            displayEmergencyContact($_SESSION['member_username'], $relationships, "fail");
+                        }
                     }
                 }
             ?>

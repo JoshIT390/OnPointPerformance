@@ -75,30 +75,37 @@ and open the template in the editor.
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
             <div class="container">
-                <div class="row-fluid">
                 <?php
                     if (isset($_SESSION['member_username'])){
                         include './account_information.php';
 
-                        echo '<div><a href="../">Your Account</a> › View/change Account Settings</div>';
+                        echo 
+                            '<div class="row-fluid">
+                                <ul class="breadcrumb">
+                                    <li><a href="../">Your Account</a></li>
+                                    <li class="active">View/change Account Information</li>
+                                </ul>
+                            </div>';
 
                         if (!isset($_POST["submit"])) {
-                            displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs);
+                            displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs, "");
                         }
                         else {
                             if (verifyEmail(trim($_POST["email"]))) {
-                                echo 
-                                '<div>
-                                    Changes saved
-                                </div>';
-                                submitAccountInformation($_SESSION["member_username"], trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["address"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]));
-                                $_SESSION['member_username'] = $_POST["email"];
-                                displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs);
+                                if (submitAccountInformation($_SESSION["member_username"], htmlentities(trim($_POST["firstName"])), htmlentities(trim($_POST["lastName"])), htmlentities(trim($_POST["address"])), htmlentities(trim($_POST["city"])), htmlentities(trim($_POST["state"])), trim($_POST["zip"]), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["notes"])), trim($_POST["email"]))) {
+                                    $_SESSION['member_username'] = $_POST["email"];
+                                    displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs, "success");
+                                }
+                                else {
+                                    displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs, "fail");
+                                }
+                            }
+                            else {
+                                displayAccountInformation($_SESSION["member_username"], $us_state_abbrevs, "fail_email");
                             }
                         }
                     }
                 ?>
-                </div>
             </div>
         </div>
         

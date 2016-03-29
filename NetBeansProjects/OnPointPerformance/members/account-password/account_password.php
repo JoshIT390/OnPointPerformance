@@ -47,40 +47,38 @@
         echo 
         '<div class="row-fluid">
             <div class="well bs-component">
+                <legend style="font-weight: bold; color:#ffffff">PASSWORD</legend>
                 Your new password must be eight or more characters and have at least one each:
                 <ul>
                     <li>Lower-case letter</li>
                     <li>Upper-case letter</li>
                     <li>Number</li>
                     <li>Special characters</li>
-                </ul>
-                
-                <div class="row-fluid">' . 
-                    $message . 
-                    '<form method="post" action="./" id="account_update">
-                        <div class="form-group row">
-                            <label class="col-lg-2 control-label">Enter your current password</label>
-                            <div class="col-lg-8">
-                                <input type="password" name="currentPassword" />
-                            </div>
+                </ul><br />' . 
+                $message . 
+                '<form method="post" action="./" id="account_update">
+                    <div class="form-group row">
+                        <label class="col-lg-3 control-label">Enter your current password</label>
+                        <div class="col-lg-7">
+                            <input type="password" name="currentPassword" class="form-control" />
                         </div>
-                        <div class="form-group row">
-                            <label class="col-lg-2 control-label">Enter your new password</label>
-                            <div class="col-lg-8">
-                                <input type="password" name="newPassword1" />
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 control-label">Enter your new password</label>
+                        <div class="col-lg-7">
+                            <input type="password" name="newPassword1" class="form-control" />
                         </div>
-                        <div class="form-group row">
-                            <label class="col-lg-2 control-label">Re-enter your new password</label>
-                            <div class="col-lg-8">
-                                <input type="password" name="newPassword2" />
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 control-label">Re-enter your new password</label>
+                        <div class="col-lg-7">
+                            <input type="password" name="newPassword2" class="form-control" />
                         </div>
-                        <div>
-                            <input type="submit" value="Save changes" />
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div>
+                        <input type="submit" value="Save changes" class="btn btn-default" />
+                    </div>
+                </form>
             </div>
         </div>';
     }

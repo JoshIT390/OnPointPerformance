@@ -74,34 +74,47 @@ and open the template in the editor.
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
-            <div class="container">
-                <?php            
-                    if (isset($_SESSION['member_username'])){
-                        include 'portal_information.php';
-                        echo 
-                        '<div>
-                            <h1>Welcome, ' . queryName($_SESSION['member_username']) . '</h1>
+            <?php            
+                if (isset($_SESSION['member_username'])){
+                    include 'portal_information.php';
+                    echo 
+                    '<div>
+                        <div class="container">
+                            <div class="row-fluid">
+                                <div class="col-lg-9">
+                                    <h1 style="color:#ffffff; font-weight: bold">WELCOME, ' . queryName($_SESSION['member_username']) . '</h1>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div>
+                                        <h5>MEMBERSHIP FEE DUE DATE</h5>
+                                    </div>
+                                    <div>
+                                        <h3 style="color:#ffffff;">' . date("F j, Y", strtotime(queryDueDate($_SESSION['member_username']))) . '</h3>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h4>MEMBERSHIP FEE DUE DATE</h4>
+                    </div></br>
+                    <div class="container">
+                        <div class="row-fluid">
+                            <div class="well well-lg">
+                                <legend style="font-weight: bold; color:#ffffff">ACCOUNT ACTIONS</legend>
+                                <div class="list-group table-of-contents">
+                                    <a class="list-group-item" href="./account-information/">View/change your account information</a>
+                                    <a class="list-group-item" href="./emergency-contact/">View/change your emergency contact</a>
+                                    <a class="list-group-item" href="./account-password/">Change your password</a>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h3>' . date("F j, Y", strtotime(queryDueDate($_SESSION['member_username']))) . '</h3>
-                        </div>
-                        <div>
-                            <a href="./account-information/">View/change your account information</a></br></br>
-                            <a href="./emergency-contact/">View/change your emergency contact</a></br></br>
-                            <a href="./account-password/">Change your password</a>
-                        </div>';
-                    }
-                    else {
-                        unset($_SESSION['member_username']);
-                        unset($_SESSION['admin_username']);
+                    </div>';
+                }
+                else {
+                    unset($_SESSION['member_username']);
+                    unset($_SESSION['admin_username']);
 
-                        include ("../login/login.php");
-                    }
-                ?>
-            </div>
+                    include ("../login/login.php");
+                }
+            ?>
         </div>
         
         <?php include ("../assets/virtual/footer.inc"); ?>

@@ -79,7 +79,13 @@ and open the template in the editor.
                     if (isset($_SESSION['member_username'])){
                         include './account_password.php';
 
-                        echo '<div><a href="../">Your Account</a> › Change Password</div>';
+                        echo 
+                            '<div class="row-fluid">
+                                <ul class="breadcrumb">
+                                    <li><a href="../">Your Account</a></li>
+                                    <li class="active">Change Password</li>
+                                </ul>
+                            </div>';
                         
                         if (isset($_POST["currentPassword"]) && isset($_POST["newPassword1"]) && isset($_POST["newPassword2"])) {
                             if (checkCurrentPassword($_SESSION['member_username'], $_POST["currentPassword"])) {                       
