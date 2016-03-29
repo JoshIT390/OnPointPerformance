@@ -40,13 +40,13 @@
             echo "<div class='row-fluid'>"
                     . "<div class='col-lg-3'>"
                         //todo: replace this with img url
-                        . "<img src='" . $result[5] . "' alt='" . $result[6] . "' >"
+                        . "<img src='../images/" . $result[4] . "' alt='" . $result[5] . "' >"
                     . "</div>"
                     . "<div class='col-lg-9'>"
                         . "<div class='jumbotron'>"
-                            . "<h1>" . $result[2] . "</h1>"
-                            . "<p> Description: \n" . $result[1] . "</p>"
-                            . "<p> Date: " . $result[3] . "</p>"
+                            . "<h2>" . $result[2] . "</h2>"
+                            . "<p class='linez' style='font-size: 12pt'>" . $result[1] . "</p>"
+                            . "<p class='linez' style='font-size: 12pt'> Date: " . $result[3] . "</p>"
                         . "</div>"
                     . "</div>"
                 . "</div>";

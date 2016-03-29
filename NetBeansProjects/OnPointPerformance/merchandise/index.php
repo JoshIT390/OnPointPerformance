@@ -77,11 +77,11 @@ and open the template in the editor.
                         <h2>On Point Performance Center T-Shirt</h2>
                                 </div>
                                 <div class="panel-body">
-                        <p>Pre-shrunk cotton</p>
-                        <p>On Point Performance Center logo on the front</p>
-                        <p>Color: Olive drab</p>
-                        <p>Sizes: Large to XXXL.</p>
-                        <p>Call or email for prices and availability</p>
+                        <p class='linez' style='font-size: 12pt'>Pre-shrunk cotton</p>
+                        <p class='linez' style='font-size: 12pt'>On Point Performance Center logo on the front</p>
+                        <p class='linez' style='font-size: 12pt'>Color: Olive drab</p>
+                        <p class='linez' style='font-size: 12pt'>Sizes: Large to XXXL.</p>
+                        <p class='linez' style='font-size: 12pt'>Call or email for prices and availability</p>
                                 </div>
                             </div>
                         </div>
