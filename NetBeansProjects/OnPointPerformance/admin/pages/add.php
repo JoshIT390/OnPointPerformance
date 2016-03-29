@@ -19,7 +19,7 @@
 
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -165,9 +165,9 @@
                                     ) {
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             if(verifyPassword($_POST["newPassword1"], $_POST["newPassword2"])) {
-                                                if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), 1, trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], $_POST["newPassword2"])) {
-                                                    if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["email"])) {
-                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
+                                                if (submitAccountInformation(htmlentities(trim($_POST["fname"]), ENT_QUOTES), htmlentities(trim($_POST["lname"]), ENT_QUOTES), $_POST["duesdate"], 1, htmlentities(trim($_POST["street"]), ENT_QUOTES), htmlentities(trim($_POST["city"]), ENT_QUOTES), $_POST["state"], htmlentities($_POST["zip"], ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["email"]), ENT_QUOTES), htmlentities($_POST["notes"], ENT_QUOTES), $_POST["newPassword2"])) {
+                                                    if (submitEmergencyContactInformation(htmlentities(trim($_POST["emergency_fname"]), ENT_QUOTES), htmlentities(trim($_POST["emergency_lname"]), ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
+                                                        sendAuditAlert((htmlentities(trim($_POST["fname"]), ENT_QUOTES) . " " . htmlentities(trim($_POST["lname"]), ENT_QUOTES)), htmlentities(trim($_POST["email"]), ENT_QUOTES), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
                                                         displayForm($us_state_abbrevs, $relationships, "success_manual", "", "", "", "", "", "", "", "", "", "", "", "", "", "");                                                        
                                                     }
                                                 }
@@ -201,24 +201,24 @@
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             $password = generatePassword();
 
-                                            if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), 1, trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], $_POST["newPassword2"])) {
-                                                if (submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["email"])) {
+                                            if (submitAccountInformation(htmlentities(trim($_POST["fname"]), ENT_QUOTES), htmlentities(trim($_POST["lname"]), ENT_QUOTES), $_POST["duesdate"], 1, htmlentities(trim($_POST["street"]), ENT_QUOTES), htmlentities(trim($_POST["city"]), ENT_QUOTES), $_POST["state"], htmlentities($_POST["zip"], ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["email"]), ENT_QUOTES), htmlentities($_POST["notes"], ENT_QUOTES), $password)) {
+                                                if (submitEmergencyContactInformation(htmlentities(trim($_POST["emergency_fname"]), ENT_QUOTES), htmlentities(trim($_POST["emergency_lname"]), ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
                                                     if(sendMail(trim($_POST["email"]), $password)) {
-                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
+                                                        sendAuditAlert((htmlentities(trim($_POST["fname"]), ENT_QUOTES) . " " . htmlentities(trim($_POST["lname"]), ENT_QUOTES)), htmlentities(trim($_POST["email"]), ENT_QUOTES), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
                                                         displayForm($us_state_abbrevs, $relationships, "success_auto", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
                                                         
                                                     }
                                                     else {
-                                                        displayForm($us_state_abbrevs, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"])); 
+                                                        displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                                     }   
                                                 }
                                             }
                                             else {
-                                                displayForm($us_state_abbrevs, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"])); 
+                                                displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                             }
                                         }
                                         else {
-                                            displayForm($us_state_abbrevs, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                         }
                                     }
                                 }
@@ -476,7 +476,7 @@
                                     }
                                 }
 
-                                function displayForm($us_state_abbrevs, $relationships, $status, $submittedFirstName, $submittedLastName, $submittedDuesDate, $submittedStreet, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedEmergencyFirstName, $submittedEmergencyLastName, $submittedEmergencyPhone, $submittedEmergencyRelationship) {
+                                function displayForm($us_state_abbrevs, $relationships, $status, $submittedFirstName, $submittedLastName, $submittedDuesDate, $submittedStreet, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedEmergencyFirstName, $submittedEmergencyLastName, $submittedEmergencyPhone, $submittedEmergencyRelationship) {                                   
                                     $notice = "";
 
                                     if ($status == "success_manual") {
@@ -520,22 +520,22 @@
                                                 <h3> Add a Member</h3></br>" . 
                                                 $notice . 
                                                 "<div>
-                                                    First Name: <input type='text' name='fname' value='" . $submittedFirstName . "' required />
-                                                    Last Name: <input type='text' name='lname' value='" . $submittedLastName . "' required />
+                                                    First Name: <input type='text' name='fname' value='" . htmlentities($submittedFirstName, ENT_QUOTES) . "' required />
+                                                    Last Name: <input type='text' name='lname' value='" . htmlentities($submittedLastName, ENT_QUOTES) . "' required />
                                                     Dues End Date: <input type='date' name='duesdate' value='" . $submittedDuesDate . "' required />
                                                 </div><br />
                                                 <div>
-                                                    Street Address: <input type='text' name='street' value='" . $submittedStreet . "' required />
-                                                    City: <input type='text' name='city' value='" . $submittedCity . "' required />
+                                                    Street Address: <input type='text' name='street' value='" . htmlentities($submittedStreet, ENT_QUOTES) . "' required />
+                                                    City: <input type='text' name='city' value='" . htmlentities($submittedCity, ENT_QUOTES) . "' required />
                                                     State:
                                                     <select name='state'>" . 
                                                         createStateAbbrevOptions($us_state_abbrevs, $submittedState) . 
                                                     "</select>
-                                                    Zip Code: <input type='text' name='zip' value='" . $submittedZip . "' required />
+                                                    Zip Code: <input type='text' name='zip' value='" . htmlentities($submittedZip, ENT_QUOTES) . "' maxlength='5' required />
                                                 </div><br />
                                                 <div>
                                                     Phone Number: <input type='text' name='phone' value='" . $submittedPhone . "' required />
-                                                    Email Address: <input type='text' name='email' value='" . $submittedEmail . "' required />
+                                                    Email Address: <input type='text' name='email' value='" . htmlentities($submittedEmail, ENT_QUOTES) . "' required />
                                                 </div>
                                                 <br />
                                                 <div>
@@ -547,9 +547,9 @@
                                                 <hr />
                                                 <h4> Emergency Contact:</h4>
                                                 <div>
-                                                    First Name: <input type='text' name='emergency_fname' value='" . $submittedEmergencyFirstName . "' required />
-                                                    Last Name: <input type='text' name='emergency_lname' value='" . $submittedEmergencyLastName . "' required />
-                                                    Phone Number: <input type='text' name='emergency_phone' value='" . $submittedEmergencyPhone . "' required />                                    
+                                                    First Name: <input type='text' name='emergency_fname' value='" . htmlentities($submittedEmergencyFirstName, ENT_QUOTES) . "' required />
+                                                    Last Name: <input type='text' name='emergency_lname' value='" . htmlentities($submittedEmergencyLastName, ENT_QUOTES) . "' required />
+                                                    Phone Number: <input type='text' name='emergency_phone' value='" . htmlentities($submittedEmergencyPhone, ENT_QUOTES) . "' pattern='(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}' maxlength='14' required />                                    
                                                     Relationship:
                                                     <select name='emergency_relationship'>" . 
                                                         createRelationshipsOptions($relationships, $submittedEmergencyRelationship) . 
