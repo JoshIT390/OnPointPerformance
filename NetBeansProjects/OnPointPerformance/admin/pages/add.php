@@ -150,12 +150,12 @@
                                 define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
                                 define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
 
-                                $us_state_abbrevs = array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY');
+                                $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
                                 $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
 
                                 // Regular view
                                 if (!isset($_POST["submit"])) {
-                                    displayForm($us_state_abbrevs, $relationships, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                                    displayForm($us_state_abbrevs, $relationships, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
                                 }
                                 else {
                                     // Account information and manually entered password
@@ -165,22 +165,22 @@
                                     ) {
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             if(verifyPassword($_POST["newPassword1"], $_POST["newPassword2"])) {
-                                                if (submitAccountInformation(htmlentities(trim($_POST["fname"]), ENT_QUOTES), htmlentities(trim($_POST["lname"]), ENT_QUOTES), $_POST["duesdate"], 1, htmlentities(trim($_POST["street"]), ENT_QUOTES), htmlentities(trim($_POST["city"]), ENT_QUOTES), $_POST["state"], htmlentities($_POST["zip"], ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["email"]), ENT_QUOTES), htmlentities($_POST["notes"], ENT_QUOTES), $_POST["newPassword2"])) {
-                                                    if (submitEmergencyContactInformation(htmlentities(trim($_POST["emergency_fname"]), ENT_QUOTES), htmlentities(trim($_POST["emergency_lname"]), ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
+                                                if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), $_POST["duesdate"], 1, trim($_POST["street"]), trim($_POST["city"]), $_POST["state"], $_POST["zip"], preg_replace("/[^0-9]/", "", trim($_POST["phone"])), trim($_POST["email"]), $_POST["notes"], $_POST["newPassword2"])) {
+                                                    if (submitEmergencyContactInformation(trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
                                                         sendAuditAlert((htmlentities(trim($_POST["fname"]), ENT_QUOTES) . " " . htmlentities(trim($_POST["lname"]), ENT_QUOTES)), htmlentities(trim($_POST["email"]), ENT_QUOTES), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
-                                                        displayForm($us_state_abbrevs, $relationships, "success_manual", "", "", "", "", "", "", "", "", "", "", "", "", "", "");                                                        
+                                                        displayForm($us_state_abbrevs, $relationships, "success_manual", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");                                                        
                                                     }
                                                 }
                                                 else {
-                                                    displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                                    displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                                 }
                                             }
                                             else {
-                                                displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                                displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                             }
                                         }
                                         else {
-                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                         }
                                     }
                                     // Account information entered, but no password
@@ -188,7 +188,7 @@
                                         !empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duesdate"]) && !empty($_POST["street"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"]) && 
                                         (empty($_POST["generatePassword"]) && (empty($_POST["newPassword1"]) || empty($_POST["newPassword2"])))
                                     ) {
-                                        displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                        displayForm($us_state_abbrevs, $relationships, "fail_password", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                     }
                                     // Account information and password generator requested
                                     elseif (
@@ -201,24 +201,24 @@
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             $password = generatePassword();
 
-                                            if (submitAccountInformation(htmlentities(trim($_POST["fname"]), ENT_QUOTES), htmlentities(trim($_POST["lname"]), ENT_QUOTES), $_POST["duesdate"], 1, htmlentities(trim($_POST["street"]), ENT_QUOTES), htmlentities(trim($_POST["city"]), ENT_QUOTES), $_POST["state"], htmlentities($_POST["zip"], ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["phone"])), htmlentities(trim($_POST["email"]), ENT_QUOTES), htmlentities($_POST["notes"], ENT_QUOTES), $password)) {
-                                                if (submitEmergencyContactInformation(htmlentities(trim($_POST["emergency_fname"]), ENT_QUOTES), htmlentities(trim($_POST["emergency_lname"]), ENT_QUOTES), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
+                                            if (submitAccountInformation(trim($_POST["fname"]), trim($_POST["lname"]), $_POST["duesdate"], 1, trim($_POST["street"]), trim($_POST["city"]), $_POST["state"], $_POST["zip"], preg_replace("/[^0-9]/", "", trim($_POST["phone"])), trim($_POST["email"]), $_POST["notes"], $password)) {
+                                                if (submitEmergencyContactInformation(trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), preg_replace("/[^0-9]/", "", trim($_POST["emergency_phone"])), $_POST["emergency_relationship"], trim($_POST["email"]))) {
                                                     if(sendMail(trim($_POST["email"]), $password)) {
                                                         sendAuditAlert((htmlentities(trim($_POST["fname"]), ENT_QUOTES) . " " . htmlentities(trim($_POST["lname"]), ENT_QUOTES)), htmlentities(trim($_POST["email"]), ENT_QUOTES), "member", date("D M j y G:i:s e"), $_SESSION['admin_username']);
                                                         displayForm($us_state_abbrevs, $relationships, "success_auto", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
                                                         
                                                     }
                                                     else {
-                                                        displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                                        displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                                     }   
                                                 }
                                             }
                                             else {
-                                                displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                                displayForm($us_state_abbrevs, $relationships, "tech_diff", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), trim($_POST["email"]), $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                             }
                                         }
                                         else {
-                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
+                                            displayForm($us_state_abbrevs, $relationships, "fail_email", trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["duesdate"]), trim($_POST["street"]), trim($_POST["city"]), trim($_POST["state"]), trim($_POST["zip"]), trim($_POST["phone"]), "", $_POST["notes"], trim($_POST["emergency_fname"]), trim($_POST["emergency_lname"]), trim($_POST["emergency_phone"]), trim($_POST["emergency_relationship"]));
                                         }
                                     }
                                 }
@@ -476,7 +476,7 @@
                                     }
                                 }
 
-                                function displayForm($us_state_abbrevs, $relationships, $status, $submittedFirstName, $submittedLastName, $submittedDuesDate, $submittedStreet, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedEmergencyFirstName, $submittedEmergencyLastName, $submittedEmergencyPhone, $submittedEmergencyRelationship) {                                   
+                                function displayForm($us_state_abbrevs, $relationships, $status, $submittedFirstName, $submittedLastName, $submittedDuesDate, $submittedStreet, $submittedCity, $submittedState, $submittedZip, $submittedPhone, $submittedEmail, $submittedAdminNotes, $submittedEmergencyFirstName, $submittedEmergencyLastName, $submittedEmergencyPhone, $submittedEmergencyRelationship) {                                   
                                     $notice = "";
 
                                     if ($status == "success_manual") {
@@ -542,7 +542,7 @@
                                                     Administrator Notes:
                                                 </div>
                                                 <div>
-                                                    <textarea rows='4' cols='100' name='notes'></textarea>
+                                                    <textarea rows='4' cols='100' name='notes'>" . htmlentities($submittedAdminNotes, ENT_QUOTES) . "</textarea>
                                                 </div>
                                                 <hr />
                                                 <h4> Emergency Contact:</h4>

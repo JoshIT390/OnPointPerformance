@@ -162,12 +162,77 @@
                                 define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
                                 
                                 if (isset($_POST["deleteMemberID"])) {
-                                    deleteEmergencyContact($_POST["deleteMemberID"]);
-                                    deleteMember($_POST["deleteMemberID"]);
-                                    generatePage();
+                                    $memberName = getMemberName($_POST["deleteMemberID"]);
+                                    $memberEmail = getMemberEmail($_POST["deleteMemberID"]);
+                                    
+                                    if ((deleteEmergencyContact($_POST["deleteMemberID"])) && (deleteMember($_POST["deleteMemberID"]))) {
+                                        generatePage("success", $memberName, $memberEmail);
+                                    }
+                                    else {
+                                        generatePage("fail", $memberName, $memberEmail);
+                                    }
                                 }
                                 else {
-                                    generatePage();
+                                    generatePage("", "", "");
+                                }
+                                
+                                function getMemberName($memberID) {
+                                    $memberName;
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $memberNameQuery = $connection->query('
+                                            SELECT FIRSTNAME, LASTNAME 
+                                            FROM ' . USER_CREDENTIAL_TABLE . 
+                                            ' WHERE MEMBER_ID = ' . $memberID
+                                        );
+                                        
+                                        $memberNameInformation = $memberNameQuery->fetch();
+                                        $memberName = $memberNameInformation[0] . " " . $memberNameInformation[1];
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return $memberName;
+                                }
+                                
+                                function getMemberEmail($memberID) {
+                                    $memberEmail;
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $memberEmailQuery = $connection->query('
+                                            SELECT MEMBER_EMAIL 
+                                            FROM ' . USER_CREDENTIAL_TABLE . 
+                                            ' WHERE MEMBER_ID = ' . $memberID
+                                        );
+                                        
+                                        $memberEmail = $memberEmailQuery->fetch();
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return $memberEmail[0];
                                 }
 
                                 function deleteEmergencyContact($memberID) {
@@ -176,7 +241,7 @@
                                         // Exceptions fire when occur
                                         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                        $accountInformationQuery = $connection->query('
+                                        $deleteQuery = $connection->query('
                                             DELETE FROM ' . USER_EMERGENCY_CONTACT_TABLE . ' 
                                             WHERE MEMBER_ID = '. $connection->quote($memberID)
                                         );
@@ -200,7 +265,7 @@
                                         // Exceptions fire when occur
                                         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                        $accountInformationQuery = $connection->query('
+                                        $deleteQuery = $connection->query('
                                             DELETE FROM ' . USER_CREDENTIAL_TABLE . ' 
                                             WHERE MEMBER_ID = '. $connection->quote($memberID)
                                         );
@@ -218,8 +283,24 @@
                                     return TRUE;
                                 }
                                 
-                                function generatePage() {
+                                function generatePage($status, $deleteMemberName, $deleteMemberEmail) {
+                                    $message;
                                     $searchStatusString = "";
+                                    
+                                    if ($status == "success") {
+                                        $message = 
+                                            '<div class="alert alert-success alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . 
+                                                $deleteMemberName . ' (' . $deleteMemberEmail . ') was deleted successfully.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting ' . $deleteMemberName . ' (' . $deleteMemberEmail . '). Please try again.
+                                            </div>';
+                                    }
                                     
                                     if ($_POST["search_status"] == "inactive") {
                                         $searchStatusString = " AND ACTIVESTATUS = 0";
@@ -343,7 +424,7 @@
                                             $membersQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, MEMBER_EMAIL, PHONE, DUEDATE, ACTIVESTATUS, MEMBER_ID  
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE FIRSTNAME LIKE :searchedLastName AND LASTNAME LIKE :searchedLastName AND MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName AND MEMBER_EMAIL LIKE :searchedEmail' . $searchStatusString . 
                                                 ' ORDER BY LASTNAME');
 
                                             $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
@@ -359,7 +440,9 @@
                                         $members = $membersQuery->fetchAll(PDO::FETCH_ASSOC);
 
                                         echo 
-                                            "<br /><br /><div>Returned " . count($members) . " row(s)</div>
+                                            "<br /><br />" . 
+                                            $message . 
+                                            "<div>Returned " . count($members) . " row(s)</div>
                                             <table>
                                                 <thead>
                                                     <tr>
@@ -382,7 +465,7 @@
                                                     <td>" . $member[FIRSTNAME] . "</td>
                                                     <td>" . $member[LASTNAME] . "</td>
                                                     <td><a href='mailto:" . $member[MEMBER_EMAIL] . "'>" . $member[MEMBER_EMAIL] . "</a></td>
-                                                    <td>" . $member[PHONE] . "</td>
+                                                    <td>" . preg_replace('/^(\d{3})(\d{3})(\d{4})$/', '$1-$2-$3', $member[PHONE]) . "</td>
                                                     <td>" . $member[DUEDATE] . "</td>
                                                     <td>" . $formattedActiveStatus . "</td>
                                                     <td>

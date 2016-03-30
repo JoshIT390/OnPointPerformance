@@ -144,7 +144,7 @@
                                 define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
                                 define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
 
-                                $us_state_abbrevs = array('AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY');
+                                $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
                                 $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
 
                                 // Regular view
@@ -157,8 +157,8 @@
                                     if (!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duedate"]) && !empty($_POST["status"]) && !empty($_POST["address"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"]) && (empty($_POST["automatedPasswordReset"]) && empty($_POST["newPassword1"]) && empty($_POST["newPassword2"]))) {
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             if (
-                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["phone"], $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
-                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["buttonMemberID"])
+                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], preg_replace("/[^0-9]/", "", $_POST["phone"]), $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
+                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], preg_replace("/[^0-9]/", "", $_POST["emergency_phone"]), $_POST["emergency_relationship"], $_POST["buttonMemberID"])
                                             ) {
                                                 displayAccountForm("success", $us_state_abbrevs, $relationships);
                                                 displayPasswordForm("");
@@ -177,8 +177,8 @@
                                     elseif (!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["duedate"]) && !empty($_POST["status"]) && !empty($_POST["address"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["phone"]) && !empty($_POST["email"]) && !empty($_POST["emergency_fname"]) && !empty($_POST["emergency_lname"]) && !empty($_POST["emergency_phone"]) && !empty($_POST["emergency_relationship"]) && (empty($_POST["automatedPasswordReset"]) && (!empty($_POST["newPassword1"]) || !empty($_POST["newPassword2"])))) {
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             if (
-                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["phone"], $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
-                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["buttonMemberID"])
+                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], preg_replace("/[^0-9]/", "", $_POST["phone"]), $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
+                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], preg_replace("/[^0-9]/", "", $_POST["emergency_phone"]), $_POST["emergency_relationship"], $_POST["buttonMemberID"])
                                             ) {
                                                 displayAccountForm("success", $us_state_abbrevs, $relationships);
                                             }
@@ -187,7 +187,7 @@
                                             }
                                         }
                                         else {
-                                            displayAccountForm("fail");
+                                            displayAccountForm("fail", $us_state_abbrevs, $relationships);
                                         }
 
                                         if (verifyPassword($_POST["newPassword1"], $_POST["newPassword2"])) {
@@ -208,14 +208,14 @@
 
                                         if (verifyEmail(trim($_POST["email"]))) {
                                             if (
-                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["phone"], $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
-                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], $_POST["emergency_phone"], $_POST["emergency_relationship"], $_POST["buttonMemberID"])
+                                                submitAccountInformation($_POST["fname"], $_POST["lname"], $_POST["duedate"], $_POST["status"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], preg_replace("/[^0-9]/", "", $_POST["phone"]), $_POST["email"], $_POST["notes"], $_POST["adminnotes"], $_POST["buttonMemberID"]) &&
+                                                submitEmergencyContactInformation($_POST["emergency_fname"], $_POST["emergency_lname"], preg_replace("/[^0-9]/", "", $_POST["emergency_phone"]), $_POST["emergency_relationship"], $_POST["buttonMemberID"])
                                             ) {
-                                                displayAccountForm("success", $relationships);
+                                                displayAccountForm("success", $us_state_abbrevs, $relationships);
                                                 $accountInfoStatus = TRUE;
                                             }
                                             else {
-                                                displayAccountForm("tech_diff", $relationships); 
+                                                displayAccountForm("tech_diff", $us_state_abbrevs, $relationships); 
                                             }
 
                                             if ($accountInfoStatus) {
@@ -231,7 +231,7 @@
                                             }
                                         }
                                         else {
-                                            displayAccountForm("fail", $relationships);
+                                            displayAccountForm("fail", $us_state_abbrevs, $relationships);
                                         }
                                     }
                                 }
@@ -529,9 +529,9 @@
                                                 "<input type='text' name='buttonMemberID' value='" . $_POST["buttonMemberID"] . "' hidden>
                                                 <table style='width:75%'>
                                                     <tr>
-                                                        <td>First Name: <input type='text' name='fname' value='" . $accountInformation[2] . "' required /></td>
-                                                        <td>Last Name: <input type='text' name='lname' value='" . $accountInformation[3] . "'  required /></td>
-                                                        <td>Dues Paid Until: <input type='date' name='duedate' value='" . $accountInformation[12] . "' required></td>
+                                                        <td>First Name: <input type='text' name='fname' value='" . htmlentities($accountInformation[2], ENT_QUOTES) . "' required /></td>
+                                                        <td>Last Name: <input type='text' name='lname' value='" . htmlentities($accountInformation[3], ENT_QUOTES) . "'  required /></td>
+                                                        <td>Dues Paid Until: <input type='date' name='duedate' value='" . $accountInformation[12] . "' required /></td>
                                                         <td>Member Status: <select name='status' >
                                                             <option value='active'>Active</option>
                                                             <option value='inactive'";
@@ -543,37 +543,37 @@
                                                             }
                                                         echo
                                                         "<tr>
-                                                            <td> </br>Street Address: <input type='text' name='address' value='" . $accountInformation[4] . "'  required></td>
-                                                            <td></br>City: <input type='text' name='city' value='" . $accountInformation[5] . "' required></td>
+                                                            <td> </br>Street Address: <input type='text' name='address' value='" . htmlentities($accountInformation[4], ENT_QUOTES) . "'  required></td>
+                                                            <td></br>City: <input type='text' name='city' value='" . htmlentities($accountInformation[5], ENT_QUOTES) . "' required></td>
                                                             <td>
                                                                 </br>State: 
                                                                 <select name='state' required>" . 
                                                                     createStateAbbrevOptions($us_state_abbrevs, $accountInformation[6]) . 
                                                                 "</select>
                                                             </td>
-                                                            <td></br>Zip Code: <input type='text' name='zip' value='" . $accountInformation[7] . "' required></td>
+                                                            <td></br>Zip Code: <input type='text' name='zip' value='" . $accountInformation[7] . "' required /></td>
                                                         </tr>
                                                         <tr>
-                                                            <td> </br>Phone Number: <input type='text' name='phone' value='" . $accountInformation[8] . "' required></td>
-                                                            <td></br>Email Address: <input type='text' name='email' value='" . $accountInformation[1] . "' required></td>
+                                                            <td> </br>Phone Number: <input type='text' name='phone' value='" . preg_replace('/^(\d{3})(\d{3})(\d{4})$/', '$1-$2-$3', $accountInformation[8]) . "' pattern='(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}' maxlength='14' required/></td>
+                                                            <td></br>Email Address: <input type='text' name='email' value='" . htmlentities($accountInformation[1], ENT_QUOTES) . "' required></td>
                                                         </tr>
                                                     </table>
                                                     <br />
                                                     <div style='width:50%'>
                                                         Member Viewable Notes:</br> 
-                                                        <textarea rows='4' cols='100' name='notes'>" . $accountInformation[9] . "</textarea>
+                                                        <textarea rows='4' cols='100' name='notes'>" . htmlentities($accountInformation[9], ENT_QUOTES) . "</textarea>
                                                     </div>
                                                     <div style='width:50%'>
                                                         Administrator Notes:</br>
-                                                        <textarea rows='4' cols='100' name='adminnotes'>" . $accountInformation[10] . "</textarea>
+                                                        <textarea rows='4' cols='100' name='adminnotes'>" . htmlentities($accountInformation[10], ENT_QUOTES) . "</textarea>
                                                     </div>
                                                     <hr />
                                                     <h4>Emergency Contact</h4>
                                                     <table style='width:50%'>
                                                         <tr>
-                                                                <td>First Name: <input type='text' name='emergency_fname' value='" . $accountInformation[14] . "' required></td>
-                                                                <td>Last Name: <input type='text' name='emergency_lname' value='" . $accountInformation[15] . "'  required></td>
-                                                                <td>Phone Number: <input type='text' name='emergency_phone' value='" . $accountInformation[16] . "' required></td>
+                                                                <td>First Name: <input type='text' name='emergency_fname' value='" . htmlentities($accountInformation[14], ENT_QUOTES) . "' required /></td>
+                                                                <td>Last Name: <input type='text' name='emergency_lname' value='" . htmlentities($accountInformation[15], ENT_QUOTES) . "'  required /></td>
+                                                                <td>Phone Number: <input type='text' name='emergency_phone' value='" . preg_replace('/^(\d{3})(\d{3})(\d{4})$/', '$1-$2-$3', $accountInformation[16]) . "' pattern='(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}' maxlength='14' required/></td>
                                                                 <td>Relationship <select name='emergency_relationship'>" . createRelationshipsOptions($relationships, $accountInformation[17]) . "</select></td>
                                                         </tr>
                                                     </table>
