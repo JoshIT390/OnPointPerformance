@@ -79,13 +79,19 @@
             // Exceptions fire when occur
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
-            $adminPasswordQuery = $connection->prepare('SELECT PASSWORD FROM ADMIN_USERS WHERE EMAIL = :username');
+            $adminPasswordQuery = $connection->prepare('
+                        SELECT PASSWORD FROM ADMIN_USERS 
+                        WHERE EMAIL = :username');
+            
             $adminPasswordQuery->execute(array('username' => $username));
             
             $adminPasswordResult = $adminPasswordQuery->fetch();
             // If no matches
             if (!$adminPasswordResult) {
-                $memberPasswordQuery = $connection->prepare('SELECT PASSWORD FROM MEMBER_ACCOUNT WHERE MEMBER_EMAIL = :username');
+                $memberPasswordQuery = $connection->prepare('
+                        SELECT PASSWORD FROM MEMBER_ACCOUNT 
+                        WHERE MEMBER_EMAIL = :username AND ACTIVESTATUS = 1');
+                
                 $memberPasswordQuery->execute(array('username' => $username));
                 $memberPasswordResult = $memberPasswordQuery->fetch();
                 
