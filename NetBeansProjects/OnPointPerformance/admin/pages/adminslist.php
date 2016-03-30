@@ -144,7 +144,7 @@
                                 First Name: <input type="text" name="search_fname">
                                 Last Name: <input type="text" name="search_lname"> 
                                 Email: <input type="text" name="search_email">
-                                <input type='submit' value='Search'>
+                                <input type='submit' value='Search' class="btn btn-default">
                             </form>
                             
                             <?php
@@ -155,11 +155,77 @@
                                 define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
                                 
                                 if (isset($_POST["deleteAdminID"])) {
-                                    deleteAdmin($_POST["deleteAdminID"]);
-                                    generatePage();
+                                    $adminName = getAdminName($_POST["deleteAdminID"]);
+                                    $adminEmail = getAdminEmail($_POST["deleteAdminID"]);
+                                   
+                                    if (deleteAdmin($_POST["deleteAdminID"])) {
+                                        generatePage("success", $adminName, $adminEmail);
+                                    }
+                                    else {
+                                        generatePage("fail", $adminName, $adminEmail);
+                                    }
                                 }
                                 else {
-                                    generatePage();
+                                    generatePage("", "", "");
+                                }
+                                
+                                function getAdminName($adminID) {
+                                    $adminName;
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $adminNameQuery = $connection->query('
+                                            SELECT FIRSTNAME, LASTNAME 
+                                            FROM ' . USER_CREDENTIAL_TABLE . 
+                                            ' WHERE ADMIN_ID = ' . $adminID
+                                        );
+                                        
+                                        $adminNameInformation = $adminNameQuery->fetch();
+                                        $adminName = $adminNameInformation[0] . " " . $adminNameInformation[1];
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return $adminName;
+                                }
+                                
+                                function getAdminEmail($adminID) {
+                                    $adminEmail;
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $adminEmailQuery = $connection->query('
+                                            SELECT EMAIL 
+                                            FROM ' . USER_CREDENTIAL_TABLE . 
+                                            ' WHERE ADMIN_ID = ' . $adminID
+                                        );
+                                        
+                                        $adminEmail = $adminEmailQuery->fetch();
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return $adminEmail[0];
                                 }
                                 
                                 function deleteAdmin($adminID) {
@@ -186,7 +252,24 @@
                                     return TRUE;
                                 }
                                 
-                                function generatePage() {
+                                function generatePage($status, $deleteAdminName, $deleteAdminEmail) {
+                                    $message;
+                                    
+                                    if ($status == "success") {
+                                        $message = 
+                                            '<div class="alert alert-success alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . 
+                                                $deleteAdminName . ' (' . $deleteAdminEmail . ') was deleted successfully.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting ' . $deleteAdminName . ' (' . $deleteAdminEmail . '). Please try again.
+                                            </div>';
+                                    }
+                                    
                                     try {
                                         $adminsQuery;
 
@@ -203,7 +286,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE FIRSTNAME LIKE :searchedFirstName');
+                                                WHERE FIRSTNAME LIKE :searchedFirstName
+                                                ORDER BY LASTNAME');
 
                                             $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
                                             $adminsQuery->bindParam(':searchedFirstName', $searchedFirstName);
@@ -225,7 +309,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE EMAIL LIKE :searchedEmail');
+                                                WHERE EMAIL LIKE :searchedEmail
+                                                ORDER BY LASTNAME');
 
                                             $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
                                             $adminsQuery->bindParam(':searchedEmail', $searchedEmail);
@@ -236,7 +321,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName');
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName
+                                                ORDER BY LASTNAME');
 
                                             $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
                                             $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
@@ -250,7 +336,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE FIRSTNAME LIKE :searchedFirstName AND EMAIL LIKE :searchedEmail');
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND EMAIL LIKE :searchedEmail
+                                                ORDER BY LASTNAME');
 
                                             $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
                                             $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
@@ -264,7 +351,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
+                                                WHERE LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail
+                                                ORDER BY LASTNAME');
 
                                             $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
                                             $searchedEmail = '%' . trim($_POST["search_email"]) . '%';
@@ -278,7 +366,8 @@
                                             $adminsQuery = $connection->prepare(
                                                 'SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
                                                 FROM ' . USER_CREDENTIAL_TABLE . '
-                                                WHERE FIRSTNAME LIKE :searchedLastName AND LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail');
+                                                WHERE FIRSTNAME LIKE :searchedFirstName AND LASTNAME LIKE :searchedLastName AND EMAIL LIKE :searchedEmail
+                                                ORDER BY LASTNAME');
 
                                             $searchedFirstName = '%' . trim($_POST["search_fname"]) . '%';
                                             $searchedLastName = '%' . trim($_POST["search_lname"]) . '%';
@@ -293,7 +382,9 @@
                                         $admins = $adminsQuery->fetchAll(PDO::FETCH_ASSOC);
 
                                         echo 
-                                            "<br /><br /><div>Returned " . count($admins) . " row(s)</div>
+                                            "<br /><br />" . 
+                                            $message . 
+                                            "<div>Returned " . count($admins) . " row(s)</div>
                                             <table style='width:100%'>
                                                 <tr>
                                                     <th>First Name</th>

@@ -311,11 +311,11 @@
                                         }
                                         else {
                                             // Must be greater than or equal to eight characters and use numbers, lower-case letters, upper-case letters, and special characters
-                                            if ((strlen($newPassword1) < 8) &&  !preg_match("#[0-9]+#", $newPassword1) && !preg_match("#[a-z]+#", $newPassword1) && !preg_match("#[A-Z]+#", $newPassword1) &&  !preg_match("#\W+#", $newPassword1)) {
-                                                return FALSE;
+                                            if ((strlen($newPassword1) >= 8) &&  preg_match("#[0-9]+#", $newPassword1) && preg_match("#[a-z]+#", $newPassword1) && preg_match("#[A-Z]+#", $newPassword1) &&  preg_match("#\W+#", $newPassword1)) {
+                                                return TRUE;
                                             }
                                             else {
-                                                return TRUE;
+                                                return FALSE;
                                             }
                                         }
                                     }
@@ -431,9 +431,9 @@
                                                         <h3> Editing " . $accountInformation[0] . " " . $accountInformation[1] . "</h3></br>" . 
                                                         $notice . 
                                                         "<input type='text' name='random' value='" . $_POST["buttonAdminID"] . "' hidden>
-                                                        First Name: <input type='text' name='fname' value='" . $accountInformation[0] . "' required /><br /><br />
-                                                        Last Name: <input type='text' name='lname' value='" . $accountInformation[1] . "'  required /><br /><br />
-                                                        Email Address: <input type='email' name='email' value='" . $accountInformation[2] . "' required />
+                                                        First Name: <input type='text' name='fname' value='" . htmlentities($accountInformation[0], ENT_QUOTES) . "' required /><br /><br />
+                                                        Last Name: <input type='text' name='lname' value='" . htmlentities($accountInformation[1], ENT_QUOTES) . "'  required /><br /><br />
+                                                        Email Address: <input type='email' name='email' value='" . htmlentities($accountInformation[2], ENT_QUOTES) . "' required />
                                                     </div>";
                                         }
                                         // Script halts and throws error if exception is caught

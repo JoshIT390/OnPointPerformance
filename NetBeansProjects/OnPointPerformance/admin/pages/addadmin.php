@@ -137,6 +137,7 @@
                             <p>
                                 <?php
                                     include '../../mail/welcome_admin.php';
+                                    include '../../mail/audit_alert.php';
                                 
                                     define("DB_HOST_NAME", "mysql.dnguyen94.com");
                                     define("DB_USER_NAME", "ad_victorium");
@@ -155,6 +156,7 @@
                                             if (verifyEmail(trim($_POST["email"]))) {
                                                 if(verifyPassword($_POST["newPassword1"], $_POST["newPassword2"])) {
                                                     if (submitInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["email"]), $_POST["newPassword1"])) {
+                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "admin", date("D M j y G:i:s e"), $_SESSION['admin_username']);
                                                         displayForm("success_manual", "", "", "");
                                                     }
                                                     else {
@@ -182,6 +184,7 @@
                                                 
                                                 if (submitInformation(trim($_POST["fname"]), trim($_POST["lname"]), trim($_POST["email"]), $password)) {
                                                     if(sendMail(trim($_POST["email"]), $password)) {
+                                                        sendAuditAlert((trim($_POST["fname"]) . " " . trim($_POST["lname"])), trim($_POST["email"]), "admin", date("D M j y G:i:s e"), $_SESSION['admin_username']);
                                                         displayForm("success_auto", "", "", "");
                                                     }
                                                     else {
@@ -248,11 +251,11 @@
                                         }
                                         else {
                                             // Must be greater than or equal to eight characters and use numbers, lower-case letters, upper-case letters, and special characters
-                                            if ((strlen($newPassword1) < 8) &&  !preg_match("#[0-9]+#", $newPassword1) && !preg_match("#[a-z]+#", $newPassword1) && !preg_match("#[A-Z]+#", $newPassword1) &&  !preg_match("#\W+#", $newPassword1)) {
-                                                return FALSE;
+                                            if ((strlen($newPassword1) >= 8) &&  preg_match("#[0-9]+#", $newPassword1) && preg_match("#[a-z]+#", $newPassword1) && preg_match("#[A-Z]+#", $newPassword1) &&  preg_match("#\W+#", $newPassword1)) {
+                                                return TRUE;
                                             }
                                             else {
-                                                return TRUE;
+                                                return FALSE;
                                             }
                                         }
                                     }
@@ -367,9 +370,9 @@
                                                 <div>
                                                     <h3> Add Admin</h3></br>" . 
                                                     $notice . 
-                                                    "First Name: <input type='text' name='fname' value='" . $submittedFirstName . "' required /><br /><br />
-                                                    Last Name: <input type='text' name='lname' value='" . $submittedLastName . "' required /><br /><br />
-                                                    Email Address: <input type='email' name='email' value='" . $submittedEmail . "' required />
+                                                    "First Name: <input type='text' name='fname' value='" . htmlentities($submittedFirstName, ENT_QUOTES) . "' required /><br /><br />
+                                                    Last Name: <input type='text' name='lname' value='" . htmlentities($submittedLastName, ENT_QUOTES) . "' required /><br /><br />
+                                                    Email Address: <input type='email' name='email' value='" . htmlentities($submittedEmail, ENT_QUOTES) . "' required />
                                                 </div>
                                                 <hr />
                                                 <div>
@@ -401,7 +404,7 @@
                                                 <hr />
                                                 <div>
                                                     <input type='text' name='submit' value='TRUE' hidden>
-                                                    <input type='submit' class='btn btn-default' value='Submit*' />
+                                                    <input type='submit' class='btn btn-default' value='Submit' />
                                                 </div>
                                             </form>";
                                     }
