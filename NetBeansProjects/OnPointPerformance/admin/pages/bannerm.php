@@ -135,33 +135,116 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Front Page Banner</h1>
-						<p> 
-                                                <?php
+                        <div> 
+                            <?php                                               
+                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
+                                define("DB_USER_NAME", "ad_victorium");
+                                define("DB_PASSWORD", "MT8AlJAM");
+                                define("DB_NAME", "onpoint_performance_center_lower");
+                                define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
+                                define("USER_CREDENTIAL_TABLE2", "MEMBER_ACCOUNT");
 
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+                                if (!empty($_POST["date"]) && !empty($_POST["title"]) && !empty($_POST["desc"])) {
+                                    if (submitBannerInformation($_POST["date"], $_POST["title"], $_POST["desc"])) {
+                                        displayForm("success");
+                                    }
+                                    else {
+                                        displayForm("fail");
+                                    }
+                                }
+                                else {
+                                    displayForm("");
+                                }
 
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-                                                        }
-                                                        $query = "SELECT * FROM BANNER;";
-                                                        $result = mysqli_query($conn, $query);
-                                                        while($row = $result->fetch_assoc()) {
-                                                            echo "<table style='width:50%'><form action='banneru.php' method='post'> <tr><td> Title: <input type='text' name='title' value='" . $row["TITLE"] . "'></td>";
-                                                            echo "<td>Displayed Until: <input type='text' name='date' value='" . $row["DISPLAYED_UNTIL"] . "'></td></tr></table>";
-                                                            echo "</br>Description:</br> <textarea rows='4' cols='100' name='desc'>" . $row["DESCRIPTION"] . "</textarea>";
-                                                            echo "</br></br><input type='submit' value='Submit'> </form>";
-                                                        }
-                                                        if (!$result){
-                                                            die('Invalid query: ' . mysql_error());
-                                                        }
-							?>
-                                                </p>
+                                function submitBannerInformation($displayedUntil, $title, $desc) {                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $bannerUpdate = $connection->prepare(
+                                                'UPDATE BANNER
+                                                SET DISPLAYED_UNTIL = :displayedUntil, TITLE = :title, DESCRIPTION = :description 
+                                                WHERE BANNER_ID = 1');
+
+                                        $bannerUpdate->execute(array(
+                                            ':displayedUntil' => $displayedUntil,
+                                            ':title' => $title,
+                                            ':description' => $desc
+                                        ));
+                                    }
+
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+
+                                    return TRUE;
+                                }
+
+                                function displayForm($status) {
+                                    $message;
+
+                                    if ($status == "success") {
+                                        $message = 
+                                            "<div class='alert alert-dismissible alert-success'>
+                                                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                                Banner successfully updated.
+                                            </div>";
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            "<div class='alert alert-dismissible alert-danger'>
+                                                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                                There was a problem updating the banner. Please try again.
+                                            </div>";
+                                    }
+
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $bannerInfoQuery = $connection->query(
+                                                'SELECT DISPLAYED_UNTIL, TITLE, DESCRIPTION 
+                                                FROM BANNER 
+                                                WHERE BANNER_ID = 1');
+
+                                        $formData = $bannerInfoQuery->fetch(PDO::FETCH_ASSOC);
+
+                                        echo 
+                                            $message . 
+                                            "<form action='bannerm.php' method='post'>
+                                                <table style = 'width: 50%'>
+                                                    <tr>
+                                                        <td>Title: <input type='text' name='title' value='" . htmlentities($formData["TITLE"], ENT_QUOTES) . "' required></td>
+                                                        <td>Displayed Until: <input type='date' name='date' value='" . $formData["DISPLAYED_UNTIL"] . "' required></td>
+                                                    </tr>
+                                                </table>
+                                                </br>
+                                                Description:</br> <textarea rows='4' cols='100' name='desc' required>" . htmlentities($formData["DESCRIPTION"], ENT_QUOTES) . "</textarea>
+                                                </br></br>
+                                                <input type='submit' value='Submit' class='btn btn-default'>
+                                            </form>";
+                                    }
+
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+                                }
+                            ?>
+                        </div>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
