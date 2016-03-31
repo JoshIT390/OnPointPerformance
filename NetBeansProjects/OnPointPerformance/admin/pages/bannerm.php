@@ -143,17 +143,27 @@
                                 define("DB_NAME", "onpoint_performance_center_lower");
                                 define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
                                 define("USER_CREDENTIAL_TABLE2", "MEMBER_ACCOUNT");
-
-                                if (!empty($_POST["date"]) && !empty($_POST["title"]) && !empty($_POST["desc"])) {
-                                    if (submitBannerInformation($_POST["date"], $_POST["title"], $_POST["desc"])) {
-                                        displayForm("success");
+                                
+                                if (!empty($_POST["clear"])) {
+                                    if (submitBannerInformation(NULL, NULL, NULL)) {
+                                        displayForm("clear_success");
                                     }
                                     else {
-                                        displayForm("fail");
+                                        displayForm("clear_fail");
                                     }
                                 }
-                                else {
-                                    displayForm("");
+                                else {                               
+                                    if (!empty($_POST["date"]) && !empty($_POST["title"]) && !empty($_POST["desc"])) {
+                                        if (submitBannerInformation($_POST["date"], $_POST["title"], $_POST["desc"])) {
+                                            displayForm("success");
+                                        }
+                                        else {
+                                            displayForm("fail");
+                                        }
+                                    }
+                                    else {
+                                        displayForm("");
+                                    }
                                 }
 
                                 function submitBannerInformation($displayedUntil, $title, $desc) {                                    
@@ -197,11 +207,25 @@
                                                 Banner successfully updated.
                                             </div>";
                                     }
+                                    if ($status == "clear_success") {
+                                        $message = 
+                                            "<div class='alert alert-dismissible alert-success'>
+                                                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                                Banner successfully cleared.
+                                            </div>";
+                                    }
                                     elseif ($status == "fail") {
                                         $message = 
                                             "<div class='alert alert-dismissible alert-danger'>
                                                 <button type='button' class='close' data-dismiss='alert'>&times;</button>
                                                 There was a problem updating the banner. Please try again.
+                                            </div>";
+                                    }
+                                    elseif ($status == "fail_success") {
+                                        $message = 
+                                            "<div class='alert alert-dismissible alert-danger'>
+                                                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                                There was a problem clearing the banner. Please try again.
                                             </div>";
                                     }
 
@@ -222,14 +246,18 @@
                                             "<form action='bannerm.php' method='post'>
                                                 <table style = 'width: 50%'>
                                                     <tr>
-                                                        <td>Title: <input type='text' name='title' value='" . htmlentities($formData["TITLE"], ENT_QUOTES) . "' required></td>
-                                                        <td>Displayed Until: <input type='date' name='date' value='" . $formData["DISPLAYED_UNTIL"] . "' required></td>
+                                                        <td>Title: <input type='text' name='title' value='" . htmlentities($formData["TITLE"], ENT_QUOTES) . "' required /></td>
+                                                        <td>Displayed Until: <input type='date' name='date' value='" . $formData["DISPLAYED_UNTIL"] . "' required /></td>
                                                     </tr>
                                                 </table>
                                                 </br>
-                                                Description:</br> <textarea rows='4' cols='100' name='desc' required>" . htmlentities($formData["DESCRIPTION"], ENT_QUOTES) . "</textarea>
-                                                </br></br>
-                                                <input type='submit' value='Submit' class='btn btn-default'>
+                                                Description:<br /> <textarea rows='4' cols='100' name='desc' required>" . htmlentities($formData["DESCRIPTION"], ENT_QUOTES) . "</textarea>
+                                                <br /><br />
+                                                <input type='submit' value='Submit' class='btn btn-default' />
+                                            </form><br />
+                                            <form action='bannerm.php' method='post'>
+                                                <input type='hidden' name='clear' value='TRUE' />
+                                                <input type='submit' value='Clear' class='btn btn-warning' />
                                             </form>";
                                     }
 
