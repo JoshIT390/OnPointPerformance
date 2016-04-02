@@ -81,35 +81,6 @@ and open the template in the editor.
             
             <div class="container"><?php include 'banner.php';?> </div>
 			
-            <!-- FLEXSLIDER 
-            <div class="container">
-                <div class="flexslider" style="width:100%; height:auto; position:relative; display:block; margin-left:auto; margin-right:auto; background:#000000; border: 5px solid #000000;">
-                    <ul class="slides" style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;">
-                        <li>
-                            <img src="./assets/images/slide1.jpg" style="height:auto;" />
-                            <div class="flex-caption">
-                                <h1>Dual Purpose Gym</h1>
-                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="./assets/images/slide2.jpg" style="height:auto;"/>
-                            <div class="flex-caption">
-                                <h1>Strength Training</h1>
-                                <h4>Our strength training section has all the equipment you need to get stronger</h4>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="./assets/images/slide3.jpg" style="height:auto;"/>
-                            <div class="flex-caption">
-                                <h1>Tactical Training</h1>
-                                <h4>Our tactical section is set up for practicing military and police routines</h4>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            END FLEXSLIDER -->
             <!-- NEW SLIDESHOW CODE -->
             <div class="container">
                 <div id="captioned-gallery" >
@@ -117,29 +88,29 @@ and open the template in the editor.
                         <figure>
                             <img src="./assets/images/slide1.jpg" style="height:auto;" />
                             <figcaption>
-                                <h1>Dual Purpose Gym</h1>
-                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                                <h1>On Point Truths</h1>
+                                <h4>Human effort is more important than hardware!</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide2.jpg" style="height:auto;"/>
                             <figcaption>
-                                <h1>Strength Training</h1>
-                                <h4>Our strength training section has all the equipment you need to get stronger</h4>
+                                <h1>Quality over Quantity</h1>
+                                <h4>Quality of training is more important than quantity!</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide3.jpg" style="height:auto;"/>
                             <figcaption>
-                                <h1>Tactical Training</h1>
-                                <h4>Our tactical section is set up for practicing military and police routines</h4>
+                                <h1>Selection</h1>
+                                <h4>Selection for On Point is a never ending process!</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide1.jpg" style="height:auto;" />
                             <figcaption>
-                                <h1>Dual Purpose Gym</h1>
-                                <h4>We have our facility split into two sides, one for strength training and the other tactical training</h4>
+                                <h1>On Point Truths</h1>
+                                <h4>Human effort is more important than hardware!</h4>
                             </figcaption>
                         </figure>
                     </figure>
