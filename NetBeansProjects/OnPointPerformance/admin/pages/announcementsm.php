@@ -138,35 +138,131 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-						<p><h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
-						<p>  <?php
-                                    $servername = "mysql.dnguyen94.com";
-                                    $username = "ad_victorium";
-                                    $password = "MT8AlJAM";
-                                    $database = "onpoint_performance_center_lower";
-
-                                    // Create connection
-                                    $conn = mysqli_connect($servername, $username, $password, $database);
-									
-                                    // Check connection
-                                    if ($conn->connect_error) {
-                                            die("Connection failed: " . $conn->connect_error);
+                        <h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
+                        
+                        <p>                             
+                            <?php
+                                include "../../databaseInfo.php";
+                                
+                                if (isset($_POST["annID"]) && isset($_POST["announcementName"])) {                                  
+                                    if (deleteAnnouncement($_POST["annID"])) {
+                                        generatePage("success", $_POST["announcementName"]);
                                     }
-                                    $result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM ANNOUNCEMENT ORDER BY DATE desc;");
-                                    printf("Returned %d row(s).", $result->num_rows);
-                                    echo "<table style='width:100%'><tr><th>Title</th><th>Date</th><th>Description</th><th>Image URL</th><th>Image Description</th><th>Management</th></tr>";
-                                    if ($result->num_rows > 0) {
-                                            // output data of each row
-                                            while($row = $result->fetch_assoc()) {
-                                            $image='../../images/';
-											$image.=$row["IMG_URL"];
-                                            echo "<tr> <td>". $row["TITLE"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["DESCRIPTION"] . "</td> <td><a href=".$image.">" . $row["IMG_URL"] . "</a></td><td>" . $row["IMG_ALT"] . "</td><td><form action='viewAnnouncement.php' method='post'><input type='text' name='annID' value='" . $row["ANN_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editAnnouncement.php' method='post'><input type='text' name='annID' value='" . $row["ANN_ID"] . "' hidden> <input type='submit' value='Edit'></form></td> </tr>";
-                                            }
+                                    else {
+                                        generatePage("fail", $_POST["announcementName"]);
                                     }
-                                    echo "</table>";
-                                    $result->close();
+                                }
+                                else {
+                                    generatePage("", "");
+                                }
+                                
+                                function deleteAnnouncement($announcementID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    ?>  </p>
+                                        $accountInformationQuery = $connection->query('
+                                            DELETE FROM ' . ANNOUNCEMENTS_TABLE . ' 
+                                            WHERE ANN_ID = '. $connection->quote($announcementID)
+                                        );
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return TRUE;
+                                }
+                                
+                                function generatePage($status, $announcementName) {
+                                    $message;
+                                    
+                                    if ($status == "success") {
+                                        $message = 
+                                            '<div class="alert alert-success alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . 
+                                                '"' . $announcementName . '" was deleted successfully.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting "' . $announcementName . '". Please try again.
+                                            </div>';
+                                    }
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $announcementsQuery = $connection->query('
+                                                SELECT TITLE, DATE, DESCRIPTION, IMG_URL, IMG_ALT, ANN_ID 
+                                                FROM ' . ANNOUNCEMENTS_TABLE . ' 
+                                                ORDER BY DATE desc');
+
+                                        $announcements = $announcementsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo  
+                                            $message . 
+                                            "<div>Returned " . ($announcementsQuery->rowCount()) . " row(s)</div>
+                                            <table style='width:100%'>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Date</th>
+                                                    <th>Description</th>
+                                                    <th>Image URL</th>
+                                                    <th>Image Description</th>
+                                                    <th>Management</th>
+                                                </tr>";
+
+                                        while($announcement = array_shift($announcements)){
+                                            echo 
+                                                "<tr>
+                                                    <td>" . $announcement[TITLE] . "</td>
+                                                    <td>" . $announcement[DATE] . "</td>
+                                                    <td>" . $announcement[DESCRIPTION] . "</td>
+                                                    <td><a href='../../images/" . $announcement[IMG_URL] . "' target='_blank'>" . $announcement[IMG_URL] . "</a></td>
+                                                    <td>" . $announcement[IMG_ALT] . "</td>
+                                                    <td>
+                                                        <form action='viewAnnouncement.php' method='post'>
+                                                            <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='View' />
+                                                        </form>
+                                                        <form action='editAnnouncement.php' method='post'>
+                                                            <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='Edit' />
+                                                        </form>                                                       
+                                                        <form action='announcementsm.php' method='post'>
+                                                            <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
+                                                            <input type='text' name='announcementName' value='" . $announcement[TITLE] . "' hidden />
+                                                            <input type='submit' class='btn btn-warning' value='Delete' />
+                                                        </form>
+                                                    </td>
+                                                </tr>";
+                                        }
+
+                                        echo "</table>";
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                }
+                            ?> 
+                        </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
