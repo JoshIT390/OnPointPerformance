@@ -138,33 +138,153 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Manage Calendar Events</h1>
-						<h3><a href="addEvent.php">Add Event</a></h3>
-						<p> <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+                        <h3><a href="addEvent.php">Add Event</a></h3>
+                        <p>                            
+                            <?php
+                                include "../../databaseInfo.php";
+                                
+                                if (isset($_POST["calendarID"]) && isset($_POST["eventName"])) {                                  
+                                    if (deleteEvent($_POST["calendarID"])) {
+                                        generatePage("success", $_POST["eventName"]);
+                                    }
+                                    else {
+                                        generatePage("fail", $_POST["eventName"]);
+                                    }
+                                }
+                                else {
+                                    generatePage("", "");
+                                }
+                                
+                                function deleteEvent($eventID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+                                        $accountInformationQuery = $connection->query('
+                                            DELETE FROM ' . CALENDAR_TABLE . ' 
+                                            WHERE CALENDAR_ID = '. $connection->quote($eventID)
+                                        );
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                    
+                                    return TRUE;
+                                }
+                                
+                                function generatePage($status, $eventName) {
+                                    $message;
+                                    
+                                    if ($status == "success") {
+                                        $message = 
+                                            '<div class="alert alert-success alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . 
+                                                '"' . $eventName . '" was deleted successfully.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting "' . $eventName . '". Please try again.
+                                            </div>';
+                                    }
+                                    
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR ORDER BY DATE desc;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:100%'><tr><th>Name</th><th>DATE</th><th>CITY</th><th>STATE</th><th>ZIP</th><th>DESCRIPTION</th><th>FORMS</th><th>Management</th></tr>";
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-							
-								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["DATE"]. "</td> <td>" . $row["CITY"] . "</td> <td>" . $row["STATE"] . "</td> <td>" . $row["ZIP"] . "</td><td>" . $row["DESCRIPTION"] . "</td><td>" . $row["FORMS"] . "</td> <td><form action='viewEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='View'></form><form action='editEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Edit'></form><form action='deleteEvent.php' method='post'><input type='text' name='calendarID' value='" . $row["CALENDAR_ID"] . "' hidden> <input type='submit' value='Delete'></form></td></tr>";
-								}
-							}
-							$result->close();
-							
-							?>  </p>
+                                        $eventsQuery = $connection->query('
+                                                SELECT CALENDAR_ID, NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS 
+                                                FROM ' . CALENDAR_TABLE . ' 
+                                                ORDER BY DATE desc');
+
+                                        $events = $eventsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo  
+                                            $message . 
+                                            "<div>Returned " . ($eventsQuery->rowCount()) . " row(s)</div>
+                                            <table style='width:100%'>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Date</th>
+                                                    <th>City</th>
+                                                    <th>State</th>
+                                                    <th>Zip</th>
+                                                    <th>Description</th>
+                                                    <th>Forms</th>
+                                                    <th>Management</th>
+                                                </tr>";
+
+                                        while($event = array_shift($events)){
+                                            $managementOptions;
+
+                                            if ($admin[EMAIL] != $_SESSION['admin_username']) {
+                                                $managementOptions = 
+                                                    "<form action='editadmin.php' method='post'>
+                                                        <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
+                                                        <input type='submit' class='btn btn-primary' value='Edit'>
+                                                    </form>
+                                                    <form action='adminslist.php' method='post'>
+                                                        <input type='text' name='deleteAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
+                                                        <input type='submit' class='btn btn-warning' value='Delete'>
+                                                    </form>";
+                                            }
+                                            else {
+                                                $managementOptions = 
+                                                    "<button type='button' class='btn btn-primary disabled'>Edit</button>
+                                                    <button type='button' class='btn btn-warning disabled'>Delete</button>";
+                                            }
+
+                                            echo 
+                                                "<tr>
+                                                    <td>" . $event[NAME] . "</td>
+                                                    <td>" . $event[DATE] . "</td>
+                                                    <td>" . $event[CITY] . "</td>
+                                                    <td>" . $event[STATE] . "</td>
+                                                    <td>" . $event[ZIP] . "</td>
+                                                    <td>" . $event[DESCRIPTION] . "</td>
+                                                    <td>" . $event[FORMS] . "</td>
+                                                    <td>
+                                                        <form action='viewEvent.php' method='post'>
+                                                            <input type='text' name='calendarID' value='" . $event["CALENDAR_ID"] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='View' />
+                                                        </form>
+                                                        <form action='editEvent.php' method='post'>
+                                                            <input type='text' name='calendarID' value='" . $event["CALENDAR_ID"] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='Edit' />
+                                                        </form>                                                       
+                                                        <form action='calendar.php' method='post'>
+                                                            <input type='text' name='calendarID' value='" . $event["CALENDAR_ID"] . "' hidden />
+                                                            <input type='text' name='eventName' value='" . $event["NAME"] . "' hidden />
+                                                            <input type='submit' class='btn btn-warning' value='Delete' />
+                                                        </form>
+                                                    </td>
+                                                </tr>";
+                                        }
+
+                                        echo "</table>";
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+                                        
+                                        return FALSE;
+                                    }
+                                }
+                            ?> 
+                        </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
