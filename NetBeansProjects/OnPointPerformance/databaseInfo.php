@@ -7,6 +7,7 @@
     
     // Tables
     define("ADMIN_CREDENTIAL_TABLE", "ADMIN_USERS");
+    define("ANNOUNCEMENTS_TABLE", "ANNOUNCEMENT");
     define("APPLICATIONS_TABLE", "APPLICATIONS");
     define("BANNER_TABLE", "BANNER");
     define("CALENDAR_TABLE", "CALENDAR");
