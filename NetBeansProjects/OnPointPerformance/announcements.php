@@ -40,7 +40,7 @@
             echo "<div class='row-fluid' >"
                     . "<div class='col-lg-4'>"
                         //todo: replace this with img url
-                        . "<img src='images/" . $result[4] . "' alt='" . $result[5] . "' >"
+                        . "<img src='images/" . $result[4] . "' alt='" . $result[5] . "' style='width:300px;height:300px;' >"
                     . "</div>"
                     . "<div class='col-lg-8' >"
                         . "<div class='jumbotron' >"
