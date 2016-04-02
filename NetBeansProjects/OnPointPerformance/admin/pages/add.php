@@ -515,7 +515,7 @@
                                                 "<div>
                                                     First Name: <input type='text' name='fname' value='" . htmlentities($submittedFirstName, ENT_QUOTES) . "' required />
                                                     Last Name: <input type='text' name='lname' value='" . htmlentities($submittedLastName, ENT_QUOTES) . "' required />
-                                                    Dues End Date: <input type='date' name='duesdate' value='" . $submittedDuesDate . "' required />
+                                                    Dues End Date: <input type='date' name='duesdate' placeholder='YYYY-MM-DD' value='" . $submittedDuesDate . "' required />
                                                 </div><br />
                                                 <div>
                                                     Street Address: <input type='text' name='street' value='" . htmlentities($submittedStreet, ENT_QUOTES) . "' required />

@@ -242,7 +242,7 @@
                                                 <table style = 'width: 50%'>
                                                     <tr>
                                                         <td>Title: <input type='text' name='title' value='" . htmlentities($formData["TITLE"], ENT_QUOTES) . "' required /></td>
-                                                        <td>Displayed Until: <input type='date' name='date' value='" . $formData["DISPLAYED_UNTIL"] . "' required /></td>
+                                                        <td>Displayed Until: <input type='date' name='date' placeholder='YYYY-MM-DD' value='" . $formData["DISPLAYED_UNTIL"] . "' required /></td>
                                                     </tr>
                                                 </table>
                                                 </br>

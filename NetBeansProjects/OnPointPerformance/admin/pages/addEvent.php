@@ -138,7 +138,7 @@
 						<p> <h3> Add an Event:</h3>
 							<form action="addEventCompletion.php" method="post">
 							<div>Name: <input type="text" name="name" required>
-							Date: <input type="date" name="date" required></div></br>
+                                                            Date: <input type="date" name="date" placeholder="YYYY-MM-DD" required></div></br>
 							<div>City: <input type="text" name="city" required>
 							State: <input type="text" name="state" required>
 							Zip Code: <input type="text" name="zip" required></div> </br>
