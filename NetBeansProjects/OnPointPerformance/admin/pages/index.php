@@ -141,98 +141,31 @@
                             <h3><a href="add.php">Add a Member</a></h3>
                             <h3> Search for a Member:</h3>
                             <form action="index.php" method="post">
-                                First Name: <input type="text" name="search_fname">
-                                Last Name: <input type="text" name="search_lname"> 
-                                Email: <input type="text" name="search_email">
+                                First Name: <input type="text" name="search_fname" />
+                                Last Name: <input type="text" name="search_lname" /> 
+                                Email: <input type="text" name="search_email" />
                                 Member Status: 
                                     <select name="search_status"> 
                                         <option value="all" selected>All</option>
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option> 
                                     </select> 
-                                <input type='submit' value='Search' class='btn btn-default'>
+                                <input type='submit' value='Search' class='btn btn-default' />
                             </form>
                             
                             <?php
-                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                define("DB_USER_NAME", "ad_victorium");
-                                define("DB_PASSWORD", "MT8AlJAM");
-                                define("DB_NAME", "onpoint_performance_center_lower");
-                                define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-                                define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                include "../../databaseInfo.php";
                                 
-                                if (isset($_POST["deleteMemberID"])) {
-                                    $memberName = getMemberName($_POST["deleteMemberID"]);
-                                    $memberEmail = getMemberEmail($_POST["deleteMemberID"]);
-                                    
-                                    if ((deleteEmergencyContact($_POST["deleteMemberID"])) && (deleteMember($_POST["deleteMemberID"]))) {
-                                        generatePage("success", $memberName, $memberEmail);
+                                if (isset($_POST["memberID"]) && isset($_POST["memberName"]) && isset($_POST["memberEmail"])) {                                   
+                                    if ((deleteEmergencyContact($_POST["memberID"])) && (deleteMember($_POST["memberID"]))) {
+                                        generatePage("success", $_POST["memberName"], $_POST["memberEmail"]);
                                     }
                                     else {
-                                        generatePage("fail", $memberName, $memberEmail);
+                                        generatePage("fail", $_POST["memberName"], $_POST["memberEmail"]);
                                     }
                                 }
                                 else {
                                     generatePage("", "", "");
-                                }
-                                
-                                function getMemberName($memberID) {
-                                    $memberName;
-                                    
-                                    try {
-                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
-                                        // Exceptions fire when occur
-                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                        $memberNameQuery = $connection->query('
-                                            SELECT FIRSTNAME, LASTNAME 
-                                            FROM ' . USER_CREDENTIAL_TABLE . 
-                                            ' WHERE MEMBER_ID = ' . $memberID
-                                        );
-                                        
-                                        $memberNameInformation = $memberNameQuery->fetch();
-                                        $memberName = $memberNameInformation[0] . " " . $memberNameInformation[1];
-                                    }
-                                    // Script halts and throws error if exception is caught
-                                    catch(PDOException $e) {
-                                        echo "
-                                        <div>
-                                            Error: " . $e->getMessage() . 
-                                        "</div>";
-                                        
-                                        return FALSE;
-                                    }
-                                    
-                                    return $memberName;
-                                }
-                                
-                                function getMemberEmail($memberID) {
-                                    $memberEmail;
-                                    
-                                    try {
-                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
-                                        // Exceptions fire when occur
-                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                                        $memberEmailQuery = $connection->query('
-                                            SELECT MEMBER_EMAIL 
-                                            FROM ' . USER_CREDENTIAL_TABLE . 
-                                            ' WHERE MEMBER_ID = ' . $memberID
-                                        );
-                                        
-                                        $memberEmail = $memberEmailQuery->fetch();
-                                    }
-                                    // Script halts and throws error if exception is caught
-                                    catch(PDOException $e) {
-                                        echo "
-                                        <div>
-                                            Error: " . $e->getMessage() . 
-                                        "</div>";
-                                        
-                                        return FALSE;
-                                    }
-                                    
-                                    return $memberEmail[0];
                                 }
 
                                 function deleteEmergencyContact($memberID) {
@@ -242,7 +175,7 @@
                                         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                         $deleteQuery = $connection->query('
-                                            DELETE FROM ' . USER_EMERGENCY_CONTACT_TABLE . ' 
+                                            DELETE FROM ' . EMERGENCY_CONTACTS_TABLE . ' 
                                             WHERE MEMBER_ID = '. $connection->quote($memberID)
                                         );
                                     }
@@ -442,7 +375,7 @@
                                         echo 
                                             "<br /><br />" . 
                                             $message . 
-                                            "<div>Returned " . count($members) . " row(s)</div>
+                                            "<div>Returned " . ($membersQuery->rowCount()) . " row(s)</div>
                                             <table>
                                                 <thead>
                                                     <tr>
@@ -470,16 +403,18 @@
                                                     <td>" . $formattedActiveStatus . "</td>
                                                     <td>
                                                         <form action='view.php' method='post'>
-                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
-                                                            <input type='submit' class='btn btn-primary' value='View'>
+                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='View' />
                                                         </form>
                                                         <form action='edit.php' method='post'>
-                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
-                                                            <input type='submit' class='btn btn-primary' value='Edit'>
+                                                            <input type='text' name='buttonMemberID' value='" . $member["MEMBER_ID"] . "' hidden />
+                                                            <input type='submit' class='btn btn-primary' value='Edit' />
                                                         </form>
                                                         <form action='index.php' method='post'>
-                                                            <input type='text' name='deleteMemberID' value='" . $member["MEMBER_ID"] . "' hidden>
-                                                            <input type='submit' class='btn btn-warning' value='Delete'>
+                                                            <input type='text' name='memberID' value='" . htmlentities($member[MEMBER_ID], ENT_QUOTES) . "' hidden />
+                                                            <input type='text' name='memberName' value='" . htmlentities($member[FIRSTNAME], ENT_QUOTES) . " " . htmlentities($member[LASTNAME], ENT_QUOTES) . "' hidden />
+                                                            <input type='text' name='memberEmail' value='" . htmlentities($member[MEMBER_EMAIL], ENT_QUOTES) . "' hidden />
+                                                            <input type='submit' class='btn btn-warning' value='Delete' />
                                                         </form>
                                                     </td>
                                                 </tr>";

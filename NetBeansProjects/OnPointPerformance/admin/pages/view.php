@@ -136,12 +136,7 @@
                         <h1 class="page-header">Member Management</h1>
                             <p>                                                   
                                 <?php
-                                    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                    define("DB_USER_NAME", "ad_victorium");
-                                    define("DB_PASSWORD", "MT8AlJAM");
-                                    define("DB_NAME", "onpoint_performance_center_lower");
-                                    define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-                                    define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                    include "../../databaseInfo.php";
 
                                     try {
                                         $memberStatus;
@@ -152,7 +147,7 @@
 
                                         $accountInformationQuery = $connection->query('
                                             SELECT M.MEMBER_ID, M.MEMBER_EMAIL, M.FIRSTNAME, M.LASTNAME, M.ADDRESS, M.CITY, M.STATE, M.ZIP, M.PHONE, M.NOTES, M.ADMIN_NOTES, M.PASSWORD, M.DUEDATE, M.ACTIVESTATUS, ME.FIRSTNAME, ME.LASTNAME, ME.PHONE, ME.RELATIONSHIP, ME.EMERGENCY_CONTACT_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . USER_EMERGENCY_CONTACT_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
+                                            FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . EMERGENCY_CONTACTS_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
                                             WHERE M.MEMBER_ID = '. $connection->quote($_POST["buttonMemberID"])
                                         );
 
@@ -205,8 +200,8 @@
                                             </br>
                                             <div>
                                                 <form action='edit.php' method='post'>
-                                                    <input type='text' name='buttonMemberID' value='" . $accountInformation[0] . "' hidden>
-                                                    <input type='submit' value='Edit' class='btn btn-default'>
+                                                    <input type='text' name='buttonMemberID' value='" . $accountInformation[0] . "' hidden />
+                                                    <input type='submit' value='Edit' class='btn btn-default' />
                                                 </form>
                                             </div>";
                                     }

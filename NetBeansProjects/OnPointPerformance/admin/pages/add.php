@@ -141,14 +141,7 @@
                             <?php
                                 include '../../mail/welcome_member.php';
                                 include '../../mail/audit_alert.php';
-
-                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                define("DB_USER_NAME", "ad_victorium");
-                                define("DB_PASSWORD", "MT8AlJAM");
-                                define("DB_NAME", "onpoint_performance_center_lower");
-                                define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-                                define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
-                                define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                include "../../databaseInfo.php";
 
                                 $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
                                 $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
@@ -331,7 +324,7 @@
                                         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                         $accountInformationUpdate = $connection->prepare("
-                                            INSERT INTO " . USER_EMERGENCY_CONTACT_TABLE . "(FIRSTNAME, LASTNAME, PHONE, RELATIONSHIP, MEMBER_ID)
+                                            INSERT INTO " . EMERGENCY_CONTACTS_TABLE . "(FIRSTNAME, LASTNAME, PHONE, RELATIONSHIP, MEMBER_ID)
                                             VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedRelationship, '" . getMemberID($submittedEmail) . "')"
                                         );
 
@@ -428,7 +421,7 @@
 
                                         $adminEmailQuery = $connection->prepare('
                                             SELECT EMAIL 
-                                            FROM ' . USER_CREDENTIAL_TABLE2 . ' 
+                                            FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                                             WHERE EMAIL LIKE :submittedEmail'
                                         );
 

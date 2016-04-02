@@ -136,13 +136,8 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Front Page Banner</h1>
                         <div> 
-                            <?php                                               
-                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                define("DB_USER_NAME", "ad_victorium");
-                                define("DB_PASSWORD", "MT8AlJAM");
-                                define("DB_NAME", "onpoint_performance_center_lower");
-                                define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
-                                define("USER_CREDENTIAL_TABLE2", "MEMBER_ACCOUNT");
+                            <?php     
+                                include "../../databaseInfo.php";
                                 
                                 if (!empty($_POST["clear"])) {
                                     if (submitBannerInformation(NULL, NULL, NULL)) {
@@ -236,7 +231,7 @@
 
                                         $bannerInfoQuery = $connection->query(
                                                 'SELECT DISPLAYED_UNTIL, TITLE, DESCRIPTION 
-                                                FROM BANNER 
+                                                FROM ' . BANNER_TABLE . '  
                                                 WHERE BANNER_ID = 1');
 
                                         $formData = $bannerInfoQuery->fetch(PDO::FETCH_ASSOC);

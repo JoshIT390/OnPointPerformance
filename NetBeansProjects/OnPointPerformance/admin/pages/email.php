@@ -135,23 +135,107 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Email Members</h1>
-			<form method="post" action="sendEmail.php">
-                            <p>
-                                Notice: This email will be sent to all active members from noreply@OnPointPerformanceCenter.com
-                            </p></br>
-                            <div>
-                                Subject: <input type="text" name="subject" required/>
-                            </div><br />
-                            <div>
-                                Message: 
-                            </div>
-                            <div>
-                                <textarea rows='10' cols='100' name='message'></textarea>
-                            </div><br />
-                            <div>
-                                <input type='submit' value='Send' class='btn btn-default' />
-                            </div>
-                        </form>
+                        
+                        <?php
+                            include "../../databaseInfo.php";
+                        
+                            if (isset($_POST['subject']) && isset($_POST['message'])) {
+                                if (submitEmails($_POST['subject'], $_POST['message'])) {
+                                    displayForm("success");
+                                }
+                                else {
+                                    displayForm("fail");
+                                }
+                            }
+                            else {
+                                displayForm("");
+                            }
+                            
+                            function getActiveMemberEmailAddresses() {
+                                $memberEmails;
+                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $memberEmailsQuery = $connection->query('
+                                        SELECT MEMBER_EMAIL 
+                                        FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                        WHERE ACTIVESTATUS = '. $connection->quote(1)
+                                    );
+
+                                    $memberEmails = $memberEmailsQuery->fetchAll(PDO::FETCH_COLUMN, 0);
+                                }
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+                                }
+                                
+                                return $memberEmails;
+                            }
+                            
+                            function submitEmails($subject, $message) {
+                                include '../../mail/all_member.php';
+                                $numFailed = 0;
+                                $memberEmails = getActiveMemberEmailAddresses();
+                                
+                                foreach ($memberEmails as &$memberEmail) {
+                                    if (!sendEmail($memberEmail, $subject, nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8')))) {
+                                        $numFailed++;
+                                    }
+                                }
+                                
+                                if ($numFailed > 0) {
+                                    return FALSE;
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                            
+                            function displayForm($status) {
+                                $message;
+                                
+                                if ($status == "success") {
+                                    $message = 
+                                        '<div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            Emails have been sent to all active members successfully.
+                                        </div>';
+                                }
+                                elseif ($status == "fail") {
+                                    $message = 
+                                        '<div class="alert alert-danger alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            There was a problem sending the emails. Please try again.
+                                        </div>';
+                                }
+                                
+                                echo
+                                    $message . 
+                                    '<form method="post" action="email.php">
+                                        <p>
+                                            Notice: This email will be sent to all active members from noreply@OnPointPerformanceCenter.com
+                                        </p></br>
+                                        <div>
+                                            Subject: <input type="text" name="subject" required/>
+                                        </div><br />
+                                        <div>
+                                            Message: 
+                                        </div>
+                                        <div>
+                                            <textarea rows="10" cols="100" name="message"></textarea>
+                                        </div><br />
+                                        <div>
+                                            <input type="submit" value="Send" class="btn btn-default" />
+                                        </div>
+                                    </form>';
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

@@ -138,13 +138,7 @@
                                 <?php
                                     include '../../mail/welcome_admin.php';
                                     include '../../mail/audit_alert.php';
-                                
-                                    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                    define("DB_USER_NAME", "ad_victorium");
-                                    define("DB_PASSWORD", "MT8AlJAM");
-                                    define("DB_NAME", "onpoint_performance_center_lower");
-                                    define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
-                                    define("USER_CREDENTIAL_TABLE2", "MEMBER_ACCOUNT");
+                                    include "../../databaseInfo.php";
 
                                     // Regular view
                                     if (!isset($_POST["submit"])) {
@@ -213,7 +207,7 @@
                                             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                             $accountInformationUpdate = $connection->prepare(
-                                                    'INSERT INTO ' . USER_CREDENTIAL_TABLE . ' (FIRSTNAME, LASTNAME, EMAIL, PASSWORD) 
+                                                    'INSERT INTO ' . ADMIN_CREDENTIAL_TABLE . ' (FIRSTNAME, LASTNAME, EMAIL, PASSWORD) 
                                                     VALUES (:submittedFirstName, :submittedLastName, :submittedEmail, :submittedPassword)');
 
                                             $accountInformationUpdate->execute(array(
@@ -278,7 +272,7 @@
 
                                             $adminEmailQuery = $connection->prepare('
                                                 SELECT EMAIL 
-                                                FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                                FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                                                 WHERE EMAIL LIKE :submittedEmail'
                                             );
 
@@ -306,7 +300,7 @@
 
                                             $memberEmailQuery = $connection->prepare('
                                                 SELECT MEMBER_EMAIL 
-                                                FROM ' . USER_CREDENTIAL_TABLE2 . ' 
+                                                FROM ' . USER_CREDENTIAL_TABLE . ' 
                                                 WHERE MEMBER_EMAIL LIKE :submittedEmail'
                                             );
 

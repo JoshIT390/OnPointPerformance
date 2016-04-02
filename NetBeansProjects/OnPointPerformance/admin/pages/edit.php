@@ -136,13 +136,7 @@
                         <h1 class="page-header">Member Management</h1>                        
                         <p>
                             <?php
-                                define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                define("DB_USER_NAME", "ad_victorium");
-                                define("DB_PASSWORD", "MT8AlJAM");
-                                define("DB_NAME", "onpoint_performance_center_lower");
-                                define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-                                define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
-                                define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+                                include "../../databaseInfo.php";
 
                                 $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
                                 $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
@@ -338,7 +332,7 @@
                                         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                         $accountInformationUpdate = $connection->prepare('
-                                            UPDATE ' . USER_EMERGENCY_CONTACT_TABLE . ' 
+                                            UPDATE ' . EMERGENCY_CONTACTS_TABLE . ' 
                                             SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, PHONE = :submittedPhone, RELATIONSHIP = :submittedRelationship 
                                             WHERE MEMBER_ID = :memberID'
                                         );
@@ -464,7 +458,7 @@
 
                                         $adminEmailQuery = $connection->prepare('
                                             SELECT EMAIL 
-                                            FROM ' . USER_CREDENTIAL_TABLE2 . ' 
+                                            FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                                             WHERE EMAIL LIKE :submittedEmail'
                                         );
 
@@ -516,7 +510,7 @@
 
                                         $accountInformationQuery = $connection->query('
                                             SELECT M.MEMBER_ID, M.MEMBER_EMAIL, M.FIRSTNAME, M.LASTNAME, M.ADDRESS, M.CITY, M.STATE, M.ZIP, M.PHONE, M.NOTES, M.ADMIN_NOTES, M.PASSWORD, M.DUEDATE, M.ACTIVESTATUS, ME.FIRSTNAME, ME.LASTNAME, ME.PHONE, ME.RELATIONSHIP, ME.EMERGENCY_CONTACT_ID 
-                                            FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . USER_EMERGENCY_CONTACT_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
+                                            FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . EMERGENCY_CONTACTS_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
                                             WHERE M.MEMBER_ID = '. $connection->quote($_POST["buttonMemberID"])
                                         );
 

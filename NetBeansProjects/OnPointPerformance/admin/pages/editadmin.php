@@ -136,12 +136,7 @@
                         <h1 class="page-header">Admin Management</h1>
                             <p>
                                 <?php
-                                    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                                    define("DB_USER_NAME", "ad_victorium");
-                                    define("DB_PASSWORD", "MT8AlJAM");
-                                    define("DB_NAME", "onpoint_performance_center_lower");
-                                    define("USER_CREDENTIAL_TABLE", "ADMIN_USERS");
-                                    define("USER_CREDENTIAL_TABLE2", "MEMBER_ACCOUNT");
+                                    include "../../databaseInfo.php";
 
                                     // Regular view
                                     if (!isset($_POST["submit"])) {
@@ -244,7 +239,7 @@
                                             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                             $accountInformationUpdate = $connection->prepare(
-                                                    'UPDATE ' . USER_CREDENTIAL_TABLE . ' SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, EMAIL = :submittedEmail 
+                                                    'UPDATE ' . ADMIN_CREDENTIAL_TABLE . ' SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, EMAIL = :submittedEmail 
                                                     WHERE ADMIN_ID = :adminID');
 
                                             $accountInformationUpdate->execute(array(
@@ -275,7 +270,7 @@
                                             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                                             $accountInformationUpdate = $connection->prepare(
-                                                    'UPDATE ' . USER_CREDENTIAL_TABLE . ' SET PASSWORD = :submittedPassword 
+                                                    'UPDATE ' . ADMIN_CREDENTIAL_TABLE . ' SET PASSWORD = :submittedPassword 
                                                     WHERE ADMIN_ID = :adminID');
 
                                             $accountInformationUpdate->execute(array(
@@ -338,7 +333,7 @@
 
                                             $adminEmailQuery = $connection->prepare('
                                                 SELECT EMAIL 
-                                                FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                                FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                                                 WHERE ADMIN_ID != :adminID AND EMAIL LIKE :submittedEmail'
                                             );
 
@@ -367,7 +362,7 @@
 
                                             $memberEmailQuery = $connection->prepare('
                                                 SELECT MEMBER_EMAIL 
-                                                FROM ' . USER_CREDENTIAL_TABLE2 . ' 
+                                                FROM ' . MEMBER_ACCOUNT . ' 
                                                 WHERE MEMBER_EMAIL LIKE :submittedEmail'
                                             );
 
@@ -419,7 +414,7 @@
 
                                             $accountInformationQuery = $connection->query('
                                                 SELECT FIRSTNAME, LASTNAME, EMAIL, ADMIN_ID 
-                                                FROM ' . USER_CREDENTIAL_TABLE . ' 
+                                                FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                                                 WHERE ADMIN_ID = '. $connection->quote($_POST["buttonAdminID"])
                                             );
 
