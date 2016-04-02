@@ -141,8 +141,8 @@
 						<p>  <h3> Add an Announcement:</h3>
 							<form action="addAnnouncementCompletion.php" method="post" enctype="multipart/form-data">
 							<div>Title: <input type="text" name="title" required>
-							Date: <input type="text" name="date" required>
-                                                        Description: <input type="text" name="description" placeholder="YYYY-MM-DD" required></div></br>
+							Date: <input type="date" name="date" placeholder="YYYY-MM-DD" required>
+                                                        Description: <input type="text" name="description" required></div></br>
                                                         <div>Select Square Image to Upload:  <input type="file" name="imgUpload" id="imageUpload" required></div></br>
 							<div>Image Description: <input type="text" name="imgDescription" required></div></br>
 							<input type="submit" value="Submit"> </form></br> </br> 
