@@ -65,18 +65,18 @@ and open the template in the editor.
             
             <div class="container">
             <div class="jumbotron">
-                <h1>On Point Performance Center</h1>
+                <h1 style="color:#ff2600">On Point Performance Center</h1>
                 <p class='linez' style="font-size: 12pt">OPPC is a physical training approach for elite and tactical athletes. It’s not just gym or a workout, it is a mindset and an approach to existence. We exist for the purpose of creating mission-capable athletes who compete on the platform, in the streets and on the battlefield. Participation in this program is limited and by invitation or application only. It is not for the general population and the core focus and mission of OPPC will be vigorously protected. The owners and trainers of this facility have years of Special Forces experience and decades of institutional and experiential knowledge in the field of training athletes to become stronger, faster and more mentally tough than their competition, their adversaries or their enemies.</p>
                 </div>
             </div>
             <div class="container">
                         <div class="jumbotron">
 						<img src="RustyPugh.jpg" alt="Picture of Rusty Pugh" style="float:left;padding-right:15px;">
-                            <h1>Rusty Pugh</h1>
+                            <h1 style="color:#ff2600">Rusty Pugh</h1>
                             <p class='linez' style="font-size: 12pt">Rusty served 14 years in the U.S. Army's elite Special Forces, known as the Green Berets. During this time Rusty operated in several high threat missions overseas. These included tours in Central America and Afghanistan where he was awarded the Bronze Star Medal and the Combat Infantry Badge. Rusty served the majority of his military  career on an Operational Detachment Alpha, otherwise known as a Special Forces A Team. Rusty was a graduate of the Special Forces Advanced Urban Combat Course as well as the Special Operations Combat Diver Qualification Course, one of the most physically demanding military courses in the world. Rusty has also competed in Tactical 3 Gun and International Practical Shooting Confederation at a National level. Rusty holds Elite / Pro totals in 2 weight classes as a powerlifter  and has squatted 800 pounds and bench pressed 650 pounds in sanctioned powerlifting meets. Rusty has coached several powerlifters to achieve Elite/Pro totals. He has a personal training certificate from the Cooper Institute in Dallas Texas.</p>
                         </div> 
                         <div class="jumbotron">
-                            <h1>John Sheetz
+                            <h1 style="color:#ff2600">John Sheetz
                             <img src="JohnSheetz.jpg" alt="Picture of John Sheetz"  style="float:right;width:275px;height:350px;padding-left:15px;">
                             </h1>
                             <p class='linez' style="font-size: 12pt">
