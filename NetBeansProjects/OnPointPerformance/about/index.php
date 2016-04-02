@@ -77,7 +77,7 @@ and open the template in the editor.
                         </div> 
                         <div class="jumbotron">
                             <h1>John Sheetz
-                            <img src="JohnSheetz.png" alt="Picture of John Sheetz"  style="float:right;width:275px;height:350px;padding-left:15px;">
+                            <img src="JohnSheetz.jpg" alt="Picture of John Sheetz"  style="float:right;width:275px;height:350px;padding-left:15px;">
                             </h1>
                             <p class='linez' style="font-size: 12pt">
                                 John holds a Master of Sports Science degree and has extensive experience in testing and training of athletes to improve performance. He has worked with conventional and tactical athletes from amateur to professional ranks, and has consulted with municipalities and public companies on fitness for duty programming. John has held certifications from organizations such as National Strength and Conditioning Association, ACE and others. A lifelong athlete, he participated in team sports before finding success in powerlifting and martial arts. He trained and served as both a volunteer city firefighter and a paid firefighter for the U.S. Forest Service. John is also certified as a Personal Protection Specialist by the Executive Protection Institute and holds a Private Security Service registration from the Virginia Department of Criminal Justice Services.</p>
