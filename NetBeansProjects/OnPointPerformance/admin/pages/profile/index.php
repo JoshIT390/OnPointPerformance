@@ -156,18 +156,21 @@
                                                 include './account_information.php';
 
                                                 if (!isset($_POST["accountInfoSubmit"])) {
-                                                    displayAccountInformation($_SESSION["admin_username"]);
+                                                    displayAccountInformation($_SESSION["admin_username"], "");
                                                 }
                                                 else {
-                                                    echo 
-                                                    "<div class='alert alert-success alert-dismissable'>
-                                                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                                        Account information updated.
-                                                    </div>";
-                                                        
-                                                    submitAccountInformation($_SESSION["admin_username"], trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["email"]));
-                                                    $_SESSION['member_username'] = $_POST["email"];
-                                                    displayAccountInformation($_SESSION["admin_username"]);
+                                                    if (verifyEmail($_POST["email"])) {
+                                                        if (submitAccountInformation($_SESSION["admin_username"], trim($_POST["firstName"]), trim($_POST["lastName"]), trim($_POST["email"]))) {
+                                                            $_SESSION['admin_username'] = $_POST["email"];
+                                                            displayAccountInformation($_SESSION["admin_username"], "success");
+                                                        }
+                                                        else {
+                                                            displayAccountInformation($_SESSION["admin_username"], "fail");
+                                                        }
+                                                    }
+                                                    else {
+                                                        displayAccountInformation($_SESSION["admin_username"], "fail_email");
+                                                    }
                                                 }
                                             ?>
                                         </div>    
@@ -177,22 +180,30 @@
                                                 include './account_password.php';
 
                                                 if (isset($_POST["currentPassword"]) && isset($_POST["newPassword1"]) && isset($_POST["newPassword2"])) {
-                                                    if (checkPassword($_SESSION['admin_username'], $_POST["currentPassword"], $_POST["newPassword1"], $_POST["newPassword2"])) {
-                                                        echo 
-                                                        "<div class='alert alert-success alert-dismissable'>
-                                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                                            Password updated.
-                                                        </div>";
-                                                        
-                                                        submitPassword($_SESSION['admin_username'], $_POST["newPassword1"]);
-                                                        displayPasswordForm();
+                                                    if (checkCurrentPassword($_SESSION["admin_username"], $_POST["currentPassword"])) {                       
+                                                        if (checkNewPasswordMatch($_POST["newPassword1"], $_POST["newPassword2"])) {
+                                                            if (checkNewPasswordRequirements($_POST["newPassword1"])) {
+                                                                if (submitPassword($_SESSION["admin_username"], $_POST["newPassword1"])) {
+                                                                    displayPasswordForm("success");
+                                                                }
+                                                                else {
+                                                                    displayPasswordForm("fail");
+                                                                }
+                                                            }
+                                                            else {
+                                                                displayPasswordForm("fail_new_password_requirements");
+                                                            }
+                                                        }
+                                                        else {
+                                                           displayPasswordForm("fail_new_password_match"); 
+                                                        }
                                                     }
                                                     else {
-                                                        displayPasswordForm();
+                                                        displayPasswordForm("fail_current_password");
                                                     }
                                                 }
                                                 else {
-                                                    displayPasswordForm();
+                                                    displayPasswordForm("");
                                                 }
                                             ?>
                                         </div>
