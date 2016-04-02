@@ -156,7 +156,7 @@
 								while($row = $result->fetch_assoc()) {
 								echo'<form action="updateEvent.php" method="post">
 								<p>Event Name: <input type="text" name="name" value="'.$row["NAME"].'" />
-								Date: <input type="text" name="date" value="'.$row["DATE"].'"/></p>
+								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
 								<p>City: <input type="text" name="city" value="'.$row["CITY"].'"/>
 								State: <input type="text" name="state" value="'.$row["STATE"].'"/></p>
 								<p>Zip: <input type="text" name="zip" value="'.$row["ZIP"].'"/>

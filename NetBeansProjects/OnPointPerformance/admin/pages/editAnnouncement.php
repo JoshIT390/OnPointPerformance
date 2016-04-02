@@ -158,7 +158,7 @@
 								while($row = $result->fetch_assoc()) {
 								echo'<form action="updateAnnouncement.php" method="post">
 								<p>Title: <input type="text" name="title" value="'.$row["TITLE"].'"/>
-								Date: <input type="text" name="date" value="'.$row["DATE"].'"/></p>
+								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
 								<p>Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
 								<p><input type="hidden" name="annID" value="'.$annID.'"/></p>
 								<p><input type="submit" value="Update"/></p>
