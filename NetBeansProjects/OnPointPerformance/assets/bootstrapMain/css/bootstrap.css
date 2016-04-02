@@ -5100,8 +5100,8 @@ a.thumbnail.active {
   color: #e6e6e6;
 }
 .alert-danger {
-  background-color: #cc0000;
-  border-color: #ed4d63;
+  background-color: #ff2600;
+  border-color: #000000;
   color: #ffffff;
 }
 .alert-danger hr {
@@ -5788,7 +5788,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel-danger > .panel-heading {
   color: #ffffff;
-  background-color: #cc0000;
+  background-color: #ff2600;
   border-color: rgba(0, 0, 0, 0.6);
   text-align: center;
 }

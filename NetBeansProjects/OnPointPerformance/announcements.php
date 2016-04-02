@@ -45,8 +45,8 @@
                     . "<div class='col-lg-8' >"
                         . "<div class='jumbotron' >"
                             . "<h1>" . $result[2] . "</h1>"
-                            . "<p> " . $result[1] . "</p>"
-                            . "<p> Date: " . $result[3] . "</p>"
+                            . "<p class='linez' style='font-size: 12pt'> " . $result[1] . "</p>"
+                            . "<p class='linez' style='font-size: 12pt'> Date: " . $result[3] . "</p>"
                         . "</div>"
                     . "</div>"
                 . "</div>";
