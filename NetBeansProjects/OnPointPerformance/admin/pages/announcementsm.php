@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-                        <h3><a href="addAnnouncement.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Announcement</a></h3>
+                        <a href="addAnnouncement.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Announcement</a>
                         
                         <p>                             
                             <?php

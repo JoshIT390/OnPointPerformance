@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Manage Calendar Events</h1>
-                        <h3><a href="addEvent.php">Add Event</a></h3>
+                        <a href="addEvent.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Event</a>
                         <p>                            
                             <?php
                                 include "../../databaseInfo.php";

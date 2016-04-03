@@ -138,7 +138,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Admin Management</h1>
                         <p>
-                            <h3><a href="addadmin.php">Add an Admin</a></h3>
+                            <a href="addadmin.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Admin</a>
                             <h3> Search for an Admin:</h3>
                             <form action="adminslist.php" method="post">
                                 First Name: <input type="text" name="search_fname" />

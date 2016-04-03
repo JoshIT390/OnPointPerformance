@@ -138,7 +138,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Member Management</h1>
                         <p>
-                            <h3><a href="add.php">Add a Member</a></h3>
+                            <a href="add.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Member</a>
                             <h3> Search for a Member:</h3>
                             <form action="index.php" method="post">
                                 First Name: <input type="text" name="search_fname" />
