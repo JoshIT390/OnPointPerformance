@@ -89,28 +89,28 @@ and open the template in the editor.
                             <img src="./assets/images/slide1.jpg" style="height:auto;" />
                             <figcaption>
                                 <h1>On Point Truths</h1>
-                                <h4>Human effort is more important than hardware!</h4>
+                                <h4>Human effort is more important than hardware.</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide2.jpg" style="height:auto;"/>
                             <figcaption>
                                 <h1>Quality over Quantity</h1>
-                                <h4>Quality of training is more important than quantity!</h4>
+                                <h4>Quality of training is more important than quantity.</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide3.jpg" style="height:auto;"/>
                             <figcaption>
                                 <h1>Selection</h1>
-                                <h4>Selection for On Point is a never ending process!</h4>
+                                <h4>Selection for On Point is a never ending process.</h4>
                             </figcaption>
                         </figure>
                         <figure>
                             <img src="./assets/images/slide1.jpg" style="height:auto;" />
                             <figcaption>
                                 <h1>On Point Truths</h1>
-                                <h4>Human effort is more important than hardware!</h4>
+                                <h4>Human effort is more important than hardware.</h4>
                             </figcaption>
                         </figure>
                     </figure>
