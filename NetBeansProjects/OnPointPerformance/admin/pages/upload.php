@@ -139,6 +139,8 @@
                         <h1 class="page-header">Forms</h1>
 						<p>
                                                     <?php
+                                                    include "../../databaseInfo.php";
+                                                    
                                                     $target_dir = "../../forms/";
                                                     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                                                     $uploadOk = 1;
@@ -160,20 +162,15 @@
                                                     } else {
                                                         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                                                             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='formsm.php'>Forms Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
-                                                        $filename = $_POST['filename'];
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-                                                        $query = "INSERT INTO FORMS (NAME, PDF) VALUES ('$filename', '". basename( $_FILES["fileToUpload"]["name"]) ."');";
+                                                        $query = "INSERT INTO " . FORMS_TABLE . " (NAME, PDF) VALUES ('$filename', '". basename( $_FILES["fileToUpload"]["name"]) ."');";
 							$result = mysqli_query($conn, $query );
                                                         } else {
                                                             echo " Sorry, there was an error uploading your file.";

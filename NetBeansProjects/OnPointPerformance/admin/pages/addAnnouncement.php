@@ -265,7 +265,7 @@
 
                                 echo 
                                     '<div>  
-                                        <h3> Add an Announcement</h3>' . 
+                                        <h3> Add Announcement</h3>' . 
                                         $notice . '
                                         <form action="addAnnouncement.php" method="post" enctype="multipart/form-data">
                                             Title: <input type="text" name="title" value="' . htmlentities($submittedTitle, ENT_QUOTES) . '" required /><br /><br />

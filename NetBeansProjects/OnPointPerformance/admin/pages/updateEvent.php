@@ -140,13 +140,10 @@
                         <h1 class="page-header">Manage Calendar Events</h1>
 						
 						<p> <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+							include "../../databaseInfo.php";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 
 							// Check connection
 							if ($conn->connect_error) {
@@ -160,7 +157,7 @@
 							$ZIP=$_POST["zip"];
 							$DESCRIPTION=$_POST["description"];
 							$FORMS=$_POST["forms"];
-							$result = mysqli_query($conn, "UPDATE CALENDAR SET NAME = '".$NAME."', DATE = '".$DATE."', CITY = '".$CITY."', STATE = '".$STATE."', ZIP = '".$ZIP."', DESCRIPTION = '".$DESCRIPTION."', FORMS = '".$FORMS."' WHERE CALENDAR_ID = '".$CALENDAR_ID."'");
+							$result = mysqli_query($conn, "UPDATE " . CALENDAR_TABLE . " SET NAME = '".$NAME."', DATE = '".$DATE."', CITY = '".$CITY."', STATE = '".$STATE."', ZIP = '".$ZIP."', DESCRIPTION = '".$DESCRIPTION."', FORMS = '".$FORMS."' WHERE CALENDAR_ID = '".$CALENDAR_ID."'");
 							echo "<h3>Update Successful for ".$NAME."!</h3>";
 							mysqli_close($conn);
 							

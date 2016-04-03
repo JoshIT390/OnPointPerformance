@@ -138,10 +138,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">View Application</h1>
 			<?php 
-                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                            define("DB_USER_NAME", "ad_victorium");
-                            define("DB_PASSWORD", "MT8AlJAM");
-                            define("DB_NAME", "onpoint_performance_center_lower");
+                            include "../../databaseInfo.php";
                             
                             $appID = $_POST["appID"];
                             
@@ -150,7 +147,7 @@
                                 // Exceptions fire when occur
                                 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-                                $query = $connection->prepare('SELECT * FROM APPLICATIONS WHERE APP_ID=' . $appID);
+                                $query = $connection->prepare('SELECT * FROM ' . APPLICATIONS_TABLE . ' WHERE APP_ID=' . $appID);
                                 $query->execute();
                             }
                             catch(PDOException $e) {

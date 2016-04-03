@@ -141,7 +141,7 @@
 							$database = "onpoint_performance_center_lower";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 
 							// Check connection
 							if ($conn->connect_error) {
@@ -151,7 +151,7 @@
 							$TITLE=$_POST["title"];
 							$DATE=$_POST["date"];
 							$DESCRIPTION=$_POST["description"];
-							$result = mysqli_query($conn, "UPDATE ANNOUNCEMENT SET TITLE = '".$TITLE."', DATE = '".$DATE."', DESCRIPTION = '".$DESCRIPTION."' WHERE ANN_ID = '".$ANN_ID."'");
+							$result = mysqli_query($conn, "UPDATE " . ANNOUNCEMENTS_TABLE . " SET TITLE = '".$TITLE."', DATE = '".$DATE."', DESCRIPTION = '".$DESCRIPTION."' WHERE ANN_ID = '".$ANN_ID."'");
 							echo "<h3>Update Successful for ".$TITLE."!</h3>";
 							mysqli_close($conn);
 							

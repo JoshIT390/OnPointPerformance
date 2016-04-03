@@ -140,25 +140,22 @@
                         <h1 class="page-header">Announcements</h1>
 						<p><h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
 						<p>  <?php
-                            $servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+                                                        include "../../databaseInfo.php";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 							$annID=$_POST['annID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT TITLE, DATE, DESCRIPTION FROM ANNOUNCEMENT WHERE ANN_ID='" . $annID . "';");
+							$result = mysqli_query($conn, "SELECT TITLE, DATE, DESCRIPTION FROM " . ANNOUNCEMENTS_TABLE . " WHERE ANN_ID='" . $annID . "';");
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
 								echo'<form action="updateAnnouncement.php" method="post">
 								<p>Title: <input type="text" name="title" value="'.$row["TITLE"].'"/>
-								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
+								Date: <input type="text" name="date" value="'.$row["DATE"].'"/></p>
 								<p>Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
 								<p><input type="hidden" name="annID" value="'.$annID.'"/></p>
 								<p><input type="submit" value="Update"/></p>

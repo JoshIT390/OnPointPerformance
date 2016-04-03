@@ -136,10 +136,7 @@
                         <h1 class="page-header">Manage Calendar Events</h1>
 						<p>
 							<?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+							include "../../databaseInfo.php";
                                                         $name = $_POST["name"];
                                                         $date = $_POST["date"];
                                                         $city = $_POST["city"];
@@ -149,13 +146,13 @@
                                                         $forms = $_POST["forms"];
                                                         
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
                                                         }
-                                                        $query = "INSERT INTO CALENDAR(NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS) VALUES ('$name', '$date', '$city', '$state', '$zip', '$description', '$forms');";
+                                                        $query = "INSERT INTO " . CALENDAR_TABLE . "(NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS) VALUES ('$name', '$date', '$city', '$state', '$zip', '$description', '$forms');";
                                                         $result = mysqli_query($conn, $query);
                                                         if (!$result){
                                                             die('Invalid query: ' . mysql_error());

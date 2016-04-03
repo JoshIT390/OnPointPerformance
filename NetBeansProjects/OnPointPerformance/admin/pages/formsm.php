@@ -140,19 +140,16 @@
 						<p>
                                                 <h3><a href="addform.php">Add a Form</a></h3>
                                                     <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+							include "../../databaseInfo.php";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT * FROM FORMS ORDER BY NAME;");
+							$result = mysqli_query($conn, "SELECT * FROM " . FORMS_TABLE . " ORDER BY NAME;");
 							printf("Returned %d row(s).", $result->num_rows);
 							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
 							if ($result->num_rows > 0) {

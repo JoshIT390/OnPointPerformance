@@ -139,19 +139,16 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Manage Announcements</h1>
 						<p> <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+							include "../../databaseInfo.php";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 							$annID=$_POST['annID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM ANNOUNCEMENT WHERE ANN_ID='" . $annID . "';");
+							$result = mysqli_query($conn, "SELECT ANN_ID, DESCRIPTION, TITLE, DATE, IMG_URL, IMG_ALT FROM " . ANNOUNCEMENTS_TABLE . " WHERE ANN_ID='" . $annID . "';");
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {

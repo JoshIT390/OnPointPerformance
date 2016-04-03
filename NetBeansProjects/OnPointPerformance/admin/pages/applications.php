@@ -139,17 +139,14 @@
                         <h1 class="page-header">View Applications</h1>
                         
 			<?php 
-                            define("DB_HOST_NAME", "mysql.dnguyen94.com");
-                            define("DB_USER_NAME", "ad_victorium");
-                            define("DB_PASSWORD", "MT8AlJAM");
-                            define("DB_NAME", "onpoint_performance_center_lower");
+                            include "../../databaseInfo.php";
                             
                             try{
                                 $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
                                 // Exceptions fire when occur
                                 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-                                $query = $connection->prepare('SELECT FIRSTNAME, LASTNAME, AGE, MILITARY_BG, LAW_EN_BG, COMP_ATHLETE_BG, CERTIFICATION, APP_ID FROM APPLICATIONS ORDER BY APP_ID asc');
+                                $query = $connection->prepare('SELECT FIRSTNAME, LASTNAME, AGE, MILITARY_BG, LAW_EN_BG, COMP_ATHLETE_BG, CERTIFICATION, APP_ID FROM ' . APPLICATIONS_TABLE . ' ORDER BY APP_ID asc');
                                 $query->execute();
                             }
                             catch(PDOException $e) {

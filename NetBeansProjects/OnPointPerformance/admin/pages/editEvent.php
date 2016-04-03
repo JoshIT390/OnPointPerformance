@@ -138,25 +138,22 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Manage Calendar Events</h1>
 						<p> <?php
-							$servername = "mysql.dnguyen94.com";
-							$username = "ad_victorium";
-							$password = "MT8AlJAM";
-							$database = "onpoint_performance_center_lower";
+							include "../../databaseInfo.php";
 
 							// Create connection
-							$conn = mysqli_connect($servername, $username, $password, $database);
+							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 							$calendarID=$_POST['calendarID'];
 							// Check connection
 							if ($conn->connect_error) {
 								die("Connection failed: " . $conn->connect_error);
 							}
-							$result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM CALENDAR WHERE CALENDAR_ID='" . $calendarID . "';");
+							$result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM " . CALENDAR_TABLE . " WHERE CALENDAR_ID='" . $calendarID . "';");
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
 								echo'<form action="updateEvent.php" method="post">
 								<p>Event Name: <input type="text" name="name" value="'.$row["NAME"].'" />
-								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
+								Date: <input type="text" name="date" value="'.$row["DATE"].'"/></p>
 								<p>City: <input type="text" name="city" value="'.$row["CITY"].'"/>
 								State: <input type="text" name="state" value="'.$row["STATE"].'"/></p>
 								<p>Zip: <input type="text" name="zip" value="'.$row["ZIP"].'"/>
