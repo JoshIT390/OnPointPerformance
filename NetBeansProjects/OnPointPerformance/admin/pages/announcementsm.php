@@ -138,19 +138,24 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-                        <h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
+                        <h3><a href="addAnnouncement.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Announcement</a></h3>
                         
                         <p>                             
                             <?php
                                 include "../../databaseInfo.php";
                                 
-                                if (isset($_POST["annID"]) && isset($_POST["announcementName"])) {                                  
-                                    if (deleteAnnouncement($_POST["annID"])) {
-                                        generatePage("success", $_POST["announcementName"]);
+                                if (isset($_POST["annID"]) && isset($_POST["announcementName"]) && isset($_POST["imageFileName"])) {                                  
+                                    if (unlink('../../images/' . $_POST["imageFileName"])) {
+                                        if (deleteAnnouncement($_POST["annID"])) {
+                                            generatePage("success", $_POST["announcementName"]);
+                                        }
+                                        else {
+                                            generatePage("fail", $_POST["announcementName"]);
+                                        }                                        
                                     }
                                     else {
-                                        generatePage("fail", $_POST["announcementName"]);
-                                    }
+                                        generatePage("fail_delete_img", $_POST["announcementName"]);
+                                    } 
                                 }
                                 else {
                                     generatePage("", "");
@@ -195,6 +200,13 @@
                                             '<div class="alert alert-danger alert-dismissable">
                                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                                 There was a problem deleting "' . $announcementName . '". Please try again.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail_delete_img") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting the image file for "' . $announcementName . '". Please try again.
                                             </div>';
                                     }
                                     
@@ -243,6 +255,7 @@
                                                         <form action='announcementsm.php' method='post'>
                                                             <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
                                                             <input type='text' name='announcementName' value='" . $announcement[TITLE] . "' hidden />
+                                                            <input type='text' name='imageFileName' value='" . $announcement[IMG_URL] . "' hidden />
                                                             <input type='submit' class='btn btn-warning' value='Delete' />
                                                         </form>
                                                     </td>

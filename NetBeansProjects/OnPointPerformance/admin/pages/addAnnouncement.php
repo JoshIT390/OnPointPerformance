@@ -138,16 +138,160 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-						<p>  <h3> Add an Announcement:</h3>
-							<form action="addAnnouncementCompletion.php" method="post" enctype="multipart/form-data">
-							<div>Title: <input type="text" name="title" required>
-							Date: <input type="date" name="date" placeholder="YYYY-MM-DD" required>
-                                                        Description: <input type="text" name="description" required></div></br>
-                                                        <div>Select Square Image to Upload:  <input type="file" name="imgUpload" id="imageUpload" required></div></br>
-							<div>Image Description: <input type="text" name="imgDescription" required></div></br>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="announcementsm.php">Manage Announcements Home Page</a> </br>
-						</p>
+                        <?php
+                            include "../../databaseInfo.php";
+                        
+                            define("TARGET_DIR", "../../images/");
+                            
+                            if (!empty($_POST["title"]) && !empty($_POST["date"]) && !empty($_POST["description"]) && !empty($_POST["imgDescription"]) && !empty($_FILES["imgUpload"]["name"])) {
+                                if (!file_exists(TARGET_DIR . $_FILES["imgUpload"]["name"])) {
+                                    if (checkExtension(pathinfo($_FILES["imgUpload"]["name"], PATHINFO_EXTENSION))) {
+                                        if (move_uploaded_file($_FILES["imgUpload"]["tmp_name"], TARGET_DIR . $_FILES["imgUpload"]["name"])) {
+                                            if (submitInformation(trim($_POST["title"]), trim($_POST["description"]), $_POST["date"], $_FILES["imgUpload"]["name"], trim($_POST["imgDescription"]))) {
+                                                displayForm("success", "", "", "", "");
+                                            }
+                                            else {
+                                                unlink('../../images/' . basename( $_FILES["imgUpload"]["name"]));
+                                                displayForm("fail_submit", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                            }
+                                        }
+                                        else {
+                                            displayForm("fail_upload", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                        }
+                                    }
+                                    else {
+                                        displayForm("fail_image_ext", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                    }
+                                }
+                                else {
+                                    displayForm("fail_image_exist", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                }
+                            }
+                            else {
+                                displayForm("", "", "", "", "");
+                            }
+                            
+                            function checkExtension($fileExtension) {
+                                if (!strcasecmp($fileExtension, "jpg")) {
+                                    if (!strcasecmp($fileExtension, "jpeg")) {
+                                        if (!strcasecmp($fileExtension, "png")) {
+                                            if (!strcasecmp($fileExtension, "gif")) {
+                                                return FALSE;
+                                            }
+                                        }
+                                        else {
+                                            return TRUE;
+                                        }
+                                    }
+                                    else {
+                                        return TRUE;
+                                    }
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                        
+                            function submitInformation($submittedTitle, $submittedDescription, $submittedDate, $submittedFilePath, $submittedFileDescription) {                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $announcementSubmit = $connection->prepare(
+                                            'INSERT INTO ' . ANNOUNCEMENTS_TABLE . ' (TITLE, DESCRIPTION, DATE, IMG_URL, IMG_ALT) 
+                                            VALUES (:submittedTitle, :submittedDescription, :submittedDate, :submittedFilePath, :submittedFileDescription)');
+
+                                    $announcementSubmit->execute(array(
+                                        ':submittedTitle' => $submittedTitle,
+                                        ':submittedDescription' => $submittedDescription,
+                                        ':submittedDate' => $submittedDate,
+                                        ':submittedFilePath' => $submittedFilePath,
+                                        ':submittedFileDescription' => $submittedFileDescription
+                                    ));
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+
+                                return TRUE;
+                            }
+                            
+                            function displayForm($status, $submittedTitle, $submittedDescription, $submittedDate, $submittedFileDescription) {
+                                $notice = "";
+
+                                if ($status == "success") {
+                                    $notice = 
+                                        "<div class='alert alert-success alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            Announcement and image successfully submitted.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_image_exist") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded image already exists. Please choose a different image or rename your image and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_image_ext") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded image is not a supported format. Please choose a different image or convert your image to the below requirements and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_upload") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem with the image upload. The announcement was not submitted. Please try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_submit") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem submitting the announcement. Please try again.
+                                        </div>";
+                                }
+
+                                echo 
+                                    '<div>  
+                                        <h3> Add an Announcement</h3>' . 
+                                        $notice . '
+                                        <form action="addAnnouncement.php" method="post" enctype="multipart/form-data">
+                                            Title: <input type="text" name="title" value="' . htmlentities($submittedTitle, ENT_QUOTES) . '" required /><br /><br />
+                                            Date: <input type="date" name="date" placeholder="YYYY-MM-DD" value="' . htmlentities($submittedDate, ENT_QUOTES) . '" required /><br /><br />
+                                            Description:<br />
+                                            <textarea rows="4" cols="100" name="description">' . htmlentities($submittedDescription, ENT_QUOTES) . '</textarea>
+                                            <hr />
+                                            <div>
+                                                <h4>Image Upload</h4>
+                                                Requirements:
+                                                <ul>
+                                                    <li>Square image</li>
+                                                    <li>JPG, JPEG, PNG, or GIF format</li>
+                                                    <li>Not already being used by other announcements</li><br />
+                                                </ul>  
+                                                <input type="file" name="imgUpload" id="imageUpload" required />
+                                            </div><br />
+                                            <div>
+                                                Image Description: <input type="text" name="imgDescription" value="' . htmlentities($submittedFileDescription, ENT_QUOTES) . '" required />
+                                            </div>
+                                            <hr />
+                                            <input type="submit" value="Submit" class="btn btn-default" />
+                                        </form>
+                                    </div>';
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
