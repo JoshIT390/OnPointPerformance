@@ -162,7 +162,9 @@
                                                     } else {
                                                         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                                                             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded and can now be accessed from the <a href='formsm.php'>Forms Page</a>.</br></br> This means it is also viewable on the public side of the website so please check that it is being displayed correctly.";
-
+                                                        
+                                                        $filename = $_POST['filename'];    
+                                                            
 							// Create connection
 							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
 

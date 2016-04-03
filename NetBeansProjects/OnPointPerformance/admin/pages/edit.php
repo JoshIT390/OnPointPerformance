@@ -525,7 +525,7 @@
                                                     <tr>
                                                         <td>First Name: <input type='text' name='fname' value='" . htmlentities($accountInformation[2], ENT_QUOTES) . "' required /></td>
                                                         <td>Last Name: <input type='text' name='lname' value='" . htmlentities($accountInformation[3], ENT_QUOTES) . "'  required /></td>
-                                                        <td>Dues Paid Until: <input type='date' name='duedate' value='" . $accountInformation[12] . "' required /></td>
+                                                        <td>Dues Paid Until: <input type='date' name='duedate' value='" . $accountInformation[12] . "' placeholder='YYYY-MM-DD' required /></td>
                                                         <td>Member Status: <select name='status' >
                                                             <option value='active'>Active</option>
                                                             <option value='inactive'";
