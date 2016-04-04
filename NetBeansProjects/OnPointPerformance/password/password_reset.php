@@ -105,12 +105,15 @@
     
     function submitPassword($newPassword, $username, $role) {
         $table;
+        $column;
         
         if ($role == "member") {
             $table = USER_CREDENTIAL_TABLE;
+            $column = "MEMBER_EMAIL";
         }
         if ($role == "admin") {
             $table = USER_CREDENTIAL_TABLE2;
+            $column = "EMAIL";
         }
         try {
             $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
@@ -119,7 +122,7 @@
 
             $accountInformationUpdate = $connection->prepare(
                     'UPDATE ' . $table . ' SET PASSWORD = :submittedPassword 
-                    WHERE MEMBER_EMAIL = :submittedEmail');
+                    WHERE ' . $column . ' = :submittedEmail');
 
             $accountInformationUpdate->execute(array(
                 ':submittedPassword' => hashPassword($newPassword),
