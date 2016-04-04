@@ -136,38 +136,143 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<p> <?php
-							include "../../databaseInfo.php";
+                        <h1 class="page-header">Manage Calendar Events</h1>                      
+                        <?php     
+                            include "../../databaseInfo.php";
+                            $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
 
-							// Create connection
-							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
-							$calendarID=$_POST['calendarID'];
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM " . CALENDAR_TABLE . " WHERE CALENDAR_ID='" . $calendarID . "';");
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-								echo'<form action="updateEvent.php" method="post">
-								<p>Event Name: <input type="text" name="name" value="'.$row["NAME"].'" />
-								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
-								<p>City: <input type="text" name="city" value="'.$row["CITY"].'"/>
-								State: <input type="text" name="state" value="'.$row["STATE"].'"/></p>
-								<p>Zip: <input type="text" name="zip" value="'.$row["ZIP"].'"/>
-								Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
-								<p>Forms: <input type="text" name="forms" value="'.$row["FORMS"].'"/></p>
-								<p><input type="hidden" name="calendarID" value="'.$calendarID.'"/></p>
-								<p><input type="submit" value="Update"/></p>
-								</form>';
-								
-								}
-							}
-							$result->close();
-							
-							?>  </p>
+                            if (!empty($_POST["name"]) && !empty($_POST["date"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["description"]) && !empty($_POST["forms"])) {
+                                if (submitEventInformation(trim($_POST["name"]), $_POST["date"], trim($_POST["city"]), $_POST["state"], trim($_POST["zip"]), $_POST["description"], $_POST["forms"])) {
+                                    displayForm("success", $us_state_abbrevs);
+                                }
+                                else {
+                                    displayForm("fail", $us_state_abbrevs);
+                                }
+                            }
+                            else {
+                                displayForm("", $us_state_abbrevs);
+                            }
+
+                            function createStateAbbrevOptions($us_state_abbrevs, $submittedState) {
+                                $stateAbbrevOptions;
+
+                                foreach ($us_state_abbrevs as &$stateAbbrev) {
+                                    if ($stateAbbrev == $submittedState) {
+                                        $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '" selected>' . $stateAbbrev . '</option>';
+                                    }
+                                    else {
+                                        $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '">' . $stateAbbrev . '</option>';
+                                    }
+                                }
+
+                                return $stateAbbrevOptions;
+                            }
+
+                            function submitEventInformation($submittedName, $submittedDate, $submittedCity, $submittedState, $submittedZip, $submittedDescription, $submittedForms) {                                    
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $eventSubmit = $connection->prepare(
+                                            'UPDATE ' . CALENDAR_TABLE . ' 
+                                            SET NAME = :submittedName, DATE = :submittedDate, CITY = :submittedCity, STATE = :submittedState, ZIP = :submittedZip, DESCRIPTION = :submittedDescription, FORMS = :submittedForms 
+                                            WHERE CALENDAR_ID = :eventID');
+
+                                    $eventSubmit->execute(array(
+                                        ':submittedName' => $submittedName,
+                                        ':submittedDate' => $submittedDate,
+                                        ':submittedCity' => $submittedCity,
+                                        ':submittedState' => $submittedState,
+                                        ':submittedZip' => $submittedZip,
+                                        ':submittedDescription' => $submittedDescription,
+                                        ':submittedForms' => $submittedForms,
+                                        ':eventID' => $_POST["calendarID"]
+                                    ));
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+
+                                return TRUE;
+                            }
+
+                            function displayForm($status, $us_state_abbrevs) {
+                                $message;
+
+                                if ($status == "success") {
+                                    $message = 
+                                        "<div class='alert alert-dismissible alert-success'>
+                                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                            Event successfully updated.
+                                        </div>";
+                                }
+                                elseif ($status == "fail") {
+                                    $message = 
+                                        "<div class='alert alert-dismissible alert-danger'>
+                                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                            There was a problem updating the event. Please try again.
+                                        </div>";
+                                }
+
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $formDataQuery = $connection->query(
+                                            'SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS 
+                                            FROM ' . CALENDAR_TABLE . ' 
+                                            WHERE CALENDAR_ID = ' . $connection->quote($_POST["calendarID"]));
+
+                                    $formData = $formDataQuery->fetch(PDO::FETCH_ASSOC);
+
+                                    echo
+                                        '<h3>Editing "' . $formData[NAME] . '"</h3><br />' . 
+                                        $message . 
+                                        "<form action='editEvent.php' method='post'>
+                                            <div>
+                                                Name: <input type='text' name='name' value='" . htmlentities($formData[NAME], ENT_QUOTES) . "' required />
+                                                Date: <input type='date' name='date' placeholder='YYYY-MM-DD' value='" . $formData[DATE] . "' required />
+                                            </div><br />
+                                            <div>
+                                                City: <input type='text' name='city' value='" . htmlentities($formData[CITY], ENT_QUOTES) . "' required />
+                                                State:
+                                                <select name='state'>" . 
+                                                    createStateAbbrevOptions($us_state_abbrevs, $formData[STATE]) . 
+                                                "</select>
+                                                Zip Code: <input type='text' name='zip' value='" . htmlentities($formData[ZIP], ENT_QUOTES) . "' required />
+                                            </div><br />
+                                            <div>
+                                                Description:<br /> <textarea rows='4' cols='100' name='description' required>" . htmlentities($formData[DESCRIPTION], ENT_QUOTES) . "</textarea>
+                                            </div><br />
+                                            <div>
+                                                Forms Needed:<br /> <textarea rows='4' cols='100' name='forms' required>" . htmlentities($formData[FORMS], ENT_QUOTES) . "</textarea>
+                                            </div>
+                                            <br />
+                                            <input type='text' name='calendarID' value='" . $_POST["calendarID"] . "' hidden />
+                                            <input type='submit' value='Save changes' class='btn btn-default' />
+                                        </form><br />";
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

@@ -225,25 +225,6 @@
                                                 </tr>";
 
                                         while($event = array_shift($events)){
-                                            $managementOptions;
-
-                                            if ($admin[EMAIL] != $_SESSION['admin_username']) {
-                                                $managementOptions = 
-                                                    "<form action='editadmin.php' method='post'>
-                                                        <input type='text' name='buttonAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
-                                                        <input type='submit' class='btn btn-primary' value='Edit'>
-                                                    </form>
-                                                    <form action='adminslist.php' method='post'>
-                                                        <input type='text' name='deleteAdminID' value='" . $admin["ADMIN_ID"] . "' hidden>
-                                                        <input type='submit' class='btn btn-warning' value='Delete'>
-                                                    </form>";
-                                            }
-                                            else {
-                                                $managementOptions = 
-                                                    "<button type='button' class='btn btn-primary disabled'>Edit</button>
-                                                    <button type='button' class='btn btn-warning disabled'>Delete</button>";
-                                            }
-
                                             echo 
                                                 "<tr>
                                                     <td>" . $event[NAME] . "</td>

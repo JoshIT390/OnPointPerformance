@@ -134,20 +134,117 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Manage Calendar Events</h1>
-						<p> <h3> Add an Event:</h3>
-							<form action="addEventCompletion.php" method="post">
-							<div>Name: <input type="text" name="name" required>
-                                                            Date: <input type="date" name="date" placeholder="YYYY-MM-DD" required></div></br>
-							<div>City: <input type="text" name="city" required>
-							State: <input type="text" name="state" required>
-							Zip Code: <input type="text" name="zip" required></div> </br>
-							<div>Description: <input type="text" name="description" required>
-							Forms: <input type="text" name="forms" required></div></br>
-							<input type="submit" value="Submit"> </form></br> </br> 
-							<a href="calendar.php">Manage Calendar Home Page</a> </br>
-							
-						</p>
+                        <h1 class="page-header">Manage Calendar Events</h1>             
+                        <?php     
+                            include "../../databaseInfo.php";
+                            $us_state_abbrevs = array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY");
+
+                            if (!empty($_POST["name"]) && !empty($_POST["date"]) && !empty($_POST["city"]) && !empty($_POST["state"]) && !empty($_POST["zip"]) && !empty($_POST["description"]) && !empty($_POST["forms"])) {
+                                if (submitEventInformation(trim($_POST["name"]), $_POST["date"], trim($_POST["city"]), $_POST["state"], trim($_POST["zip"]), $_POST["description"], $_POST["forms"])) {
+                                    displayForm("success", $us_state_abbrevs, "", "", "", "", "", "", "");
+                                }
+                                else {
+                                    displayForm("fail", $us_state_abbrevs, $_POST["name"], $_POST["date"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["description"], $_POST["forms"]);
+                                }
+                            }
+                            else {
+                                displayForm("", $us_state_abbrevs, "", "", "", "", "", "", "");
+                            }
+
+                            function createStateAbbrevOptions($us_state_abbrevs, $submittedState) {
+                                $stateAbbrevOptions;
+
+                                foreach ($us_state_abbrevs as &$stateAbbrev) {
+                                    if ($stateAbbrev == $submittedState) {
+                                        $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '" selected>' . $stateAbbrev . '</option>';
+                                    }
+                                    else {
+                                        $stateAbbrevOptions .= '<option value="' . $stateAbbrev . '">' . $stateAbbrev . '</option>';
+                                    }
+                                }
+
+                                return $stateAbbrevOptions;
+                            }
+
+                            function submitEventInformation($submittedName, $submittedDate, $submittedCity, $submittedState, $submittedZip, $submittedDescription, $submittedForms) {                                    
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $eventSubmit = $connection->prepare(
+                                            'INSERT INTO ' . CALENDAR_TABLE . ' (NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS) 
+                                            VALUES (:submittedName, :submittedDate, :submittedCity, :submittedState, :submittedZip, :submittedDescription, :submittedForms)');
+
+                                    $eventSubmit->execute(array(
+                                        ':submittedName' => $submittedName,
+                                        ':submittedDate' => $submittedDate,
+                                        ':submittedCity' => $submittedCity,
+                                        ':submittedState' => $submittedState,
+                                        ':submittedZip' => $submittedZip,
+                                        ':submittedDescription' => $submittedDescription,
+                                        ':submittedForms' => $submittedForms
+                                    ));
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+
+                                return TRUE;
+                            }
+
+                            function displayForm($status, $us_state_abbrevs, $submittedName, $submittedDate, $submittedCity, $submittedState, $submittedZip, $submittedDescription, $submittedForms) {
+                                $message;
+
+                                if ($status == "success") {
+                                    $message = 
+                                        "<div class='alert alert-dismissible alert-success'>
+                                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                            Event successfully submitted.
+                                        </div>";
+                                }
+                                elseif ($status == "fail") {
+                                    $message = 
+                                        "<div class='alert alert-dismissible alert-danger'>
+                                            <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                                            There was a problem submitting the event. Please try again.
+                                        </div>";
+                                }
+
+                                echo
+                                    "<h3>Add Event</h3>" . 
+                                    $message . 
+                                    "<form action='addEvent.php' method='post'>
+                                        <div>
+                                            Name: <input type='text' name='name' value='" . htmlentities($submittedName, ENT_QUOTES) . "' required />
+                                            Date: <input type='date' name='date' placeholder='YYYY-MM-DD' value='" . $submittedDate . "' required />
+                                        </div><br />
+                                        <div>
+                                            City: <input type='text' name='city' value='" . htmlentities($submittedCity, ENT_QUOTES) . "' required />
+                                            State:
+                                            <select name='state'>" . 
+                                                createStateAbbrevOptions($us_state_abbrevs, $submittedState) . 
+                                            "</select>
+                                            Zip Code: <input type='text' name='zip' value='" . htmlentities($submittedZip, ENT_QUOTES) . "' required />
+                                        </div><br />
+                                        <div>
+                                            Description:<br /> <textarea rows='4' cols='100' name='description' required>" . htmlentities($submittedDescription, ENT_QUOTES) . "</textarea>
+                                        </div><br />
+                                        <div>
+                                            Forms Needed:<br /> <textarea rows='4' cols='100' name='forms' required>" . htmlentities($submittedForms, ENT_QUOTES) . "</textarea>
+                                        </div>
+                                        <br />
+                                        <input type='submit' value='Submit' class='btn btn-default' />
+                                    </form><br />";
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

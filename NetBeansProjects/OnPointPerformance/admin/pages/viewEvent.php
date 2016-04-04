@@ -138,33 +138,82 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Manage Calendar Events</h1>
-						<p> <?php
-							include "../../databaseInfo.php";
+                        <p> <?php/*
+                                include "../../databaseInfo.php";
 
-							// Create connection
-							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
-							$calendarID=$_POST['calendarID'];
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM " . CALENDAR_TABLE . " WHERE CALENDAR_ID='" . $calendarID . "';");
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-								echo"<h4>Event: ". $row["NAME"]. "</h4></br>";
-								echo"<h4>Event Date: ". $row["DATE"]. "</h4></br>";
-								echo"<h4>Event City: ". $row["CITY"]. "</h4></br>";
-								echo"<h4>Event State: ". $row["STATE"]. "</h4></br>";
-								echo"<h4>Event Zip Code: ". $row["ZIP"]. "</h4></br>";
-								echo"<h4>Event Description: ". $row["DESCRIPTION"]. "</h4></br>";
-								echo"<h4>Event Forms: ". $row["FORMS"]. "</h4></br>";
+                                // Create connection
+                                $conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
+                                $calendarID=$_POST['calendarID'];
+                                // Check connection
+                                if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                }
+                                $result = mysqli_query($conn, "SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS FROM " . CALENDAR_TABLE . " WHERE CALENDAR_ID='" . $calendarID . "';");
+                                if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while($row = $result->fetch_assoc()) {
+                                        echo"<h4>Event: ". $row["NAME"]. "</h4></br>";
+                                        echo"<h4>Event Date: ". $row["DATE"]. "</h4></br>";
+                                        echo"<h4>Event City: ". $row["CITY"]. "</h4></br>";
+                                        echo"<h4>Event State: ". $row["STATE"]. "</h4></br>";
+                                        echo"<h4>Event Zip Code: ". $row["ZIP"]. "</h4></br>";
+                                        echo"<h4>Event Description: ". $row["DESCRIPTION"]. "</h4></br>";
+                                        echo"<h4>Event Forms: ". $row["FORMS"]. "</h4></br>";
 
-								}
-							}
-							$result->close();
-							
-							?>  </p>
+                                        }
+                                }
+                                $result->close();*/
+
+                                ?>  
+                        </p>
+                        
+                        <?php
+                            include "../../databaseInfo.php";
+                            
+                            try {
+                                $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                // Exceptions fire when occur
+                                $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                $informationQuery = $connection->query(
+                                        'SELECT NAME, DATE, CITY, STATE, ZIP, DESCRIPTION, FORMS 
+                                        FROM ' . CALENDAR_TABLE . ' 
+                                        WHERE CALENDAR_ID = ' . $connection->quote($_POST["calendarID"]));
+
+                                $information = $informationQuery->fetch(PDO::FETCH_ASSOC);
+
+                                echo
+                                    '<h3>Viewing "' . $information[NAME] . '"</h3><br />' . 
+                                    "<div>
+                                        Name: " . $information[NAME] . "
+                                    </div><br />
+                                    <div>
+                                        Date: " . $information[DATE] . "
+                                    </div><br />
+                                    <div>
+                                        Location: " . $information[CITY] . ", " . $information[STATE] . " " . $information[ZIP] . "
+                                    </div><br />
+                                    <div>
+                                        Description:<br />" . $information[DESCRIPTION] . "
+                                    </div><br />
+                                    <div>
+                                        Forms Needed:<br />" . $information[FORMS] . "
+                                    </div>
+                                    <br />
+                                    <form action='editEvent.php' method='post'>
+                                        <input type='text' name='calendarID' value='" . $_POST["calendarID"] . "' hidden />
+                                        <input type='submit' value='Edit' class='btn btn-default' />
+                                    </form>";
+                            }
+
+                            // Script halts and throws error if exception is caught
+                            catch(PDOException $e) {
+                                echo "
+                                <div>
+                                    Error: " . $e->getMessage() . 
+                                "</div>";
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
