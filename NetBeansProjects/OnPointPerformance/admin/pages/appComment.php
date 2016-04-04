@@ -5,21 +5,25 @@
     define("DB_NAME", "onpoint_performance_center_lower");
                       
     
-    define("COMMENT", $_POST["adminComments"]);
-    define("APP_ID", $_POST["appID"]);
+    $comments = $_POST["adminComments"];
+    $appID = $_POST["appID"];
     
-    echo $appID . ", " . $comments;
+    //echo $appID . ", " . $comments;
                          
     try{
         $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
         // Exceptions fire when occur
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-        $updateAppComment = $connection->prepare('UPDATE APPLICATIONS SET ADMIN_COMMENTS=' . COMMENT . ' WHERE APP_ID =' . APP_ID);
-        $updateAppComment->execute();
+        $updateAppComment = $connection->prepare('UPDATE APPLICATIONS SET ADMIN_COMMENTS = :submittedComment WHERE APP_ID = :appID');
+        
+        $updateAppComment->execute(array(
+            ':submittedComment' => $comments,
+            ':appID' => $appID
+        ));
         //array(':appID' => $appID, ':comments' => $comments)
         
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: https://dnguyen94.com/OnPointPerformance/admin/pages/applications.php?success2=true');
     }
     catch(PDOException $e) {
         echo "<div>

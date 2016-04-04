@@ -158,10 +158,33 @@
                             }
                             
                             $results = $query->fetchAll();
-                            //print success message for app deletion
-                            if ($_GET["success"] == true){
-                                echo '<strong> The application has been deleted.</strong><br>';
+                            //print success message for app deletion or comment submission
+                            
+                            if (isset($_GET["success"])){
+                                if ($_GET["success"] == "true"){
+                                    echo '<div class="alert alert-dismissible alert-success">
+                                            <strong>Success!</strong> The application has been deleted.
+                                        </div>';
+                                }else if ($_GET["success"] == "false"){
+                                    echo '<div class="alert alert-dismissible alert-danger">
+                                            <strong>Error!</strong> The application has not been deleted.
+                                        </div>';
+                                }
                             }
+                            
+                           
+                            if (isset($_GET["success2"])){
+                                if ($_GET["success2"] == "true"){
+                                    echo '<div class="alert alert-dismissible alert-success">
+                                            <strong>Success!</strong> Your application comment has been submitted.
+                                        </div>';
+                                }else if ($_GET["success2"] == "false"){
+                                    echo '<div class="alert alert-dismissible alert-danger">
+                                            <strong>Error!</strong> Your application comment has not been submitted.
+                                        </div>';
+                                }
+                            }
+                            
                             
                             if (sizeof($results) > 0){
                             printf("Returned %d row(s).", sizeof($results));
@@ -198,7 +221,7 @@
                                             . "<td>"
                                                 . "<form action='viewApplication.php' method='post'>"
                                                     . "<input type='text' name='appID' value='" . $results[$count]["APP_ID"] . "' hidden>"
-                                                    . "<input type='submit' value='View'>"
+                                                    . "<input type='submit' class='btn btn-primary' value='View'>"
                                                 . "</form>"
                                                 . "</td>"
                                         . "</tr>";

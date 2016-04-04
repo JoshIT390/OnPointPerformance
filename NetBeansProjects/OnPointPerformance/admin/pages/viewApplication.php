@@ -218,7 +218,7 @@
                                     . "<tr><td><strong>Management</strong></td><td>"
                                         . "<form action='deleteApplication.php' method='post'>"
                                             . "<input type='hidden' name='appID' value='" . $appID . "'>"
-                                            . "<input class='btn-default' type='submit' value='Delete'>"
+                                            . "<input class='btn btn-warning' type='submit' value='Delete'>"
                                         . "</form>"
                                     . "</td></tr>"
                                 . "</table>";
@@ -226,18 +226,18 @@
                             
                         ?>
                         <div class="container" style="text-align: center;">
-                        <!--<form action="appComment.php" method="post">
+                        <form action="appComment.php" method="post">
                             <div class="row" style="text-align: center;">
                                 <label for="adminComments"><h3>Add/Edit Admin Comments:</h3></label>
                             </div>
                             <div class="row">
-                                <textarea name="adminComments" rows="4"><?php echo $results[19];?></textarea>
+                                <textarea name="adminComments" rows="5" cols="50"><?php echo $results[19];?></textarea>
                             </div>
                             <div class="row" style="text-align: center;">
                                 <input type="hidden" name="appID" value="<?php echo $appID; ?>">
-                                <input type="submit" value="submit">
+                                <input type="submit" class="btn btn-primary" value="Save Comment">
                             </div>
-                        </form>-->
+                        </form>
                         </div>
                     </div>
                     <!-- /.col-lg-12 -->
