@@ -152,19 +152,19 @@
                                             }
                                             else {
                                                 unlink('../../images/' . basename( $_FILES["imgUpload"]["name"]));
-                                                displayForm("fail_submit", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                                displayForm("fail_submit", $_POST["title"], $_POST["description"], $_POST["date"], $_POST["imgDescription"]);
                                             }
                                         }
                                         else {
-                                            displayForm("fail_upload", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                            displayForm("fail_upload", $_POST["title"], $_POST["description"], $_POST["date"], $_POST["imgDescription"]);
                                         }
                                     }
                                     else {
-                                        displayForm("fail_image_ext", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                        displayForm("fail_image_ext", $_POST["title"], $_POST["description"], $_POST["date"], $_POST["imgDescription"]);
                                     }
                                 }
                                 else {
-                                    displayForm("fail_image_exist", $_POST["title"], $_POST["title"], $_POST["date"], $_POST["imgDescription"]);
+                                    displayForm("fail_image_exist", $_POST["title"], $_POST["description"], $_POST["date"], $_POST["imgDescription"]);
                                 }
                             }
                             else {
@@ -172,10 +172,10 @@
                             }
                             
                             function checkExtension($fileExtension) {
-                                if (!strcasecmp($fileExtension, "jpg")) {
-                                    if (!strcasecmp($fileExtension, "jpeg")) {
-                                        if (!strcasecmp($fileExtension, "png")) {
-                                            if (!strcasecmp($fileExtension, "gif")) {
+                                if (strcasecmp($fileExtension, "jpg") != 0) {
+                                    if (strcasecmp($fileExtension, "jpeg") != 0) {
+                                        if (strcasecmp($fileExtension, "png") != 0) {
+                                            if (strcasecmp($fileExtension, "gif") != 0) {
                                                 return FALSE;
                                             }
                                         }

@@ -137,32 +137,128 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Forms</h1>
-						<p>
-                                                <h3><a href="addform.php">Add a Form</a></h3>
-                                                    <?php
-							include "../../databaseInfo.php";
+                        <p>
+                            <a href="addform.php" class="btn btn-primary"><i class="fa fa-plus"></i> Add Form</a>
+                            <?php
+                                include "../../databaseInfo.php";
 
-							// Create connection
-							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
+                                if (isset($_POST["formID"]) && isset($_POST["formName"]) && isset($_POST["fileName"])) {                                  
+                                    if (unlink('../../forms/' . $_POST["fileName"])) {
+                                        if (deleteForm($_POST["formID"])) {
+                                            generatePage("success", $_POST["formName"], $_POST["fileName"]);
+                                        }
+                                        else {
+                                            generatePage("fail", $_POST["formName"], $_POST["fileName"]);
+                                        }                                        
+                                    }
+                                    else {
+                                        generatePage("fail_delete_file", $_POST["formName"], $_POST["fileName"]);
+                                    } 
+                                }
+                                else {
+                                    generatePage("", "", "");
+                                }
 
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT * FROM " . FORMS_TABLE . " ORDER BY NAME;");
-							printf("Returned %d row(s).", $result->num_rows);
-							echo "<table style='width:75%'><tr><th>Form Name</th><th>File Name</th><th>Management</th></tr>";
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-								echo "<tr> <td>". $row["NAME"]. "</td> <td> ". $row["PDF"]. "</td><td><form action='deleteform.php' method='post'><input type='text' name='random' value='" . $row["FORM_ID"] . "' hidden> <input type='submit' value='Delete'></form></tr>";
-								}
-							}
-                                                        echo "</table>";
-							$result->close();
-							
-							?>
-                                                </p>
+                                function deleteForm($formID) {
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $formDeletion = $connection->query('
+                                            DELETE FROM ' . FORMS_TABLE . ' 
+                                            WHERE FORM_ID = '. $connection->quote($formID)
+                                        );
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+
+                                    return TRUE;
+                                }
+
+                                function generatePage($status, $formName, $fileName) {
+                                    $message;
+
+                                    if ($status == "success") {
+                                        $message = 
+                                            '<div class="alert alert-success alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . 
+                                                '"' . $formName . '" (' . $fileName . ') was deleted successfully.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting "' . $formName . '" (' . $fileName . '). Please try again.
+                                            </div>';
+                                    }
+                                    elseif ($status == "fail_delete_file") {
+                                        $message = 
+                                            '<div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                There was a problem deleting the file for "' . $formName . '". Please try again.
+                                            </div>';
+                                    }
+
+                                    try {
+                                        $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                        // Exceptions fire when occur
+                                        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                        $formsQuery = $connection->query('
+                                                SELECT NAME, PDF, FORM_ID 
+                                                FROM ' . FORMS_TABLE);
+
+                                        $forms = $formsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                                        echo  
+                                            $message . 
+                                            "<div>Returned " . ($formsQuery->rowCount()) . " row(s)</div>
+                                            <table style='width:100%'>
+                                                <tr>
+                                                    <th>Form Name</th>
+                                                    <th>File Name</th>
+                                                    <th>Management</th>
+                                                </tr>";
+
+                                        while($form = array_shift($forms)){
+                                            echo 
+                                                "<tr>
+                                                    <td>" . $form[NAME] . "</td>
+                                                    <td><a href='../../forms/" . $form[PDF] . "' target='_blank'>" . $form[PDF] . "</a></td>
+                                                    <td>                                                     
+                                                        <form action='formsm.php' method='post'>
+                                                            <input type='text' name='formID' value='" . $form[FORM_ID] . "' hidden />
+                                                            <input type='text' name='formName' value='" . $form[NAME] . "' hidden />
+                                                            <input type='text' name='fileName' value='" . $form[PDF] . "' hidden />
+                                                            <input type='submit' class='btn btn-warning' value='Delete' />
+                                                        </form>
+                                                    </td>
+                                                </tr>";
+                                        }
+
+                                        echo "</table>";
+                                    }
+                                    // Script halts and throws error if exception is caught
+                                    catch(PDOException $e) {
+                                        echo "
+                                        <div>
+                                            Error: " . $e->getMessage() . 
+                                        "</div>";
+
+                                        return FALSE;
+                                    }
+                                }
+                            ?> 
+                        </p>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

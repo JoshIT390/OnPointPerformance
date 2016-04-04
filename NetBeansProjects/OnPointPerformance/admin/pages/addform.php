@@ -136,15 +136,149 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Forms</h1>
-						<p>
+                        <h1 class="page-header">Forms</h1>                                               
+                        <?php
+                            include "../../databaseInfo.php";
+                        
+                            define("TARGET_DIR", "../../forms/");
 
-                                                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                                                    Name of Document: <input type='text' name='filename'></br></br>
-                                                    Select Document to upload:
-                                                    <input type="file" name="fileToUpload" id="fileToUpload"></br>
-                                                    <input type="submit" value="Upload Document" name="submit">
-                                                </p>
+                            if (!empty($_POST["formName"]) && !empty($_FILES["fileUpload"]["name"])) {
+                                if (!file_exists(TARGET_DIR . $_FILES["fileUpload"]["name"])) {
+                                    if (checkExtension(pathinfo($_FILES["fileUpload"]["name"], PATHINFO_EXTENSION))) {
+                                        if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], TARGET_DIR . $_FILES["fileUpload"]["name"])) {
+                                            if (submitInformation(trim($_POST["formName"]), $_FILES["fileUpload"]["name"])) {
+                                                displayForm("success", "");
+                                            }
+                                            else {
+                                                unlink(TARGET_DIR . basename( $_FILES["fileUpload"]["name"]));
+                                                displayForm("fail_submit", $_POST["formName"]);
+                                            }
+                                        }
+                                        else {
+                                            displayForm("fail_upload", $_POST["formName"]);
+                                        }
+                                    }
+                                    else {
+                                        displayForm("fail_file_ext", $_POST["formName"]);
+                                    }
+                                }
+                                else {
+                                    displayForm("fail_file_exist", $_POST["formName"]);
+                                }
+                            }
+                            else {
+                                displayForm("", "");
+                            }
+                            
+                            function checkExtension($fileExtension) {
+                                if (strcasecmp($fileExtension, "doc") != 0) {
+                                    if (strcasecmp($fileExtension, "docx") != 0) {
+                                        if (strcasecmp($fileExtension, "pdf") != 0) {
+                                            return FALSE;
+                                        }
+                                        else {
+                                            return TRUE;
+                                        }
+                                    }
+                                    else {
+                                        return TRUE;
+                                    }
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                        
+                            function submitInformation($submittedFormName, $submittedFilePath) {                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $announcementSubmit = $connection->prepare(
+                                            'INSERT INTO ' . FORMS_TABLE . ' (NAME, PDF) 
+                                            VALUES (:submittedFormName, :submittedFilePath)');
+
+                                    $announcementSubmit->execute(array(
+                                        ':submittedFormName' => $submittedFormName,
+                                        ':submittedFilePath' => $submittedFilePath,
+                                    ));
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+
+                                return TRUE;
+                            }
+                            
+                            function displayForm($status, $submittedFormName) {
+                                $notice = "";
+
+                                if ($status == "success") {
+                                    $notice = 
+                                        "<div class='alert alert-success alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            Form information and file successfully submitted.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_file_exist") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded file already exists. Please choose a different file or rename your file and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_file_ext") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded file is not a supported format. Please choose a different file or convert your file to the below requirements and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_upload") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem with the file upload. The form information was not submitted. Please try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_submit") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem submitting the form. Please try again.
+                                        </div>";
+                                }
+
+                                echo 
+                                    '<div>  
+                                        <h3> Add Form</h3>' . 
+                                        $notice . '
+                                        <form action="addform.php" method="post" enctype="multipart/form-data">
+                                            Form Name: <input type="text" name="formName" value="' . htmlentities($submittedFormName, ENT_QUOTES) . '" required />
+                                            <hr />
+                                            <div>
+                                                <h4>Form Upload</h4>
+                                                Requirements:
+                                                <ul>
+                                                    <li>DOC, DOCX, or PDF format</li>
+                                                    <li>Not already uploaded</li><br />
+                                                </ul>  
+                                                <input type="file" name="fileUpload" id="imageUpload" required />
+                                            </div>
+                                            <hr />
+                                            <input type="submit" value="Submit" class="btn btn-default" />
+                                        </form>
+                                    </div>';
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
