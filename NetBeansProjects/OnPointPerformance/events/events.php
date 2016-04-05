@@ -45,7 +45,7 @@
                                 . "<h3>" . $row[1] . "</h3>"
                             . "</div>"
                             . "<div class='panel-body'>"
-                                . "<p>Date: " . $row[2] . "</p>"
+                                . "<p>Date: " . date("F j, Y", strtotime($row[2])) . "</p>"
                                 . "<p>Location: " . $row[3] . ", " . $row[4] . " " . $row[5] . "</p>"
                                 . "<p>Form needed: " . $row[7] . "</p>"
                                 . "<p>Description: " . $row[6] . "</p>"
