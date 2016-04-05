@@ -1,10 +1,5 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
-    define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-    define("USER_EMERGENCY_CONTACT_TABLE", "MEMBER_EMERGENCY_CONTACTS");
+    include "../../databaseInfo.php";
     
     $relationships = array('Spouse or Significant Other', 'Parent/Guardian', 'Son/Daughter', 'Sibling', 'Friend');
     
@@ -49,7 +44,7 @@
             
             $emergencyContactQuery = $connection->query('
                 SELECT ME.FIRSTNAME, ME.LASTNAME, ME.PHONE, ME.RELATIONSHIP, ME.EMERGENCY_CONTACT_ID 
-                FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . USER_EMERGENCY_CONTACT_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
+                FROM ' . USER_CREDENTIAL_TABLE . ' M INNER JOIN ' . EMERGENCY_CONTACTS_TABLE . ' ME ON ME.MEMBER_ID = M.MEMBER_ID
                 WHERE M.MEMBER_EMAIL = '. $connection->quote($username)
             );
             
@@ -114,7 +109,7 @@
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $accountInformationUpdate = $connection->prepare('
-                UPDATE ' . USER_EMERGENCY_CONTACT_TABLE . ' 
+                UPDATE ' . EMERGENCY_CONTACTS_TABLE . ' 
                 SET FIRSTNAME = :submittedFirstName, LASTNAME = :submittedLastName, PHONE = :submittedPhone, RELATIONSHIP = :submittedRelationship 
                 WHERE EMERGENCY_CONTACT_ID = :emergencyContactID'
             );

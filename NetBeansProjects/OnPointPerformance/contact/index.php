@@ -76,6 +76,7 @@ and open the template in the editor.
 
 
                         <?php
+                            include "../databaseInfo.php";
                             include 'form_submission.php';
 
                             if (!isset($_POST["submit"]) && !isset($_POST["g-recaptcha-response"]) && !isset($_POST["name"]) && !isset($_POST["email"]) && !isset($_POST["message"])) {
@@ -89,14 +90,14 @@ and open the template in the editor.
                                 if (isValid($_POST["g-recaptcha-response"])) {
                                     if (submitEmail($_POST["name"], $_POST["email"], $_POST["message"])) {
                                         echo '<div class="alert alert-dismissible alert-success">
-                                                <button type="button" class="close" data-dismiss="alert">&close;</button>
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
                                                 Message sent successfully
                                             </div>';
                                         displayForm();
                                     }
                                     else {
                                         echo '<div class="alert alert-dismissible alert-danger">
-                                                <button type="button" class="close" data-dismiss="alert">&close;</button>                                
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>                                
                                                 There has been a problem with submission. Please try again.
                                             </div>';
                                         displayForm();
@@ -104,7 +105,7 @@ and open the template in the editor.
                                 }
                                 else {
                                         echo '<div class="alert alert-dismissible alert-danger">
-                                                <button type="button" class="close" data-dismiss="alert">&close;</button>      
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>      
                                                 There has been a problem with our verification process. Please try again.
                                             </div>';
                                     displayForm();

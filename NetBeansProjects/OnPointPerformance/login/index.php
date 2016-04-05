@@ -96,7 +96,6 @@ and open the template in the editor.
 
                         if (isset($_SESSION['member_username']) || isset($_SESSION['admin_username'])) {
                             // Reload page so that browser reads header injection up top to redirect to proper portal
-                            /*echo '<body onload="setInterval(function() {window.location.reload();}, 2000);">';*/
 
                             if (isset($_SESSION['member_username'])) {
                                 echo '<body onload="window.location.href = \'../members/\';">';

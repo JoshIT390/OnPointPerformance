@@ -1,9 +1,5 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
-    define("USER_CREDENTIAL_TABLE", "APPLICATIONS");
+    include "../databaseInfo.php";
     
     /* Using session to pass variables */
     if(session_id() == '' || !isset($_SESSION)) {
@@ -67,7 +63,7 @@
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
             $submitApplication = $connection->prepare('
-                INSERT INTO ' . USER_CREDENTIAL_TABLE . '(FIRSTNAME, LASTNAME, PHONE, EMAIL, AGE, GENDER, MILITARY_BG, MILITARY_BG_COMMENTS, 
+                INSERT INTO ' . APPLICATIONS_TABLE . '(FIRSTNAME, LASTNAME, PHONE, EMAIL, AGE, GENDER, MILITARY_BG, MILITARY_BG_COMMENTS, 
                                         LAW_EN_BG, LAW_EN_BG_COMMENTS, COMP_ATHLETE_BG, COMP_ATHLETE_BG_COMMENTS, CURRENTLY_TRAIN,
                                         DAYS_PER_WEEK_TRAINING, TRAINING_TIME, CERTIFICATION, CERTIFICATION_COMMENTS, ADDITIONAL_COMMENTS) 
                 VALUES (:submittedFirstName, :submittedLastName, :submittedPhone, :submittedEmail, :submittedAge, :submittedGender, 

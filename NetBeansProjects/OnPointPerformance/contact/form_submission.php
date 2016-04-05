@@ -1,4 +1,6 @@
 <?php 
+    include "../databaseInfo.php";
+    
     function displayForm() {
         echo 
         '<div class="col-lg-6">

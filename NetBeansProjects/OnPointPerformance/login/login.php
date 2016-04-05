@@ -1,8 +1,5 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
+    include "../databaseInfo.php";
 
     // If first time logging in or inputted incorrect credentials
     if (!isset($_SESSION["admin_username"]) || !isset($_SESSION["member_username"])) {
@@ -80,7 +77,7 @@
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $adminPasswordQuery = $connection->prepare('
-                        SELECT PASSWORD FROM ADMIN_USERS 
+                        SELECT PASSWORD FROM ' . ADMIN_CREDENTIAL_TABLE . ' 
                         WHERE EMAIL = :username');
             
             $adminPasswordQuery->execute(array('username' => $username));
@@ -89,7 +86,7 @@
             // If no matches
             if (!$adminPasswordResult) {
                 $memberPasswordQuery = $connection->prepare('
-                        SELECT PASSWORD FROM MEMBER_ACCOUNT 
+                        SELECT PASSWORD FROM ' . USER_CREDENTIAL_TABLE . ' 
                         WHERE MEMBER_EMAIL = :username AND ACTIVESTATUS = 1');
                 
                 $memberPasswordQuery->execute(array('username' => $username));

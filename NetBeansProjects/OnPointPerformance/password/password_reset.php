@@ -1,10 +1,5 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
-    define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
-    define("USER_CREDENTIAL_TABLE2", "ADMIN_USERS");
+    include "../databaseInfo.php";
     
     if (empty($_POST["submit"]) && empty($_POST["g-recaptcha-response"]) && empty($_POST["username"])) {
         displayForm("");
@@ -58,7 +53,7 @@
             // Exceptions fire when occur
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
-            $adminEmailQuery = $connection->prepare('SELECT EMAIL FROM ' . USER_CREDENTIAL_TABLE2 . ' WHERE EMAIL LIKE :username');
+            $adminEmailQuery = $connection->prepare('SELECT EMAIL FROM ' . ADMIN_CREDENTIAL_TABLE . ' WHERE EMAIL LIKE :username');
             $adminEmailQuery->execute(array('username' => $username));
             
             $adminEmailResult = $adminEmailQuery->fetch();
@@ -112,7 +107,7 @@
             $column = "MEMBER_EMAIL";
         }
         if ($role == "admin") {
-            $table = USER_CREDENTIAL_TABLE2;
+            $table = ADMIN_CREDENTIAL_TABLE;
             $column = "EMAIL";
         }
         try {

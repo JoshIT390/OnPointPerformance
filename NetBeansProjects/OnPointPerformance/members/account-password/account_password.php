@@ -1,9 +1,5 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
-    define("USER_CREDENTIAL_TABLE", "MEMBER_ACCOUNT");
+    include "../../databaseInfo.php";
     
     function displayPasswordForm($status) {
         $message = "";
