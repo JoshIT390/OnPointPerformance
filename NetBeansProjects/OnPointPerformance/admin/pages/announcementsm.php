@@ -230,7 +230,7 @@
                                                     <th>Title</th>
                                                     <th>Date</th>
                                                     <th>Description</th>
-                                                    <th>Image URL</th>
+                                                    <th>Image Preview</th>
                                                     <th>Image Description</th>
                                                     <th>Management</th>
                                                 </tr>";
@@ -240,14 +240,14 @@
                                                 "<tr>
                                                     <td>" . $announcement[TITLE] . "</td>
                                                     <td>" . $announcement[DATE] . "</td>
-                                                    <td>" . $announcement[DESCRIPTION] . "</td>
-                                                    <td><a href='../../images/" . $announcement[IMG_URL] . "' target='_blank'>" . $announcement[IMG_URL] . "</a></td>
+                                                    <td style='width: 40%'>" . $announcement[DESCRIPTION] . "</td>
+                                                    <td style='width: 8%'>
+                                                        <a href='../../images/" . $announcement[IMG_URL] . "' target='_blank'>
+                                                            <img src='../../images/" . $announcement[IMG_URL] . "' alt='" . $announcement[IMG_ALT] . "' style='width:100%' />
+                                                        </a>
+                                                    </td>
                                                     <td>" . $announcement[IMG_ALT] . "</td>
                                                     <td>
-                                                        <form action='viewAnnouncement.php' method='post'>
-                                                            <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
-                                                            <input type='submit' class='btn btn-primary' value='View' />
-                                                        </form>
                                                         <form action='editAnnouncement.php' method='post'>
                                                             <input type='text' name='annID' value='" . $announcement[ANN_ID] . "' hidden />
                                                             <input type='submit' class='btn btn-primary' value='Edit' />

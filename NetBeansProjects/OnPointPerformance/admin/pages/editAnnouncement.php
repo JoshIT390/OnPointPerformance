@@ -138,34 +138,342 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Announcements</h1>
-						<p><h3><a href="addAnnouncement.php">Add an Announcement</a></h3>
-						<p>  <?php
-                                                        include "../../databaseInfo.php";
+                        <p>  
+                            <?php/*
+                                include "../../databaseInfo.php";
 
-							// Create connection
-							$conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
-							$annID=$_POST['annID'];
-							// Check connection
-							if ($conn->connect_error) {
-								die("Connection failed: " . $conn->connect_error);
-							}
-							$result = mysqli_query($conn, "SELECT TITLE, DATE, DESCRIPTION FROM " . ANNOUNCEMENTS_TABLE . " WHERE ANN_ID='" . $annID . "';");
-							if ($result->num_rows > 0) {
-								// output data of each row
-								while($row = $result->fetch_assoc()) {
-								echo'<form action="updateAnnouncement.php" method="post">
-								<p>Title: <input type="text" name="title" value="'.$row["TITLE"].'"/>
-								Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
-								<p>Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
-								<p><input type="hidden" name="annID" value="'.$annID.'"/></p>
-								<p><input type="submit" value="Update"/></p>
-								</form>';
-								
-								}
-							}
-							$result->close();
-							
-                             ?>  </p>
+                                // Create connection
+                                $conn = mysqli_connect(DB_HOST_NAME, DB_USER_NAME, DB_PASSWORD, DB_NAME);
+                                $annID=$_POST['annID'];
+                                // Check connection
+                                if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                }
+                                $result = mysqli_query($conn, "SELECT TITLE, DATE, DESCRIPTION FROM " . ANNOUNCEMENTS_TABLE . " WHERE ANN_ID='" . $annID . "';");
+                                if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while($row = $result->fetch_assoc()) {
+                                        echo'<form action="updateAnnouncement.php" method="post">
+                                        <p>Title: <input type="text" name="title" value="'.$row["TITLE"].'"/>
+                                        Date: <input type="text" name="date" placeholder="YYYY-MM-DD" value="'.$row["DATE"].'"/></p>
+                                        <p>Description: <input type="text" name="description" value="'.$row["DESCRIPTION"].'"/></p>
+                                        <p><input type="hidden" name="annID" value="'.$annID.'"/></p>
+                                        <p><input type="submit" value="Update"/></p>
+                                        </form>';
+
+                                        }
+                                }
+                                $result->close();*/
+                            ?>
+                        </p>
+                        
+                        <?php
+                            include "../../databaseInfo.php";
+                        
+                            define("TARGET_DIR", "../../images/");
+                            $currentStoredImageName = getCurrentStoredImageName();
+                            
+                            if (!empty($_POST["title"]) && !empty($_POST["date"]) && !empty($_POST["description"]) && (!empty($_POST["imgDescription"]) && empty($_FILES["imgUpload"]["name"]))) {
+                                if (submitInformation(trim($_POST["title"]), trim($_POST["description"]), $_POST["date"], "", trim($_POST["imgDescription"]))) {
+                                    displayInfoForm("success");
+                                    displayImageForm("success_info");
+                                }
+                                else {
+                                    displayInfoForm("fail_submit");
+                                    displayImageForm("fail_info");
+                                }
+                            }
+                            elseif (!empty($_POST["title"]) && !empty($_POST["date"]) && !empty($_POST["description"]) && (!empty($_POST["imgDescription"]) && !empty($_FILES["imgUpload"]["name"]))) {
+                                if (checkExtension(pathinfo($_FILES["imgUpload"]["name"], PATHINFO_EXTENSION))) {    
+                                    if (!checkFileExists($_FILES["imgUpload"]["name"], $currentStoredImageName)) {
+                                        if (file_exists(TARGET_DIR . $currentStoredImageName)) unlink(TARGET_DIR . $currentStoredImageName);
+
+                                        if (move_uploaded_file($_FILES["imgUpload"]["tmp_name"], TARGET_DIR . $_FILES["imgUpload"]["name"])) {
+                                            if (submitInformation(trim($_POST["title"]), trim($_POST["description"]), $_POST["date"], $_FILES["imgUpload"]["name"], trim($_POST["imgDescription"]))) {
+                                                displayInfoForm("success");
+                                                displayImageForm("success_upload");
+                                            }
+                                            else {
+                                                unlink('../../images/' . basename( $_FILES["imgUpload"]["name"]));
+                                                displayInfoForm("fail_submit");
+                                                displayImageForm("fail_upload");
+                                            }
+                                        }
+                                        else {
+                                            displayInfoForm("");
+                                            displayImageForm("fail_upload");
+                                        }
+                                    }
+                                    else {
+                                        displayInfoForm("");
+                                        displayImageForm("fail_image_exist");
+                                    }
+                                }
+                                else {
+                                    displayInfoForm("");
+                                    displayImageForm("fail_image_ext");
+                                }    
+                            }
+                            else {
+                                displayInfoForm("");
+                                displayImageForm("");
+                            }
+                            
+                            function getCurrentStoredImageName() {
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $imageNameQuery = $connection->query(
+                                            'SELECT IMG_URL 
+                                            FROM ' . ANNOUNCEMENTS_TABLE . ' 
+                                            WHERE ANN_ID = ' . $connection->quote($_POST["annID"]));
+
+                                    $imageName = $imageNameQuery->fetch(PDO::FETCH_ASSOC);
+
+                                    return $imageName[IMG_URL];
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+                            }
+                            
+                            function checkFileExists($submittedFileName, $currentFileName) {
+                                $files = scandir(TARGET_DIR);
+                                
+                                // Returns TRUE if the file exists and is being used by another announcement
+                                foreach ($files as &$file) {
+                                    if (strcmp($file, $submittedFileName) == 0) {
+                                        if (strcmp($file, $currentFileName) != 0) return TRUE;
+                                    }
+                                }
+                                
+                                return FALSE;
+                            }
+                            
+                            function checkExtension($fileExtension) {
+                                if (strcasecmp($fileExtension, "jpg") != 0) {
+                                    if (strcasecmp($fileExtension, "jpeg") != 0) {
+                                        if (strcasecmp($fileExtension, "png") != 0) {
+                                            if (strcasecmp($fileExtension, "gif") != 0) {
+                                                return FALSE;
+                                            }
+                                        }
+                                        else {
+                                            return TRUE;
+                                        }
+                                    }
+                                    else {
+                                        return TRUE;
+                                    }
+                                }
+                                else {
+                                    return TRUE;
+                                }
+                            }
+                        
+                            function submitInformation($submittedTitle, $submittedDescription, $submittedDate, $submittedFilePath, $submittedFileDescription) {                                                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    if (!empty($submittedFilePath)) {
+                                        $announcementSubmit = $connection->prepare(                                   
+                                                'UPDATE ' . ANNOUNCEMENTS_TABLE . ' 
+                                                SET TITLE = :submittedTitle, DESCRIPTION = :submittedDescription, DATE = :submittedDate, IMG_URL = :submittedFilePath, IMG_ALT = :submittedFileDescription 
+                                                WHERE ANN_ID = :annID');
+
+                                        $announcementSubmit->execute(array(
+                                            ':submittedTitle' => $submittedTitle,
+                                            ':submittedDescription' => $submittedDescription,
+                                            ':submittedDate' => $submittedDate,
+                                            ':submittedFilePath' => $submittedFilePath,
+                                            ':submittedFileDescription' => $submittedFileDescription,
+                                            ':annID' => $_POST["annID"]
+                                        ));
+                                    }
+                                    elseif (empty($submittedFilePath)) {
+                                        $announcementSubmit = $connection->prepare(                                   
+                                                'UPDATE ' . ANNOUNCEMENTS_TABLE . ' 
+                                                SET TITLE = :submittedTitle, DESCRIPTION = :submittedDescription, DATE = :submittedDate, IMG_ALT = :submittedFileDescription 
+                                                WHERE ANN_ID = :annID');
+
+                                        $announcementSubmit->execute(array(
+                                            ':submittedTitle' => $submittedTitle,
+                                            ':submittedDescription' => $submittedDescription,
+                                            ':submittedDate' => $submittedDate,
+                                            ':submittedFileDescription' => $submittedFileDescription,
+                                            ':annID' => $_POST["annID"]
+                                        ));
+                                    }
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+
+                                return TRUE;
+                            }
+                            
+                            function displayInfoForm($status) {
+                                $notice = "";
+
+                                if ($status == "success") {
+                                    $notice = 
+                                        "<div class='alert alert-success alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            Announcement information successfully changed.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_submit") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem making changes to the announcement information. Please try again.
+                                        </div>";
+                                }
+                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $formDataQuery = $connection->query(
+                                            'SELECT TITLE, DATE, DESCRIPTION 
+                                            FROM ' . ANNOUNCEMENTS_TABLE . ' 
+                                            WHERE ANN_ID = ' . $connection->quote($_POST["annID"]));
+
+                                    $formData = $formDataQuery->fetch(PDO::FETCH_ASSOC);
+                                
+                                    echo 
+                                        '<div>  
+                                            <h3>Editing "' . $formData[TITLE] . '"</h3><br />' .
+                                            $notice . '
+                                            <form action="editAnnouncement.php" method="post" enctype="multipart/form-data">
+                                                Title: <input type="text" name="title" value="' . htmlentities($formData[TITLE], ENT_QUOTES) . '" required /><br /><br />
+                                                Date: <input type="date" name="date" placeholder="YYYY-MM-DD" value="' . htmlentities($formData[DATE], ENT_QUOTES) . '" required /><br /><br />
+                                                Description:<br />
+                                                <textarea rows="4" cols="100" name="description">' . htmlentities($formData[DESCRIPTION], ENT_QUOTES) . '</textarea>
+                                                <hr />';
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+                            }
+                            
+                            function displayImageForm($status) {
+                                $notice = "";
+
+                                if ($status == "success") {
+                                    $notice = 
+                                        "<div class='alert alert-success alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            Image description successfully changed.
+                                        </div>";
+                                }
+                                elseif ($status == "success_upload") {
+                                    $notice = 
+                                        "<div class='alert alert-success alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            Image and image description successfully changed.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_image_exist") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded image already exists. Please choose a different image or rename your image and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_image_ext") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            The uploaded image is not a supported format. Please choose a different image or convert your image to the below requirements and try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_info") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem with changing the image description. Please try again.
+                                        </div>";
+                                }
+                                elseif ($status == "fail_upload") {
+                                    $notice = 
+                                        "<div class='alert alert-danger alert-dismissable'>
+                                            <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                            There was a problem with the image upload. Please try again.
+                                        </div>";
+                                }
+                                
+                                try {
+                                    $connection = new PDO("mysql:host=" . DB_HOST_NAME . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER_NAME, DB_PASSWORD);
+                                    // Exceptions fire when occur
+                                    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                                    $imageDescriptionQuery = $connection->query(
+                                            'SELECT IMG_ALT 
+                                            FROM ' . ANNOUNCEMENTS_TABLE . ' 
+                                            WHERE ANN_ID = ' . $connection->quote($_POST["annID"]));
+
+                                    $imageDescription = $imageDescriptionQuery->fetch(PDO::FETCH_ASSOC);
+                                    
+                                    echo 
+                                            $notice . '
+                                                <div>
+                                                    <h4>Image Upload</h4>
+                                                    Requirements:
+                                                    <ul>
+                                                        <li>Square image</li>
+                                                        <li>JPG, JPEG, PNG, or GIF format</li>
+                                                        <li>Not already being used by other announcements</li><br />
+                                                    </ul>  
+                                                    <input type="file" name="imgUpload" id="imageUpload" />
+                                                </div><br />
+                                                <div>
+                                                    Image Description: <input type="text" name="imgDescription" value="' . htmlentities($imageDescription[IMG_ALT], ENT_QUOTES) . '" required />
+                                                </div>
+                                                <hr />
+                                                <input type="text" name="annID" value="' . $_POST["annID"] . '" hidden />
+                                                <input type="submit" value="Save changes" class="btn btn-default" />
+                                            </form>
+                                        </div>';
+                                }
+
+                                // Script halts and throws error if exception is caught
+                                catch(PDOException $e) {
+                                    echo "
+                                    <div>
+                                        Error: " . $e->getMessage() . 
+                                    "</div>";
+
+                                    return FALSE;
+                                }
+                            }
+                        ?>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

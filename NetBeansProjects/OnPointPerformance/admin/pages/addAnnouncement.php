@@ -168,7 +168,7 @@
                                 }
                             }
                             else {
-                                displayForm("", "", "", "", "");
+                                displayForm("", "", "", date("Y-m-d"), "");
                             }
                             
                             function checkExtension($fileExtension) {
