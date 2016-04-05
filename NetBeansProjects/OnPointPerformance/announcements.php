@@ -42,7 +42,7 @@
                     . "<div class='col-lg-8' >"
                         . "<div class='jumbotron' >"
                             . "<h1>" . $result[2] . "</h1>"
-                            . "<p>" .  date("F j, Y", strtotime($result[3])) . "</p>"
+                            . "<p style='font-size: 1.25em'>" .  date("F j, Y", strtotime($result[3])) . "</p>"
                             . "<p> " . $result[1] . "</p>"
                         . "</div>"
                     . "</div>"
