@@ -75,7 +75,7 @@ and open the template in the editor.
                             <img src="../assets/images/eventsImage.jpg" style="height:auto;" />
                             <figcaption>
                                 <h1>Upcoming Events</h1>
-                                <h4>Come Join Us for these special events.</h4>
+                                <h4>Come join us for these special events</h4>
                             </figcaption>
                         </figure>
                     </figure>
