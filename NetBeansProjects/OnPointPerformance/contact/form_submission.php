@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for="textArea" class="col-lg-3 control-label"></label>
                             <div class="col-lg-8">
-                                <div class="g-recaptcha" data-sitekey="6LfnWRgTAAAAAJbrj6wxghHWppYqZK59I02w64ij"></div>
+                                <div class="g-recaptcha" data-sitekey="6LdQ2RwTAAAAALnBNw2iFi-FUyGd9z3Yuimk9XkD"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,7 +51,7 @@
     }
     
     function isValid($captcha) {
-        $secret = "6LfnWRgTAAAAAOjb5kqADRu_BPY-Ez7KLZwlF7mH";
+        $secret = "6LdQ2RwTAAAAACgLzZPzFGDw7-cQMLz3jGQ-lDaT";
         $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret .'&response=' . $captcha);
         $responseData = json_decode($verifyResponse);
         

@@ -1,8 +1,8 @@
 <?php
-    define("DB_HOST_NAME", "mysql.dnguyen94.com");
-    define("DB_USER_NAME", "ad_victorium");
-    define("DB_PASSWORD", "MT8AlJAM");
-    define("DB_NAME", "onpoint_performance_center_lower");
+    define("DB_HOST_NAME", "onpointperformancecenter.com");
+    define("DB_USER_NAME", "oppcowner");
+    define("DB_PASSWORD", "8K(eFzSE1Gi!");
+    define("DB_NAME", "onpoint_performance_center");
                       
     
     $comments = $_POST["adminComments"];
@@ -23,7 +23,7 @@
         ));
         //array(':appID' => $appID, ':comments' => $comments)
         
-        header('Location: https://dnguyen94.com/OnPointPerformance/admin/pages/applications.php?success2=true');
+        header('Location: https://onpointperformancecenter.com/admin/pages/applications.php?success2=true');
     }
     catch(PDOException $e) {
         echo "<div>

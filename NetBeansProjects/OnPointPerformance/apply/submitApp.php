@@ -103,7 +103,7 @@
         
                 $_SESSION['appErrors'] = $errorArray;
             }
-            header('Location: https://dnguyen94.com/OnPointPerformance/apply/index.php?success=true');
+            header('Location: https://onpointperformancecenter.com/apply/index.php?success=true');
         }catch(PDOException $e) {
             echo "<div>
                     Error: " . $e->getMessage() . 
@@ -123,7 +123,7 @@
         
         $_SESSION['appErrors'] = $errorArray;
         
-        header('Location: https://dnguyen94.com/OnPointPerformance/apply/index.php?success=false');
+        header('Location: https://onpointperformancecenter.com/apply/index.php?success=false');
     }
     
     /*Input Validation methods*/
